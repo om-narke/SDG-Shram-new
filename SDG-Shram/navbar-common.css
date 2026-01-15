@@ -255,7 +255,7 @@
 }
 
 /* Desktop: Ensure proper navbar display */
-@media (min-width: 769px) {
+@media (min-width: 577px) {
     .hamburger-menu {
         display: none !important;
     }
@@ -294,7 +294,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
     .feed-navbar {
         padding: 10px 15px;
         height: auto;

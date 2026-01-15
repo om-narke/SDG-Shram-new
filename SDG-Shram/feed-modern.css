@@ -769,7 +769,7 @@ body {
 }
 
 /* Desktop: Ensure proper navbar display */
-@media (min-width: 769px) {
+@media (min-width: 577px) {
     .hamburger-menu {
         display: none !important;
     }
@@ -804,7 +804,7 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
     .feed-container {
         grid-template-columns: 1fr;
         padding: 0 10px;

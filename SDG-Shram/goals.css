@@ -355,7 +355,7 @@ body {
 }
 
 /* Desktop: Ensure proper navbar display */
-@media (min-width: 769px) {
+@media (min-width: 577px) {
   .hamburger-menu {
     display: none !important;
   }
@@ -390,7 +390,7 @@ body {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 576px) {
   .goal img {
     width: 140px;
     height: 140px;
