@@ -24,7 +24,14 @@
             <input type="text" placeholder="Search startups, projects...">
         </div>
 
-        <div class="nav-links">
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-links" id="navMenu">
             <a href="feed.html">
                 <img src="logo/home.png" alt="Home">
                 <span>Home</span>
@@ -73,6 +80,8 @@
         </div>
     </nav>
     <script src="navbar-init.js"></script>
+    <script src="hamburger-menu.js"></script>
+
 
     <!-- Page Container -->
     <div class="page-container">

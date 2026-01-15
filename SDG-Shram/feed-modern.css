@@ -27,6 +27,40 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Hamburger Menu Button */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 26px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hamburger-menu span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
 /* Glassmorphic Navbar */
 .feed-navbar {
     background: var(--glass-background);
@@ -750,8 +784,10 @@ body {
     }
 
     .feed-navbar {
-        padding: 0 15px;
-        height: 60px;
+        padding: 10px 15px;
+        height: auto;
+        flex-wrap: wrap;
+        position: relative;
     }
 
     .feed-navbar .logo-section img {
@@ -762,22 +798,61 @@ body {
         font-size: 1.1rem;
     }
 
+    /* Show hamburger menu on mobile */
+    .hamburger-menu {
+        display: flex;
+        order: 2;
+    }
+
+    /* Mobile nav menu - hidden by default */
     .nav-links {
-        gap: 4px;
+        order: 4;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+        background: white;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 0;
+    }
+
+    /* Mobile nav menu - visible when active */
+    .nav-links.active {
+        max-height: 350px;
+        opacity: 1;
+        padding: 10px 0;
+        margin-top: 10px;
     }
 
     .nav-links a {
-        padding: 6px 8px;
-        font-size: 0.65rem;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 14px 20px;
+        font-size: 0.95rem;
+        gap: 12px;
+        border-bottom: 1px solid #f0f0f0;
+        border-radius: 0;
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a:hover {
+        background: var(--accent-color);
     }
 
     .nav-links a img {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
     }
 
     .nav-links a span {
-        display: none;
+        display: block;
     }
 
     .profile-menu {
