@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG-Shram | Sign Up</title>
+    <link rel="stylesheet" href="signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="signup-page">
+        <div class="signup-container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="logo/logo.png" alt="SDG-Shram" style="width: 60px; height: auto; margin-bottom: 10px;">
+                <h1>Sign Up to <span>SDG-Shram</span></h1>
+            </div>
+            <p class="subtitle">Join as an NGO, Individual, Business, or Institution to make a sustainable impact.</p>
+
+            <div id="successMessage" class="success-message"></div>
+            <div id="errorMessage" class="error-message"></div>
+
+            <!-- Step 1: Select User Type -->
+            <div class="user-type">
+                <label for="userType">Select Stakeholder Type:</label>
+                <select id="userType" name="stakeholderType" onchange="showForm()">
+                    <option value="">-- Choose One --</option>
+                    <option value="individual">Individual</option>
+                    <option value="ngo">NGO</option>
+                    <option value="business">Company / Business</option>
+                    <option value="institution">Institution</option>
+                </select>
+            </div>
+
+            <!-- Common form fields -->
+            <form id="commonForm" class="hidden" onsubmit="handleSubmit(event)" novalidate>
+                <input type="hidden" id="stakeholderType" name="stakeholderType" value="">
+
+                <!-- Individual Form -->
+                <div id="individualForm" class="form-section hidden">
+                    <h2>Individual Registration</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <input type="text" id="ind_fullName" name="fullName" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="ind_email" name="email" placeholder="Email ID" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="ind_password" name="password" placeholder="Create Password"
+                                minlength="6" required>
+                            <span class="password-hint">Min 6 chars, include uppercase, lowercase & number</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="ind_phone" name="phone" placeholder="Contact Number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roleType">I am a:</label>
+                        <select id="roleType" name="roleType" onchange="showIndividualFields()">
+                            <option value="">-- Select --</option>
+                            <option value="student">Student</option>
+                            <option value="employee">Working Professional</option>
+                        </select>
+                    </div>
+
+                    <!-- For Students -->
+                    <div id="studentFields" class="sub-section hidden">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <input type="text" id="schoolCollegeName" name="schoolCollegeName"
+                                    placeholder="School / College Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="yearOfStudy" name="yearOfStudy"
+                                    placeholder="Year of Study (e.g., 2nd Year, Final Year)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- For Employees -->
+                    <div id="employeeFields" class="sub-section hidden">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <input type="text" id="ind_companyName" name="companyName" placeholder="Company Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="designation" name="designation"
+                                    placeholder="Designation / Job Role">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <textarea id="skills" name="skills" placeholder="Skills / Areas of Interest"></textarea>
+                    </div>
+                </div>
+
+
+                <!-- NGO Form -->
+                <div id="ngoForm" class="form-section hidden">
+                    <h2>NGO Registration</h2>
+                    <p class="section-purpose">Basic Account Creation (Mandatory) — Identity & Contact Verification</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <input type="text" id="ngoName" name="ngoName"
+                                placeholder="Organization Name (as per registration)" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="ngoType" name="ngoType" required>
+                                <option value="">-- NGO Type --</option>
+                                <option value="trust">Trust</option>
+                                <option value="society">Society</option>
+                                <option value="section8">Section 8 Company</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="ngo_registrationNumber" name="registrationNumber"
+                                placeholder="Registration Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="yearOfEstablishment" name="yearOfEstablishment"
+                                placeholder="Year of Establishment" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <input type="text" id="registeredAddress" name="registeredAddress"
+                                placeholder="Registered Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="operatingStates" name="operatingStates"
+                                placeholder="Operating States/Districts" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="ngo_email" name="email" placeholder="Official Email ID" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="ngo_authorizedPersonName" name="authorizedPersonName"
+                                placeholder="Authorized Signatory Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="ngo_signatoryRole" name="signatoryRole"
+                                placeholder="Signatory Role (e.g., President, Secretary)">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="ngo_phone" name="phone" placeholder="Mobile Number (OTP Verified)"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="ngo_password" name="password" placeholder="Create Password"
+                                minlength="6" required>
+                            <span class="password-hint">Min 6 chars, include uppercase, lowercase & number</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <textarea id="missionFocusAreas" name="missionFocusAreas"
+                            placeholder="NGO Mission / Focus Areas"></textarea>
+                    </div>
+
+                </div>
+
+                <!-- Business Form -->
+                <div id="businessForm" class="form-section hidden">
+                    <h2>Business Registration</h2>
+                    <p class="section-purpose">Basic Account Creation — Identity & Contact Verification</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <input type="text" id="bus_companyName" name="companyName"
+                                placeholder="Company Name (as per registration)" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="businessType" name="businessType" required>
+                                <option value="">-- Business Type --</option>
+                                <option value="private">Private Limited</option>
+                                <option value="public">Public Limited</option>
+                                <option value="llp">LLP</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="proprietorship">Proprietorship</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="bus_yearOfEstablishment" name="yearOfEstablishment"
+                                placeholder="Year of Establishment">
+                        </div>
+                        <div class="form-group full-width">
+                            <input type="text" id="bus_registeredAddress" name="registeredAddress"
+                                placeholder="Registered Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="bus_operatingStates" name="operatingStates"
+                                placeholder="Operating States/Regions">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="bus_email" name="email" placeholder="Official Email ID" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="bus_authorizedPersonName" name="authorizedPersonName"
+                                placeholder="Authorized Signatory Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="bus_signatoryRole" name="signatoryRole"
+                                placeholder="Signatory Role (e.g., Director, CEO)">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="bus_phone" name="phone" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="bus_password" name="password" placeholder="Create Password"
+                                minlength="6" required>
+                            <span class="password-hint">Min 6 chars, include uppercase, lowercase & number</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <textarea id="csrFocusAreas" name="csrFocusAreas"
+                            placeholder="CSR / SDG Focus Areas"></textarea>
+                    </div>
+
+                </div>
+
+                <!-- Institution Form -->
+                <div id="institutionForm" class="form-section hidden">
+                    <h2>Institution Registration</h2>
+                    <p class="section-purpose">Basic Account Creation — Identity & Contact Verification</p>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <input type="text" id="institutionName" name="institutionName"
+                                placeholder="Institution Name (as per registration)" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="institutionType" name="institutionType" required>
+                                <option value="">-- Institution Type --</option>
+                                <option value="university">University</option>
+                                <option value="college">College</option>
+                                <option value="school">School</option>
+                                <option value="research">Research Institute</option>
+                                <option value="government">Government Body</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="aisheAffiliationNumber" name="aisheAffiliationNumber"
+                                placeholder="AISHE / Affiliation Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="inst_yearOfEstablishment" name="yearOfEstablishment"
+                                placeholder="Year of Establishment">
+                        </div>
+                        <div class="form-group full-width">
+                            <input type="text" id="inst_registeredAddress" name="registeredAddress"
+                                placeholder="Registered Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="inst_operatingStates" name="operatingStates"
+                                placeholder="Operating States/Districts">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="inst_email" name="email" placeholder="Official Email ID" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="headPrincipalName" name="headPrincipalName"
+                                placeholder="Head / Principal Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="inst_signatoryRole" name="signatoryRole"
+                                placeholder="Role (e.g., Principal, Director)">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="inst_phone" name="phone" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="inst_password" name="password" placeholder="Create Password"
+                                minlength="6" required>
+                            <span class="password-hint">Min 6 chars, include uppercase, lowercase & number</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <textarea id="departmentsSdgInitiatives" name="departmentsSdgInitiatives"
+                            placeholder="Departments / SDG Initiatives"></textarea>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Create Account</button>
+                <p class="login-link">
+                    Already have an account? <a href="login.html">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // API Base URL
+        const API_BASE_URL = '/api';
+
+        function showForm() {
+            const type = document.getElementById('userType').value;
+            const forms = document.querySelectorAll('.form-section');
+            const commonForm = document.getElementById('commonForm');
+
+            // Update hidden stakeholder type field
+            document.getElementById('stakeholderType').value = type;
+
+            commonForm.classList.remove('hidden');
+            forms.forEach(f => f.classList.add('hidden'));
+
+            // Clear previous messages
+            hideMessages();
+
+            if (type) {
+                document.getElementById(type + 'Form').classList.remove('hidden');
+            }
+        }
+
+        function showIndividualFields() {
+            const role = document.getElementById('roleType').value;
+            const student = document.getElementById('studentFields');
+            const employee = document.getElementById('employeeFields');
+
+            student.classList.add('hidden');
+            employee.classList.add('hidden');
+
+            if (role === 'student') {
+                student.classList.remove('hidden');
+            } else if (role === 'employee') {
+                employee.classList.remove('hidden');
+            }
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('successMessage');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+        }
+
+        // Validate form based on stakeholder type
+        function validateForm(stakeholderType) {
+            let email, password, phone;
+
+            if (stakeholderType === 'individual') {
+                email = document.getElementById('ind_email')?.value;
+                password = document.getElementById('ind_password')?.value;
+                phone = document.getElementById('ind_phone')?.value;
+            } else if (stakeholderType === 'ngo') {
+                email = document.getElementById('ngo_email')?.value;
+                password = document.getElementById('ngo_password')?.value;
+                phone = document.getElementById('ngo_phone')?.value;
+            } else if (stakeholderType === 'business') {
+                email = document.getElementById('bus_email')?.value;
+                password = document.getElementById('bus_password')?.value;
+                phone = document.getElementById('bus_phone')?.value;
+            } else if (stakeholderType === 'institution') {
+                email = document.getElementById('inst_email')?.value;
+                password = document.getElementById('inst_password')?.value;
+                phone = document.getElementById('inst_phone')?.value;
+            }
+
+            if (!email) return 'Email is required';
+            if (!password) return 'Password is required';
+            if (password.length < 6) return 'Password must be at least 6 characters';
+            if (!phone) return 'Phone number is required';
+
+            switch (stakeholderType) {
+                case 'individual':
+                    if (!document.getElementById('ind_fullName').value) return 'Full name is required';
+                    break;
+                case 'ngo':
+                    if (!document.getElementById('ngoName').value) return 'Organization name is required';
+                    if (!document.getElementById('ngoType').value) return 'NGO type is required';
+                    break;
+                case 'business':
+                    if (!document.getElementById('bus_companyName').value) return 'Company name is required';
+                    break;
+                case 'institution':
+                    if (!document.getElementById('institutionName').value) return 'Institution name is required';
+                    break;
+            }
+
+            return null;
+        }
+
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            hideMessages();
+
+            const stakeholderType = document.getElementById('stakeholderType').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('commonForm');
+
+            if (!stakeholderType) {
+                showError('Please select a stakeholder type');
+                return;
+            }
+
+            const validationError = validateForm(stakeholderType);
+            if (validationError) {
+                showError(validationError);
+                return;
+            }
+
+            const formData = {
+                stakeholderType: stakeholderType
+            };
+
+            const prefix = getFormPrefix(stakeholderType);
+
+            formData.email = document.getElementById(prefix + '_email')?.value ||
+                document.getElementById('ind_email')?.value;
+            formData.password = document.getElementById(prefix + '_password')?.value ||
+                document.getElementById('ind_password')?.value;
+            formData.phone = document.getElementById(prefix + '_phone')?.value ||
+                document.getElementById('ind_phone')?.value;
+
+            switch (stakeholderType) {
+                case 'individual':
+                    formData.fullName = document.getElementById('ind_fullName').value;
+                    formData.roleType = document.getElementById('roleType').value;
+                    formData.schoolCollegeName = document.getElementById('schoolCollegeName')?.value || '';
+                    formData.yearOfStudy = document.getElementById('yearOfStudy')?.value || '';
+                    formData.companyName = document.getElementById('ind_companyName')?.value || '';
+                    formData.designation = document.getElementById('designation')?.value || '';
+                    formData.skills = document.getElementById('skills')?.value || '';
+                    break;
+
+                case 'ngo':
+                    formData.ngoName = document.getElementById('ngoName').value;
+                    formData.ngoType = document.getElementById('ngoType').value;
+                    formData.registrationNumber = document.getElementById('ngo_registrationNumber').value;
+                    formData.yearOfEstablishment = document.getElementById('yearOfEstablishment')?.value || '';
+                    formData.registeredAddress = document.getElementById('registeredAddress')?.value || '';
+                    formData.operatingStates = document.getElementById('operatingStates')?.value || '';
+                    formData.authorizedPersonName = document.getElementById('ngo_authorizedPersonName').value;
+                    formData.signatoryRole = document.getElementById('ngo_signatoryRole')?.value || '';
+                    formData.missionFocusAreas = document.getElementById('missionFocusAreas')?.value || '';
+                    break;
+
+                case 'business':
+                    formData.companyName = document.getElementById('bus_companyName').value;
+                    formData.businessType = document.getElementById('businessType')?.value || '';
+                    formData.yearOfEstablishment = document.getElementById('bus_yearOfEstablishment')?.value || '';
+                    formData.registeredAddress = document.getElementById('bus_registeredAddress')?.value || '';
+                    formData.operatingStates = document.getElementById('bus_operatingStates')?.value || '';
+                    formData.authorizedPersonName = document.getElementById('bus_authorizedPersonName').value;
+                    formData.signatoryRole = document.getElementById('bus_signatoryRole')?.value || '';
+                    formData.csrFocusAreas = document.getElementById('csrFocusAreas')?.value || '';
+                    break;
+
+                case 'institution':
+                    formData.institutionName = document.getElementById('institutionName').value;
+                    formData.institutionType = document.getElementById('institutionType')?.value || '';
+                    formData.aisheAffiliationNumber = document.getElementById('aisheAffiliationNumber').value;
+                    formData.yearOfEstablishment = document.getElementById('inst_yearOfEstablishment')?.value || '';
+                    formData.registeredAddress = document.getElementById('inst_registeredAddress')?.value || '';
+                    formData.operatingStates = document.getElementById('inst_operatingStates')?.value || '';
+                    formData.headPrincipalName = document.getElementById('headPrincipalName').value;
+                    formData.signatoryRole = document.getElementById('inst_signatoryRole')?.value || '';
+                    formData.departmentsSdgInitiatives = document.getElementById('departmentsSdgInitiatives')?.value || '';
+                    break;
+            }
+
+            const password = formData.password;
+            if (password.length < 6) {
+                showError('Password must be at least 6 characters');
+                return;
+            }
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+                showError('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
+            form.classList.add('loading');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccess('Account created successfully! Redirecting to login...');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    showError(data.error || 'Registration failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('Unable to connect to server. Please check if the server is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+                form.classList.remove('loading');
+            }
+        }
+
+        function getFormPrefix(type) {
+            switch (type) {
+                case 'individual': return 'ind';
+                case 'ngo': return 'ngo';
+                case 'business': return 'bus';
+                case 'institution': return 'inst';
+                default: return 'ind';
+            }
+        }
+
+        function verifyOrganization(type) {
+            alert(`Verification for ${type.toUpperCase()} will be implemented with external APIs (MCA, AISHE, NGO Darpan, etc.)`);
+        }
+    </script>
+
+</body>
+
+</html>

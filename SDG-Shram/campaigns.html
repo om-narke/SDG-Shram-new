@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG Campaigns | SDG-Shram</title>
+    <link rel="stylesheet" href="campaigns.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search projects, NGOs, people...">
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="#">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html" class="active">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="#">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">Tech Enthusiast | SDG Advocate</p>
+                        </div>
+                    </div>
+
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Account</div>
+                        <a href="#">⚙️ Settings & Privacy</a>
+                        <a href="#">❓ Help</a>
+                        <a href="#">🌐 Language</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Manage</div>
+                        <a href="#">📝 Posts & Activity</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <a href="#" class="sign-out" onclick="handleLogout(); return false;">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <!-- Campaigns Header -->
+        <section class="campaigns-header">
+            <h1>Explore SDG Campaigns</h1>
+            <p class="subtitle">Discover verified fundraising campaigns aligned with the Sustainable Development Goals.
+            </p>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="search-filter">
+                <input type="text" placeholder="Search campaigns..." id="campaignSearch">
+            </div>
+            <div class="filter-dropdowns">
+                <select class="filter-select" id="sdgFilter">
+                    <option value="">All SDGs</option>
+                    <option value="1">SDG 1 - No Poverty</option>
+                    <option value="2">SDG 2 - Zero Hunger</option>
+                    <option value="3">SDG 3 - Good Health</option>
+                    <option value="4">SDG 4 - Quality Education</option>
+                    <option value="5">SDG 5 - Gender Equality</option>
+                    <option value="6">SDG 6 - Clean Water</option>
+                    <option value="7">SDG 7 - Clean Energy</option>
+                    <option value="8">SDG 8 - Decent Work</option>
+                    <option value="9">SDG 9 - Industry & Innovation</option>
+                    <option value="10">SDG 10 - Reduced Inequalities</option>
+                    <option value="11">SDG 11 - Sustainable Cities</option>
+                    <option value="12">SDG 12 - Responsible Consumption</option>
+                    <option value="13">SDG 13 - Climate Action</option>
+                    <option value="14">SDG 14 - Life Below Water</option>
+                    <option value="15">SDG 15 - Life on Land</option>
+                    <option value="16">SDG 16 - Peace & Justice</option>
+                    <option value="17">SDG 17 - Partnerships</option>
+                </select>
+                <select class="filter-select" id="locationFilter">
+                    <option value="">All Locations</option>
+                    <option value="maharashtra">Maharashtra, India</option>
+                    <option value="karnataka">Karnataka, India</option>
+                    <option value="delhi">Delhi, India</option>
+                    <option value="tamil-nadu">Tamil Nadu, India</option>
+                    <option value="gujarat">Gujarat, India</option>
+                    <option value="rajasthan">Rajasthan, India</option>
+                </select>
+                <select class="filter-select" id="typeFilter">
+                    <option value="">All Campaign Types</option>
+                    <option value="verified">Verified</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="community">Community Impact</option>
+                    <option value="ongoing">Ongoing</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Campaigns List -->
+        <section class="campaigns-list" id="campaignsContainer">
+            <!-- Campaigns will be loaded here dynamically -->
+            <div class="loading-state">Loading campaigns...</div>
+        </section>
+
+        <!-- Footer Note -->
+        <p class="review-note">All campaigns are reviewed for SDG alignment, transparency, and impact credibility.</p>
+
+    </div>
+
+    <script>
+        // Global variables
+        let allCampaigns = [];
+
+        // Authentication check
+        (function () {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+
+            if (!token || !user) {
+                alert('🔒 Please login to access this page.');
+                window.location.replace('dashboard.html');
+            } else {
+                try {
+                    const userData = JSON.parse(user);
+                    const initial = userData.name ? userData.name.charAt(0).toUpperCase() : 'U';
+
+                    document.getElementById('userAvatar').textContent = initial;
+                    document.getElementById('dropdownAvatar').textContent = initial;
+                    document.getElementById('dropdownName').textContent = userData.name || 'User Name';
+                    document.getElementById('dropdownBio').textContent = userData.userType || 'SDG Advocate';
+                } catch (e) {
+                    console.log('Error parsing user data:', e);
+                }
+            }
+        })();
+
+        // Fetch campaigns from API
+        async function fetchCampaigns() {
+            try {
+                const response = await fetch('/api/campaigns?status=pending_review,active'); // Show both for demo purposes
+                const result = await response.json();
+
+                if (result.success) {
+                    allCampaigns = result.data;
+                    displayCampaigns(allCampaigns);
+                } else {
+                    document.getElementById('campaignsContainer').innerHTML = '<div class="error-state">Failed to load campaigns</div>';
+                }
+            } catch (error) {
+                console.error('Error fetching campaigns:', error);
+                document.getElementById('campaignsContainer').innerHTML = '<div class="error-state">Error connecting to server</div>';
+            }
+        }
+
+        // Display campaigns
+        function displayCampaigns(campaigns) {
+            const container = document.getElementById('campaignsContainer');
+
+            if (campaigns.length === 0) {
+                container.innerHTML = '<div class="empty-state">No campaigns found matching your criteria.</div>';
+                return;
+            }
+
+            container.innerHTML = campaigns.map(campaign => {
+                const progress = campaign.progressPercent || 0;
+                const raised = (campaign.raisedAmount / 100000).toFixed(1) + 'L';
+                const goal = (campaign.goalAmount / 100000).toFixed(1) + 'L';
+
+                // Get creator name
+                let creatorName = 'Organization';
+                if (campaign.createdBy) {
+                    const type = campaign.createdBy.stakeholderType;
+                    if (type === 'ngo') creatorName = campaign.createdBy.ngo?.ngoName || 'NGO';
+                    else if (type === 'business') creatorName = campaign.createdBy.business?.companyName || 'Business';
+                    else if (type === 'institution') creatorName = campaign.createdBy.institution?.institutionName || 'Institution';
+                }
+
+                return `
+                    <div class="campaign-card">
+                        <div class="campaign-card-image">
+                            ${campaign.coverImage && campaign.coverImage.url ?
+                        `<img src="${campaign.coverImage.url}" alt="${campaign.title}">` :
+                        `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999; font-size: 2rem;">📷</div>`
+                    }
+                        </div>
+                        <div class="campaign-card-body">
+                            <div class="campaign-content">
+                                <h3>${campaign.title}</h3>
+                                <p class="campaign-meta">SDG ${campaign.primarySdg} · ${creatorName} · ${campaign.location}</p>
+                                <p class="campaign-description">${campaign.overview.substring(0, 180)}${campaign.overview.length > 180 ? '...' : ''}</p>
+                                <div class="campaign-tags">
+                                    ${campaign.isVerified ? '<span class="tag verified">Verified</span>' : ''}
+                                    <span class="tag community">Community Impact</span>
+                                    ${campaign.status === 'pending_review' ? '<span class="tag urgent" style="background:#fff3cd; color:#856404; border:1px solid #ffeeba;">Pending Review</span>' : ''}
+                                </div>
+                            </div>
+                            <div class="campaign-progress">
+                                <div class="raised-info">
+                                    <span class="amount">₹${raised}</span> raised of <span class="goal">₹${goal}</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress}%;"></div>
+                                </div>
+                                <a href="campaign-detail.html?id=${campaign._id}" class="btn-view-campaign">View Campaign</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter campaigns
+        function filterCampaigns() {
+            const searchTerm = document.getElementById('campaignSearch').value.toLowerCase();
+            const sdgTerm = document.getElementById('sdgFilter').value;
+            const locationTerm = document.getElementById('locationFilter').value.toLowerCase();
+
+            const filtered = allCampaigns.filter(c => {
+                const matchesSearch = c.title.toLowerCase().includes(searchTerm) ||
+                    c.overview.toLowerCase().includes(searchTerm);
+                const matchesSdg = sdgTerm === "" || c.primarySdg.toString() === sdgTerm;
+                const matchesLocation = locationTerm === "" || c.location.toLowerCase().includes(locationTerm);
+
+                return matchesSearch && matchesSdg && matchesLocation;
+            });
+
+            displayCampaigns(filtered);
+        }
+
+        // Event listeners for filters
+        document.getElementById('campaignSearch').addEventListener('input', filterCampaigns);
+        document.getElementById('sdgFilter').addEventListener('change', filterCampaigns);
+        document.getElementById('locationFilter').addEventListener('change', filterCampaigns);
+
+        // Load campaigns on startup
+        window.addEventListener('DOMContentLoaded', fetchCampaigns);
+
+        // Toggle dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            const menu = document.getElementById('profileMenu');
+            dropdown.classList.toggle('show');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const menu = document.getElementById('profileMenu');
+            const dropdown = document.getElementById('profileDropdown');
+            if (menu && !menu.contains(event.target)) {
+                dropdown.classList.remove('show');
+                menu.classList.remove('active');
+            }
+        });
+
+        // Logout function
+        function handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.replace('dashboard.html');
+        }
+    </script>
+</body>
+
+</html>

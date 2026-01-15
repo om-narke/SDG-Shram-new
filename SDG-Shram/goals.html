@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDG Goals | SDG-Shram</title>
+  <link rel="stylesheet" href="goals.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="feed-navbar">
+    <div class="logo-section">
+      <img src="logo/logo.png" alt="SDG-Shram">
+      <h2>SDG-Shram</h2>
+    </div>
+
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="Search projects, NGOs, people...">
+    </div>
+
+    <div class="nav-links">
+      <a href="feed.html">
+        <img src="logo/home.png" alt="Home">
+        <span>Home</span>
+      </a>
+      <a href="connect.html">
+        <img src="logo/connect.png" alt="Network">
+        <span>Connect</span>
+      </a>
+      <a href="projects.html">
+        <img src="logo/project.png" alt="Projects">
+        <span>Projects</span>
+      </a>
+      <a href="goals.html" class="active">
+        <img src="logo/goals.png" alt="Goals">
+        <span>SDG Goals</span>
+      </a>
+      <a href="services.html">
+        <img src="logo/services.png" alt="Services">
+        <span>Services</span>
+      </a>
+    </div>
+
+    <div class="user-section">
+      <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
+        <div class="avatar-small" id="userAvatar">U</div>
+        <div class="menu-label">
+          <span>Me</span>
+          <span class="arrow">▼</span>
+        </div>
+
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="dropdown-header">
+            <div class="avatar-large" id="dropdownAvatar">U</div>
+            <div class="info">
+              <h4 id="dropdownName">User Name</h4>
+              <p id="dropdownBio">Tech Enthusiast | SDG Advocate</p>
+            </div>
+          </div>
+
+          <a href="profile.html" class="view-profile-btn">View profile</a>
+
+          <div class="dropdown-section">
+            <div class="dropdown-section-title">Account</div>
+            <a href="#">⚙️ Settings & Privacy</a>
+            <a href="#">❓ Help</a>
+            <a href="#">🌐 Language</a>
+          </div>
+
+          <div class="dropdown-section">
+            <div class="dropdown-section-title">Manage</div>
+            <a href="#">📝 Posts & Activity</a>
+          </div>
+
+          <div class="dropdown-section">
+            <a href="#" class="sign-out" onclick="handleLogout(); return false;">Sign out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Goals Section -->
+  <div class="page-container">
+    <section class="goals-section">
+      <h1>United Nations Sustainable Development Goals</h1>
+      <div class="goals-grid">
+        <div class="goal"><img src="17goals/goal1.jpg" alt="No Poverty"></div>
+        <div class="goal"><img src="17goals/goal2.jpg" alt="Zero Hunger"></div>
+        <div class="goal"><img src="17goals/goal3.jpg" alt="Good Health"></div>
+        <div class="goal"><img src="17goals/goal4.jpg" alt="Quality Education"></div>
+        <div class="goal"><img src="17goals/goal5.jpg" alt="Gender Equality"></div>
+        <div class="goal"><img src="17goals/goal6.jpg" alt="Clean Water"></div>
+        <div class="goal"><img src="17goals/goal7.jpg" alt="Clean Energy"></div>
+        <div class="goal"><img src="17goals/goal8.jpg" alt="Decent Work"></div>
+        <div class="goal"><img src="17goals/goal9.jpg" alt="Industry Innovation"></div>
+        <div class="goal"><img src="17goals/goal10.jpg" alt="Reduced Inequalities"></div>
+        <div class="goal"><img src="17goals/goal11.jpg" alt="Sustainable Cities"></div>
+        <div class="goal"><img src="17goals/goal12.jpg" alt="Responsible Consumption"></div>
+        <div class="goal"><img src="17goals/goal13.jpg" alt="Climate Action"></div>
+        <div class="goal"><img src="17goals/goal14.jpg" alt="Life Below Water"></div>
+        <div class="goal"><img src="17goals/goal15.jpg" alt="Life on Land"></div>
+        <div class="goal"><img src="17goals/goal16.jpg" alt="Peace & Justice"></div>
+        <div class="goal"><img src="17goals/goal17.jpg" alt="Partnerships for the Goals"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <img src="logo/logo.png" alt="SDG-Shram Logo" class="footer-logo">
+        <h3>SDG-Shram</h3>
+        <div class="social-icons">
+          <a href="#"><img src="icons/instagram.png" alt="Instagram"></a>
+          <a href="#"><img src="icons/linkedin.png" alt="LinkedIn"></a>
+          <a href="#"><img src="icons/x.png" alt="X"></a>
+        </div>
+      </div>
+      <div class="footer-right">
+        <h4>Contact:</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <img src="icons/mail.png" alt="Email">
+            <p>sdg.shram@gmail.com</p>
+          </div>
+          <div class="contact-item">
+            <img src="icons/call.png" alt="WhatsApp">
+            <p>9529068143</p>
+          </div>
+          <div class="contact-item">
+            <img src="icons/insta.png" alt="Instagram">
+            <p>@sdg-shram_1004</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Authentication check - Redirect to dashboard if not logged in
+    (function () {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+
+      if (!token || !user) {
+        alert('🔒 Please login to access this page.');
+        window.location.replace('dashboard.html');
+      } else {
+        // Update user info in navbar
+        try {
+          const userData = JSON.parse(user);
+          const initial = userData.name ? userData.name.charAt(0).toUpperCase() : 'U';
+
+          document.getElementById('userAvatar').textContent = initial;
+          document.getElementById('dropdownAvatar').textContent = initial;
+          document.getElementById('dropdownName').textContent = userData.name || 'User Name';
+          document.getElementById('dropdownBio').textContent = userData.userType || 'SDG Advocate';
+        } catch (e) {
+          console.log('Error parsing user data:', e);
+        }
+      }
+    })();
+
+    // Toggle dropdown
+    function toggleDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      const menu = document.getElementById('profileMenu');
+      dropdown.classList.toggle('show');
+      menu.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+      const menu = document.getElementById('profileMenu');
+      const dropdown = document.getElementById('profileDropdown');
+      if (!menu.contains(event.target)) {
+        dropdown.classList.remove('show');
+        menu.classList.remove('active');
+      }
+    });
+
+    // Logout function
+    function handleLogout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.replace('dashboard.html');
+    }
+  </script>
+</body>
+
+</html>

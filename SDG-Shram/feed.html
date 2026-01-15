@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG-Shram | Feed</title>
+    <link rel="stylesheet" href="feed-modern.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Small utility for dropdown which is still controlled by JS */
+        .show {
+            display: block !important;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search projects, NGOs, people...">
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html" class="active">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="connect.html">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="services.html">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">Tech Enthusiast | SDG Advocate</p>
+                        </div>
+                    </div>
+
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Account</div>
+                        <a href="#"><span class="icon">⚙️</span> Settings & Privacy</a>
+                        <a href="#"><span class="icon">❓</span> Help</a>
+                        <a href="#"><span class="icon">🌐</span> Language</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Manage</div>
+                        <a href="#"><span class="icon">📝</span> Posts & Activity</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <a href="#" class="sign-out" onclick="handleLogout(); return false;"><span
+                                class="icon">🚪</span> Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Feed Container -->
+    <div class="feed-container">
+        <!-- Left Sidebar - Profile -->
+        <aside class="left-sidebar">
+            <div class="profile-card">
+                <div class="cover"></div>
+                <div class="profile-info">
+                    <div class="profile-avatar" id="profileAvatar">U</div>
+                    <h3 class="profile-name" id="profileName">User Name</h3>
+                    <p class="profile-type" id="profileType">Individual</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span>Profile views</span>
+                        <span>42</span>
+                    </div>
+                    <div class="stat">
+                        <span>Connections</span>
+                        <span>128</span>
+                    </div>
+                    <div class="stat">
+                        <span>Projects joined</span>
+                        <span>5</span>
+                    </div>
+                </div>
+                <a href="profile.html" class="view-profile">View full profile</a>
+            </div>
+        </aside>
+
+        <!-- Main Feed -->
+        <main class="main-feed">
+            <!-- Welcome Banner -->
+            <div
+                style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); padding: 30px; border-radius: 12px; color: white; margin-bottom: 24px; position: relative; overflow: hidden; box-shadow: var(--shadow);">
+                <div style="position: relative; z-index: 1;">
+                    <h2 id="welcomeText">Welcome back!</h2>
+                    <p style="opacity: 0.9; margin-top: 8px;">You've helped 3 projects reach their SDG goals this month.
+                        Keep up the great work!</p>
+                </div>
+                <div
+                    style="position: absolute; right: -20px; bottom: -20px; font-size: 100px; opacity: 0.1; transform: rotate(-15deg);">
+                    🌱</div>
+            </div>
+
+            <!-- Create Post -->
+            <div class="create-post">
+                <div class="post-input-row">
+                    <div class="avatar" id="postAvatar">U</div>
+                    <input type="text" placeholder="Share an SDG initiative or project update...">
+                </div>
+                <div class="post-actions">
+                    <button><span>📷</span> Photo</button>
+                    <button><span>🎥</span> Video</button>
+                    <button><span>📊</span> Project</button>
+                    <button><span>📝</span> Article</button>
+                </div>
+            </div>
+
+            <!-- Sample Posts -->
+            <article class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar">T</div>
+                    <div class="post-author" style="flex: 1;">
+                        <h4 style="display: flex; align-items: center; gap: 8px;">
+                            Tushar Gangurde
+                            <span
+                                style="width: 4px; height: 4px; background: var(--text-secondary); border-radius: 50%;"></span>
+                            <a href="#"
+                                style="color: var(--primary-color); text-decoration: none; font-size: 0.85rem;">Follow</a>
+                        </h4>
+                        <p>Software Engineer Intern at CloudZen Innovations</p>
+                        <span class="time">2h ago • 🌍</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>🌱 Excited to share that our team has completed the plantation drive in collaboration with local
+                        NGOs! We planted over 500 trees as part of SDG Goal 15: Life on Land.</p>
+                    <p style="margin-top: 10px;">Amazing to see students and professionals coming together for a
+                        sustainable cause. #SDGShram #LifeOnLand #Sustainability</p>
+                </div>
+                <div class="post-stats">
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span
+                            style="background: var(--primary-color); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem;">👍</span>
+                        <span>Aryan Jadhav and 15 others</span>
+                    </div>
+                    <span>8 comments • 2 shares</span>
+                </div>
+                <div class="post-actions">
+                    <button><span style="font-size: 1.2rem;">👍</span> Like</button>
+                    <button><span style="font-size: 1.2rem;">💬</span> Comment</button>
+                    <button><span style="font-size: 1.2rem;">🔄</span> Share</button>
+                    <button><span style="font-size: 1.2rem;">🚀</span> Support</button>
+                </div>
+            </article>
+
+            <article class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">C
+                    </div>
+                    <div class="post-author" style="flex: 1;">
+                        <h4 style="display: flex; align-items: center; gap: 8px;">
+                            CSMSS Chh. Shahu College of Engineering
+                            <span
+                                style="width: 4px; height: 4px; background: var(--text-secondary); border-radius: 50%;"></span>
+                            <a href="#"
+                                style="color: var(--primary-color); text-decoration: none; font-size: 0.85rem;">Follow</a>
+                        </h4>
+                        <p>Educational Institution • Aurangabad</p>
+                        <span class="time">5h ago • 🌍</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>📚 Our institution is proud to announce the SDG Innovation Challenge 2025!</p>
+                    <p style="margin-top: 10px;">We invite students, startups, and NGOs to submit innovative solutions
+                        addressing any of the 17 SDGs. Winners will receive incubation support and seed funding!</p>
+                    <p
+                        style="margin-top: 15px; padding: 12px; background: var(--accent-color); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <strong style="display: block; color: var(--primary-color); margin-bottom: 4px;">Exclusive
+                            Invitation</strong>
+                        🔗 Register now: <a href="#"
+                            style="color: var(--primary-color); font-weight: 600;">bit.ly/sdg-challenge-2025</a>
+                    </p>
+                </div>
+                <div class="post-stats">
+                    <div style="display: flex; align-items: center; gap: 2px;">
+                        <span>🎉❤️</span>
+                        <span style="margin-left: 4px;">256 interested</span>
+                    </div>
+                    <span>45 comments</span>
+                </div>
+                <div class="post-actions">
+                    <button><span style="font-size: 1.2rem;">👍</span> Like</button>
+                    <button><span style="font-size: 1.2rem;">💬</span> Comment</button>
+                    <button><span style="font-size: 1.2rem;">🔄</span> Share</button>
+                    <button><span style="font-size: 1.2rem;">💡</span> Collab</button>
+                </div>
+            </article>
+
+            <article class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">G
+                    </div>
+                    <div class="post-author" style="flex: 1;">
+                        <h4 style="display: flex; align-items: center; gap: 8px;">
+                            Green Earth Foundation
+                            <span
+                                style="width: 4px; height: 4px; background: var(--text-secondary); border-radius: 50%;"></span>
+                            <a href="#"
+                                style="color: var(--primary-color); text-decoration: none; font-size: 0.85rem;">Follow</a>
+                        </h4>
+                        <p>NGO • Environmental Conservation</p>
+                        <span class="time">1d ago • 🌍</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>🌍 Looking for volunteers for our Clean Water Initiative in rural Maharashtra!</p>
+                    <p style="margin-top: 10px;">We're installing water purification systems in 10 villages. Join us in
+                        achieving SDG Goal 6: Clean Water and Sanitation.</p>
+                    <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div style="padding: 10px; background: #f8f9fa; border-radius: 8px; text-align: center;">
+                            <span style="display: block; font-size: 0.75rem; color: #666;">Duration</span>
+                            <strong style="color: var(--primary-color);">2 Weeks</strong>
+                        </div>
+                        <div style="padding: 10px; background: #f8f9fa; border-radius: 8px; text-align: center;">
+                            <span style="display: block; font-size: 0.75rem; color: #666;">Starting</span>
+                            <strong style="color: var(--primary-color);">Jan 15</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <span>💧 89 people volunteered</span>
+                    <span>23 comments</span>
+                </div>
+                <div class="post-actions">
+                    <button><span style="font-size: 1.2rem;">👍</span> Like</button>
+                    <button><span style="font-size: 1.2rem;">💬</span> Comment</button>
+                    <button><span style="font-size: 1.2rem;">🔄</span> Share</button>
+                    <button style="color: var(--secondary-color); font-weight: 700;">🤝 Volunteer</button>
+                </div>
+            </article>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <div class="sidebar-card">
+                <h3>SDG News <span>Live</span></h3>
+                <div class="news-item">
+                    <span
+                        style="color: #0f4c81; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Environment</span>
+                    <h4>India commits to carbon neutrality by 2070</h4>
+                    <p>Ministry of Environment • 2h ago</p>
+                </div>
+                <div class="news-item">
+                    <span
+                        style="color: #2ecc71; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Corporate</span>
+                    <h4>New CSR guidelines promote SDG alignment</h4>
+                    <p>Corporate Affairs • 5h ago</p>
+                </div>
+                <div class="news-item">
+                    <span
+                        style="color: #f1c40f; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Global</span>
+                    <h4>Youth-led climate action gains momentum</h4>
+                    <p>UN Environment • 1d ago</p>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>Project Spotlight</h3>
+                <div style="background: var(--accent-color); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <h4 style="font-size: 1rem; color: var(--primary-color);">Solar for Schools</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 5px 0 10px;">Equipping 50 rural
+                        schools with sustainable solar energy solutions.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--secondary-color);">85%
+                            Funded</span>
+                        <a href="#"
+                            style="background: var(--primary-color); color: white; padding: 5px 12px; border-radius: 20px; text-decoration: none; font-size: 0.75rem; font-weight: 600;">Support</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>Featured SDG Goals</h3>
+                <div class="sdg-highlight">
+                    <img src="17goals/goal13.jpg" alt="Climate Action">
+                    <div class="sdg-info">
+                        <h4>Climate Action</h4>
+                        <p>12 active projects</p>
+                    </div>
+                </div>
+                <div class="sdg-highlight">
+                    <img src="17goals/goal4.jpg" alt="Quality Education">
+                    <div class="sdg-info">
+                        <h4>Quality Education</h4>
+                        <p>8 active projects</p>
+                    </div>
+                </div>
+                <div class="sdg-highlight">
+                    <img src="17goals/goal6.jpg" alt="Clean Water">
+                    <div class="sdg-info">
+                        <h4>Clean Water</h4>
+                        <p>6 active projects</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // API Base URL
+        const API_BASE_URL = '/api';
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Feed page loaded, checking auth...');
+            checkAuth();
+        });
+
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const userStr = localStorage.getItem('user');
+
+            console.log('Token:', token ? 'exists' : 'missing');
+            console.log('User:', userStr ? 'exists' : 'missing');
+
+            if (!token || !userStr) {
+                console.log('No auth found, redirecting to login');
+                // Not logged in, redirect to login
+                window.location.replace('login.html');
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userStr);
+                console.log('User parsed:', user);
+                const displayName = getUserDisplayName(user);
+                const initial = displayName.charAt(0).toUpperCase();
+
+                // Update all avatar and name elements (with null checks)
+                const userAvatar = document.getElementById('userAvatar');
+                const dropdownAvatar = document.getElementById('dropdownAvatar');
+                const dropdownName = document.getElementById('dropdownName');
+                const dropdownBio = document.getElementById('dropdownBio');
+                const profileAvatar = document.getElementById('profileAvatar');
+                const profileName = document.getElementById('profileName');
+                const profileType = document.getElementById('profileType');
+                const postAvatar = document.getElementById('postAvatar');
+
+                // Generate bio based on stakeholder type
+                const bio = getUserBio(user);
+
+                if (userAvatar) userAvatar.textContent = initial;
+                if (dropdownAvatar) dropdownAvatar.textContent = initial;
+                if (dropdownName) dropdownName.textContent = displayName;
+                if (dropdownBio) dropdownBio.textContent = bio;
+                if (profileAvatar) profileAvatar.textContent = initial;
+                if (profileName) profileName.textContent = displayName;
+                if (profileType) profileType.textContent = user.stakeholderType || 'User';
+                if (postAvatar) postAvatar.textContent = initial;
+
+                // Update welcome text
+                const welcomeText = document.getElementById('welcomeText');
+                if (welcomeText) {
+                    const firstName = displayName.split(' ')[0];
+                    welcomeText.textContent = `Welcome back, ${firstName}!`;
+                }
+
+                console.log('Feed auth check complete, user:', displayName);
+
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                // Don't redirect on parse error, just log
+            }
+        }
+
+        function getUserDisplayName(user) {
+            switch (user.stakeholderType) {
+                case 'individual':
+                    return user.individual?.fullName || 'User';
+                case 'ngo':
+                    return user.ngo?.ngoName || 'NGO';
+                case 'business':
+                    return user.business?.companyName || 'Business';
+                case 'institution':
+                    return user.institution?.institutionName || 'Institution';
+                default:
+                    return user.email?.split('@')[0] || 'User';
+            }
+        }
+
+        function getUserBio(user) {
+            switch (user.stakeholderType) {
+                case 'individual':
+                    const ind = user.individual || {};
+                    if (ind.roleType === 'student') {
+                        return `Student at ${ind.schoolCollegeName || 'Institution'}`;
+                    } else if (ind.roleType === 'employee') {
+                        return `${ind.designation || 'Professional'} at ${ind.companyName || 'Company'}`;
+                    }
+                    return ind.skills || 'SDG Enthusiast';
+                case 'ngo':
+                    return user.ngo?.missionFocusAreas || 'Non-Profit Organization';
+                case 'business':
+                    return user.business?.csrFocusAreas || 'Business Organization';
+                case 'institution':
+                    return user.institution?.departmentsSdgInitiatives || 'Educational Institution';
+                default:
+                    return 'SDG-Shram Member';
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            const profileMenu = document.getElementById('profileMenu');
+            dropdown.classList.toggle('show');
+            profileMenu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('profileDropdown');
+            const profileMenu = document.getElementById('profileMenu');
+            if (!profileMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+                profileMenu.classList.remove('active');
+            }
+        });
+
+        async function handleLogout() {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                try {
+                    await fetch(`${API_BASE_URL}/auth/logout`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                } catch (e) {
+                    console.error('Logout API error:', e);
+                }
+            }
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+
+</html>

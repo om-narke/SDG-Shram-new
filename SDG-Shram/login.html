@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG-Shram | Login</title>
+    <link rel="stylesheet" href="signup.css">
+    <style>
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .login-form input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        /* Center the login page */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-container {
+            max-width: 450px;
+        }
+
+        /* Social Login Styles */
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            background: white;
+            color: #3c4043;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color .2s, box-shadow .2s;
+        }
+
+        .social-btn:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .social-btn.google {
+            border-color: #dadce0;
+        }
+
+        .social-btn.x {
+            border-color: #000;
+            background: #000;
+            color: white;
+        }
+
+        .login-divider {
+            margin: 20px 0;
+            color: #5f6368;
+            font-size: 14px;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: #dadce0;
+        }
+
+        .login-divider::before {
+            left: 0;
+        }
+
+        .login-divider::after {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-container">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="logo/logo.png" alt="SDG-Shram" style="width: 60px; height: auto; margin-bottom: 10px;">
+            <h1>Login to <span>SDG-Shram</span></h1>
+        </div>
+        <p class="subtitle">Welcome back! Login to continue your SDG journey.</p>
+
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+
+        <div style="margin-bottom: 20px;">
+            <button class="social-btn google" onclick="handleSocialLogin('google')">
+                <img src="icons/google.png" alt="Google">
+                Continue With Google
+            </button>
+
+            <button class="social-btn x" onclick="handleSocialLogin('x')">
+                <img src="icons/x.png" alt="X">
+                Continue With X
+            </button>
+        </div>
+
+        <div class="login-divider">
+            or login with email
+        </div>
+
+        <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Login</button>
+
+            <p style="text-align: center; margin-top: 10px;">
+                <a href="forgot-password.html" style="color: #007bff;">Forgot Password?</a>
+            </p>
+            <p style="text-align: center;">
+                Don't have an account? <a href="signup.html" style="color: #007bff;">Sign up here</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        // API Base URL - Now relative since frontend is served from same server
+        const API_BASE_URL = '/api';
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('successMessage');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            hideMessages();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('loginForm');
+
+            // Disable submit button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            form.classList.add('loading');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Store token in localStorage
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+
+                    showSuccess('Login successful! Redirecting to feed...');
+
+                    // Redirect to feed after 1.5 seconds
+                    setTimeout(() => {
+                        window.location.replace('feed.html');
+                    }, 1500);
+                } else {
+                    showError(data.error || 'Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Unable to connect to server. Please check if the server is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+                form.classList.remove('loading');
+            }
+        }
+
+        async function handleSocialLogin(provider) {
+            console.log(`Starting ${provider} login from Login page...`);
+
+            // Simulated mock data for social login
+            const mockData = {
+                google: {
+                    email: 'google.user@example.com',
+                    name: 'Google User',
+                    provider: 'google',
+                    providerId: 'g123'
+                },
+                x: {
+                    email: 'x.user@example.com',
+                    name: 'X Professional',
+                    provider: 'x',
+                    providerId: 'x456'
+                }
+            };
+
+            const userData = mockData[provider];
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/social-login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Store token and user data
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.data));
+
+                    showSuccess(`Success! Logged in via ${provider.toUpperCase()}. Redirecting...`);
+
+                    setTimeout(() => {
+                        window.location.replace('feed.html');
+                    }, 1500);
+                } else {
+                    showError('Login failed: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Social login request failed:', error);
+                showError('An error occurred during social login. Please try again.');
+            }
+        }
+
+        // Check if user is already logged in
+        window.onload = function () {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            console.log('Login page - Token:', token ? 'exists' : 'missing');
+            console.log('Login page - User:', user ? 'exists' : 'missing');
+            if (token && user) {
+                console.log('Already logged in, redirecting to feed');
+                window.location.replace('feed.html');
+            }
+        };
+    </script>
+
+</body>
+
+</html>

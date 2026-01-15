@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDG-Shram</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-profile .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .user-profile .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-profile .user-name {
+      font-weight: bold;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .user-profile .user-type {
+      font-size: 11px;
+      color: #666;
+      text-transform: capitalize;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    .logout-btn:hover {
+      background: #c82333;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+
+    <div class="content">
+      <div class="navbar">
+        <div class="icon">
+          <img src="logo/logo.png" alt="SDG-Shram Logo" class="logo">
+          <h2 class="logoname">SDG-<br>Shram</h2>
+        </div>
+
+        <!-- <div class="search">
+          <input class="srch" type="search" name="">
+          <a href="#"> <button class="btn">Search</button></a>
+        </div> -->
+
+        <div class="menu">
+          <ul class="basic">
+            <!-- <li><a href="#"><img src="logo/home.png" alt="Home Icon"><br>HOME</a></li> -->
+            <li><a href="connect.html"><img src="logo/connect.png" alt="Connect Icon"><br>CONNECT</a></li>
+            <li><a href="projects.html"><img src="logo/project.png" alt="Projects Icon"><br>PROJECTS</a></li>
+            <li><a href="goals.html"><img src="logo/goals.png" alt="Goals Icon"><br>GOALS</a></li>
+            <li><a href="services.html"><img src="logo/services.png" alt="Services Icon"><br>SERVICES</a></li>
+          </ul>
+
+        </div>
+
+        <!-- Guest view (not logged in) -->
+        <div class="register" id="guestView">
+          <a href="login.html"> <button class="login">Login</button></a>
+          <a href="signup.html"> <button class="signup">Sign Up</button></a>
+        </div>
+
+        <!-- User view (logged in) -->
+        <div class="register user-profile hidden" id="userView">
+          <div class="avatar" id="userAvatar">U</div>
+          <div class="user-info">
+            <span class="user-name" id="userName">User Name</span>
+            <span class="user-type" id="userType">Individual</span>
+          </div>
+          <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+
+      </div>
+      <div class="content-inner">
+        <div class="text">
+          <h1><i>Empowering Collaboration for a<br> Sustainable Future</i></h1>
+          <p class="info">
+            <span>SDG-Shram is a collaborative platform uniting businesses, NGOs, institutions, and individuals to drive
+              real-world impact on the United Nations’ Sustainable Development Goals (SDGs).</span>
+            <span>Together, we create partnerships, share resources, and bring positive change to communities.</span>
+          </p>
+        </div>
+
+        <div class="login-box">
+          <h2>Welcome to your<br>social networking platform</h2>
+
+          <button class="social-btn google" onclick="handleSocialLogin('google')">
+            <img src="icons/google.png" alt="Google">
+            Continue With Google
+          </button>
+
+          <button class="social-btn x" onclick="handleSocialLogin('x')">
+            <img src="icons/x.png" alt="X">
+            Continue With X
+          </button>
+
+          <div class="login-divider">
+            Signin with the email
+          </div>
+
+          <div class="join-now">
+            New to SDG-Shram? <a href="signup.html">Join now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="sdg-section">
+      <div class="sdg-container">
+
+        <!-- Goal 1 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal1.jpg" alt="Goal 1">
+            </div>
+            <div class="goal-back">
+              <h3>No Poverty</h3>
+              <a href="https://sdgs.un.org/goals/goal1" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 2 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal2.jpg" alt="Goal 2">
+            </div>
+            <div class="goal-back">
+              <h3>Zero Hunger</h3>
+              <a href="https://sdgs.un.org/goals/goal2" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 3 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal3.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Good Health & Well-being</h3>
+              <a href="https://sdgs.un.org/goals/goal3" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 4 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal4.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Quality Education</h3>
+              <a href="https://sdgs.un.org/goals/goal4" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 5 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal5.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Gender Equality</h3>
+              <a href="https://sdgs.un.org/goals/goal5" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 6 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal6.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Clean Water and Sanitation</h3>
+              <a href="https://sdgs.un.org/goals/goal6" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 7 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal7.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Affordabale and Clean Energy</h3>
+              <a href="https://sdgs.un.org/goals/goal7" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 8 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal8.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Decent Work and Economic Growth</h3>
+              <a href="https://sdgs.un.org/goals/goal8" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 9 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal9.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Industry, Innovation and Infrastructer</h3>
+              <a href="https://sdgs.un.org/goals/goal9" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 10 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal10.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Reduced Inequalities</h3>
+              <a href="https://sdgs.un.org/goals/goal10" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 11 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal11.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Sustainable cities and communities</h3>
+              <a href="https://sdgs.un.org/goals/goal11" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 12 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal12.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Responsible Consumption and Production</h3>
+              <a href="https://sdgs.un.org/goals/goal12" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 13 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal13.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Climate Action</h3>
+              <a href="https://sdgs.un.org/goals/goal13" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 14 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal4.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Quality Education</h3>
+              <a href="https://sdgs.un.org/goals/goal14" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 15 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal15.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Life on Land</h3>
+              <a href="https://sdgs.un.org/goals/goal15" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 16 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal16.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Peace, Justice and Strong Institutions</h3>
+              <a href="https://sdgs.un.org/goals/goal16" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal 17 -->
+        <div class="goal-card">
+          <div class="goal-inner">
+            <div class="goal-front">
+              <img src="17goals/goal17.jpg" alt="Goal 3">
+            </div>
+            <div class="goal-back">
+              <h3>Partnerships For the Goals</h3>
+              <a href="https://sdgs.un.org/goals/goal17" class="info-btn">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="about-sdg-shram">
+      <div class="about-container">
+        <h2><b><i>About SDG-Shram: </i></b></h2>
+        <p>
+          SDG-Shram is a collaborative platform advancing the 17 Sustainable Development Goals (SDGs) by connecting
+          students, innovators, organizations, and institutions to create real-world impact.
+        </p>
+        <h3><b>It aims to:</b></h3>
+        <ul>
+          <li>Bridge changemakers with resources</li>
+          <li>Foster social innovation and sustainability</li>
+          <li>Promote education, equality, climate action, and responsible growth</li>
+          <li>Build partnerships driving measurable global progress</li>
+        </ul>
+        <p class="conclusion">
+          Together, SDG-Shram empowers changemakers to build a better, sustainable world.
+        </p>
+      </div>
+    </section>
+
+    <section class="sdg-banner">
+      <div class="sdg-banner-container">
+        <img src="17goals/E_SDG_logo_UN_emblem_horizontal.png" alt="Sustainable Development Goals"
+          class="sdg-banner-img">
+      </div>
+    </section>
+
+    <section id="stakeholders" style="background-color: #ffe7a1; padding: 20px; margin-top: 20px;">
+      <h2
+        style="font-size: 28px; font-weight: bold; font-style: italic; color: #002147; display: inline-block; padding: 5px 10px; margin-bottom: 15px;">
+        Who Can Join? (Stakeholders):
+      </h2>
+
+      <ul style="list-style-type: disc; margin-left: 40px; font-size: 18px; line-height: 1.8; color: #000;">
+        <li><strong>Businesses:</strong> Launch CSR and sustainability projects, partner with NGOs, and measure SDG
+          impact.</li>
+        <li><strong>NGOs:</strong> Find donors, volunteers, and collaborators to scale your initiatives.</li>
+        <li><strong>Institutions:</strong> Engage students and researchers in real SDG projects and innovation
+          challenges.</li>
+        <li><strong>Individuals:</strong> Volunteer, donate, or participate in impactful community programs.</li>
+      </ul>
+    </section>
+
+    <section class="projects-incubation">
+      <div class="projects-text">
+        <h2><i>Projects & Startup Incubation:</i></h2>
+        <p class="subtitle">Turning Sustainable Ideas into Real Impact</p>
+
+        <ul>
+          <li>Platform for students, innovators, and individuals to share startup ideas aligned with the 17 SDGs.</li>
+        </ul>
+
+        <ul>
+          <li>Enables businesses, organizations, and investors to:</li>
+          <ul class="nested-list">
+            <li>Provide funding or seed investment</li>
+            <li>Offer incubation and mentorship support</li>
+            <li>Connect startups to networks and resources</li>
+          </ul>
+        </ul>
+
+        <h3><i>Goal:</i></h3>
+        <p class="goal-text">
+          Empower entrepreneurs to create purposeful, impactful, and innovative startups addressing global challenges.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <img src="logo/logo.png" alt="SDG-Shram Logo" class="footer-logo">
+          <h3>SDG- Shram</h3>
+
+          <div class="social-icons">
+            <a href="#"><img src="icons/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="icons/linkedin.png" alt="LinkedIn"></a>
+            <a href="#"><img src="icons/x.png" alt="X"></a>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <h4>Contact:</h4>
+          <div class="contact-info">
+            <div class="contact-item">
+              <img src="icons/mail.png" alt="Email">
+              <p>sdg.shram@gmail.com</p>
+            </div>
+            <div class="contact-item">
+              <img src="icons/call.png" alt="WhatsApp">
+              <p>9529068143</p>
+            </div>
+            <div class="contact-item">
+              <img src="icons/insta.png" alt="Instagram">
+              <p>@sdg-shram_1004</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // API Base URL - Now relative since frontend is served from same server
+    const API_BASE_URL = '/api';
+
+    // Protected pages that require authentication
+    const PROTECTED_PAGES = ['projects.html', 'goals.html', 'projectlist.html', 'profile.html'];
+
+    // Check authentication on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      checkAuth();
+      setupProtectedLinks();
+    });
+
+    function checkAuth() {
+      const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
+
+      const guestView = document.getElementById('guestView');
+      const userView = document.getElementById('userView');
+
+      if (token && userStr) {
+        try {
+          const user = JSON.parse(userStr);
+
+          // AUTO-REDIRECT: Logged-in users go to feed page
+          window.location.replace('feed.html');
+          return;
+
+        } catch (e) {
+          console.error('Error parsing user data:', e);
+          // Clear invalid data
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+        }
+      }
+
+      // Show guest view, hide user view (for non-logged-in users)
+      if (guestView) guestView.classList.remove('hidden');
+      if (userView) userView.classList.add('hidden');
+    }
+
+    // Setup click handlers for protected links
+    function setupProtectedLinks() {
+      const token = localStorage.getItem('token');
+
+      // If user is not logged in, intercept clicks on protected links
+      if (!token) {
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.basic li a, .menu a');
+
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+
+          // Check if this is a protected page or a feature link (CONNECT, SERVICES with #)
+          if (PROTECTED_PAGES.some(page => href && href.includes(page)) || href === '#') {
+            link.addEventListener('click', function (e) {
+              e.preventDefault();
+              showLoginPrompt();
+            });
+          }
+        });
+      }
+    }
+
+    function showLoginPrompt() {
+      const userChoice = confirm('🔒 Please login or sign up to access this feature.\n\nClick OK to go to Login page, or Cancel to stay here.');
+      if (userChoice) {
+        window.location.href = 'login.html';
+      }
+    }
+
+    function getUserDisplayName(user) {
+      switch (user.stakeholderType) {
+        case 'individual':
+          return user.individual?.fullName || 'User';
+        case 'ngo':
+          return user.ngo?.ngoName || 'NGO';
+        case 'business':
+          return user.business?.companyName || 'Business';
+        case 'institution':
+          return user.institution?.institutionName || 'Institution';
+        default:
+          return user.email?.split('@')[0] || 'User';
+      }
+    }
+
+    async function handleLogout() {
+      const token = localStorage.getItem('token');
+
+      // Call logout API if token exists
+      if (token) {
+        try {
+          await fetch(`${API_BASE_URL}/auth/logout`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+        } catch (e) {
+          console.error('Logout API error:', e);
+        }
+      }
+
+      // Clear local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+
+      // Redirect to home/login
+      window.location.href = 'login.html';
+    }
+  </script>
+
+  <script>
+    async function handleSocialLogin(provider) {
+      console.log(`Starting ${provider} login...`);
+
+      // Simulated mock data for social login
+      const mockData = {
+        google: {
+          email: 'google.user@example.com',
+          name: 'Google User',
+          provider: 'google',
+          providerId: 'g123'
+        },
+        x: {
+          email: 'x.user@example.com',
+          name: 'X Professional',
+          provider: 'x',
+          providerId: 'x456'
+        }
+      };
+
+      const userData = mockData[provider];
+
+      try {
+        const response = await fetch('/api/auth/social-login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Store token and user data
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('user', JSON.stringify(result.data));
+
+          // Show feedback and redirect
+          alert(`Success! Logged in via ${provider.toUpperCase()}`);
+          window.location.href = 'feed.html';
+        } else {
+          alert('Login failed: ' + (result.error || 'Unknown error'));
+        }
+      } catch (error) {
+        console.error('Social login request failed:', error);
+        alert('An error occurred during social login. Please try again.');
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG-Shram | Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f2ef;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .profile-navbar {
+            background: linear-gradient(135deg, #002147 0%, #003366 100%);
+            padding: 10px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-navbar .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-navbar .logo-section img {
+            height: 40px;
+        }
+
+        .profile-navbar .logo-section h2 {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a img {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Layout */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+        }
+
+        /* Left Column - Scrollable Cards */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Right Column - Sticky Onboarding */
+        .right-column {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        /* Organization Info Card */
+        .org-header-card {
+            padding: 0;
+            overflow: visible;
+        }
+
+        .org-cover {
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .org-main-info {
+            padding: 20px 25px;
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
+        .org-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 5px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            margin-top: -55px;
+        }
+
+        .org-details {
+            flex: 1;
+            padding-top: 5px;
+        }
+
+        .org-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .org-type-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .org-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .org-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .org-info-item .icon {
+            font-size: 1rem;
+        }
+
+        /* Profile Onboarding Card */
+        .onboarding-card {
+            padding: 20px;
+        }
+
+        .onboarding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .onboarding-header h3 {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .progress-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: conic-gradient(#28a745 0%, #28a745 var(--progress), #e0e0e0 var(--progress));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .progress-circle::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .progress-circle span {
+            position: relative;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .onboarding-list {
+            list-style: none;
+        }
+
+        .onboarding-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .onboarding-item:last-child {
+            border-bottom: none;
+        }
+
+        .onboarding-item:hover {
+            background: #f9f9f9;
+            margin: 0 -20px;
+            padding: 12px 20px;
+        }
+
+        .item-status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .item-status.completed {
+            background: #d4edda;
+            color: #28a745;
+        }
+
+        .item-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .item-status.required {
+            background: #f8d7da;
+            color: #dc3545;
+        }
+
+        .item-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .item-action {
+            color: #007bff;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .item-action:hover {
+            text-decoration: underline;
+        }
+
+        /* Additional Info Card */
+        .info-card {
+            padding: 20px;
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+                position: static;
+            }
+
+            .org-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Edit Button */
+        .edit-profile-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .edit-profile-btn:hover {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            padding: 10px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #0056b3;
+        }
+
+        .btn-save:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            min-width: 320px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-size: 0.95rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+
+        .toast.info {
+            background: linear-gradient(135deg, #cce5ff 0%, #b8daff 100%);
+            border-left: 4px solid #007bff;
+            color: #004085;
+        }
+
+        .toast.uploading {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .toast-message {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.6;
+            padding: 0;
+            transition: opacity 0.2s;
+        }
+
+        .toast-close:hover {
+            opacity: 1;
+        }
+
+        .toast.hiding {
+            animation: slideOut 0.3s ease-in forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Progress Circle with Animation */
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(#28a745 0%, #28a745 var(--progress), #e0e0e0 var(--progress));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+
+        .progress-circle::before {
+            content: '';
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .progress-circle span {
+            position: relative;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .progress-circle.updating {
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Upload Progress Bar */
+        .upload-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 0 0 4px 4px;
+            transition: width 0.3s ease;
+            width: 0;
+        }
+
+        /* Enhanced Onboarding Item States */
+        .onboarding-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .onboarding-item.uploading {
+            background: linear-gradient(90deg, rgba(255, 193, 7, 0.1) 0%, transparent 100%);
+            margin: 0 -20px;
+            padding: 14px 20px;
+        }
+
+        .onboarding-item.just-uploaded {
+            animation: successFlash 0.6s ease;
+        }
+
+        @keyframes successFlash {
+            0% {
+                background: rgba(40, 167, 69, 0.2);
+            }
+
+            100% {
+                background: transparent;
+            }
+        }
+
+        /* Status Spinner */
+        .status-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #ffc107;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Compliance Warning Enhanced */
+        .compliance-warning {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .compliance-warning.verified {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .compliance-warning.pending {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .compliance-warning.not-started {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Required Documents Progress */
+        .required-docs-progress {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .required-docs-progress h4 {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .required-docs-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .required-docs-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .required-docs-text {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 6px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="profile-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="connect.html">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+        </div>
+
+        <a href="feed.html" class="back-btn">← Back to Feed</a>
+    </nav>
+
+    <!-- Profile Content -->
+    <div class="profile-container">
+        <!-- Left Column - Organization Info Cards -->
+        <div class="left-column">
+            <!-- Organization Header Card -->
+            <div class="card org-header-card">
+                <div class="org-cover">
+                    <button class="edit-profile-btn" onclick="openEditModal()">✏️ Edit Profile</button>
+                </div>
+                <div class="org-main-info">
+                    <div class="org-avatar" id="orgAvatar">N</div>
+                    <div class="org-details">
+                        <h1 class="org-name" id="orgName">Organization Name</h1>
+                        <span class="org-type-badge" id="orgType">NGO</span>
+                        <div class="org-info-grid">
+                            <div class="org-info-item">
+                                <span class="icon">📧</span>
+                                <span id="orgEmail">email@example.com</span>
+                            </div>
+                            <div class="org-info-item">
+                                <span class="icon">📍</span>
+                                <span id="orgLocation">Location</span>
+                            </div>
+                            <div class="org-info-item">
+                                <span class="icon">📅</span>
+                                <span id="orgYear">Est. 2020</span>
+                            </div>
+                            <div class="org-info-item">
+                                <span class="icon">📋</span>
+                                <span id="orgRegNo">Reg. No.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More Info Card (placeholder for future content) -->
+            <div class="card info-card">
+                <h3>About Organization</h3>
+                <p id="orgMission" style="color: #666; font-size: 0.9rem; line-height: 1.6;">
+                    Mission and focus areas will appear here...
+                </p>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="card info-card">
+                <h3>Contact Details</h3>
+                <div class="org-info-grid">
+                    <div class="org-info-item">
+                        <span class="icon">👤</span>
+                        <span id="orgSignatory">Authorized Signatory</span>
+                    </div>
+                    <div class="org-info-item">
+                        <span class="icon">📱</span>
+                        <span id="orgPhone">Phone Number</span>
+                    </div>
+                    <div class="org-info-item">
+                        <span class="icon">🏢</span>
+                        <span id="orgAddress">Address</span>
+                    </div>
+                    <div class="org-info-item">
+                        <span class="icon">🌍</span>
+                        <span id="orgStates">Operating States</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification Container -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Right Column - Profile Onboarding -->
+        <div class="right-column">
+            <div class="card onboarding-card">
+                <div class="onboarding-header">
+                    <h3>Profile Onboarding</h3>
+                    <div class="progress-circle" id="progressCircle" style="--progress: 0%;">
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+
+                <!-- Required Documents Progress -->
+                <div class="required-docs-progress" id="requiredDocsProgress">
+                    <h4>Required Documents</h4>
+                    <div class="required-docs-bar">
+                        <div class="required-docs-fill" id="requiredDocsFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="required-docs-text" id="requiredDocsText">0 of 6 completed</div>
+                </div>
+
+                <ul class="onboarding-list" id="onboardingList">
+                    <li class="onboarding-item" id="step-basic">
+                        <span class="item-status completed">✓</span>
+                        <span class="item-text">Basic Account Creation</span>
+                        <a href="#" class="item-action">View</a>
+                    </li>
+                    <li class="onboarding-item" id="step-registrationCertificate">
+                        <span class="item-status required">!</span>
+                        <span class="item-text">Registration Certificate (PDF)</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('registrationCertificate')"
+                            class="item-action">Upload</a>
+                    </li>
+                    <li class="onboarding-item" id="step-panCard">
+                        <span class="item-status required">!</span>
+                        <span class="item-text">PAN Card (NGO)</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('panCard')" class="item-action">Upload</a>
+                    </li>
+                    <li class="onboarding-item" id="step-twelveACertificate">
+                        <span class="item-status required">!</span>
+                        <span class="item-text">12A Certificate</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('twelveACertificate')"
+                            class="item-action">Upload</a>
+                    </li>
+                    <li class="onboarding-item" id="step-eightyGCertificate">
+                        <span class="item-status required">!</span>
+                        <span class="item-text">80G Certificate</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('eightyGCertificate')"
+                            class="item-action">Upload</a>
+                    </li>
+                    <li class="onboarding-item" id="step-csr1RegistrationNumber">
+                        <span class="item-status pending">○</span>
+                        <span class="item-text">CSR-1 Registration Number</span>
+                        <a href="javascript:void(0)" onclick="promptForDetail('csr1RegistrationNumber')"
+                            class="item-action">Add</a>
+                    </li>
+                    <li class="onboarding-item" id="step-fcraCertificate">
+                        <span class="item-status pending">○</span>
+                        <span class="item-text">FCRA Certificate</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('fcraCertificate')"
+                            class="item-action">Upload</a>
+                    </li>
+                    <li class="onboarding-item" id="step-trusteesDetails">
+                        <span class="item-status required">!</span>
+                        <span class="item-text">Board of Trustees Details</span>
+                        <a href="javascript:void(0)" onclick="promptForDetail('trusteesDetails')"
+                            class="item-action">Add</a>
+                    </li>
+                    <li class="onboarding-item" id="step-annualReports">
+                        <span class="item-status pending">○</span>
+                        <span class="item-text">Last 3 Years Annual Reports</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('annualReports')"
+                            class="item-action">Upload</a>
+                    </li>
+                    <li class="onboarding-item" id="step-auditedStatements">
+                        <span class="item-status pending">○</span>
+                        <span class="item-text">Audited Financial Statements</span>
+                        <a href="javascript:void(0)" onclick="triggerUpload('auditedStatements')"
+                            class="item-action">Upload</a>
+                    </li>
+                </ul>
+
+                <input type="file" id="onboardingFiles" style="display: none;" onchange="handleOnboardingUpload(this)"
+                    accept=".pdf,.jpg,.jpeg,.png">
+
+                <div class="compliance-warning not-started" id="complianceWarning">
+                    <span class="warning-icon">⚠️</span>
+                    <span class="warning-text">Complete all required documents to create campaigns</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="close-btn" onclick="closeEditModal()">×</button>
+            </div>
+            <div class="modal-body" id="editFormContainer">
+                <!-- Dynamic form based on stakeholder type -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                <button class="btn-save" id="saveBtn" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentUploadType = null;
+
+        const API_BASE_URL = '/api';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProfileData();
+        });
+
+        async function loadProfileData() {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                console.log('API Response:', data);  // Debug log
+
+                // API returns data.data for getMe endpoint
+                if (data.success && data.data) {
+                    currentUser = data.data;
+                    displayOrgInfo(data.data);
+                } else if (data.success && data.user) {
+                    currentUser = data.user;
+                    displayOrgInfo(data.user);
+                } else {
+                    const userStr = localStorage.getItem('user');
+                    if (userStr) {
+                        currentUser = JSON.parse(userStr);
+                        displayOrgInfo(currentUser);
+                    }
+                }
+            } catch (e) {
+                console.error('Error fetching profile:', e);
+                const userStr = localStorage.getItem('user');
+                if (userStr) {
+                    currentUser = JSON.parse(userStr);
+                    displayOrgInfo(currentUser);
+                }
+            }
+        }
+
+        function displayOrgInfo(user) {
+            console.log('Displaying user:', user);  // Debug log
+            const type = user.stakeholderType;
+            let name, email, ngoType, location, year, regNo, mission, signatory, phone, address, states;
+
+            if (type === 'ngo') {
+                const ngo = user.ngo || {};
+                name = ngo.ngoName || 'Organization';
+                email = user.email || '';
+                ngoType = ngo.ngoType || 'NGO';
+                location = ngo.operatingStates || 'India';
+                year = ngo.yearOfEstablishment || '';
+                regNo = ngo.registrationNumber || '';
+                mission = ngo.missionFocusAreas || 'No mission statement provided.';
+                signatory = ngo.authorizedPersonName || '';
+                phone = user.phone || '';
+                address = ngo.registeredAddress || '';
+                states = ngo.operatingStates || '';
+            } else if (type === 'business') {
+                const bus = user.business || {};
+                name = bus.companyName || 'Company';
+                email = user.email || '';
+                ngoType = 'Business';  // Show main stakeholder type
+                location = bus.operatingStates || 'India';
+                year = bus.yearOfEstablishment || '';
+                regNo = '';
+                mission = bus.csrFocusAreas || 'No CSR focus areas provided.';
+                signatory = bus.authorizedPersonName || '';
+                phone = user.phone || '';
+                address = bus.registeredAddress || '';
+                states = bus.operatingStates || '';
+            } else if (type === 'institution') {
+                const inst = user.institution || {};
+                name = inst.institutionName || 'Institution';
+                email = user.email || '';
+                ngoType = 'Institution';  // Show main stakeholder type
+                location = inst.operatingStates || 'India';
+                year = inst.yearOfEstablishment || '';
+                regNo = inst.aisheAffiliationNumber || '';
+                mission = inst.departmentsSdgInitiatives || 'No initiatives provided.';
+                signatory = inst.headPrincipalName || '';
+                phone = user.phone || '';
+                address = inst.registeredAddress || '';
+                states = inst.operatingStates || '';
+            } else {
+                const ind = user.individual || {};
+                name = ind.fullName || 'User';
+                email = user.email || '';
+                ngoType = 'Individual';  // Show main stakeholder type
+                location = 'India';
+                year = '';
+                regNo = '';
+                mission = ind.skills || 'No skills provided.';
+                signatory = ind.fullName || '';
+                phone = user.phone || '';
+                address = '';
+                states = '';
+            }
+
+            // Update UI with real-time data from database
+            document.getElementById('orgAvatar').textContent = name.charAt(0).toUpperCase();
+            document.getElementById('orgName').textContent = name;
+            document.getElementById('orgType').textContent = type ? type.toUpperCase() : 'USER';
+            document.getElementById('orgEmail').textContent = email;
+            document.getElementById('orgLocation').textContent = location || 'Not provided';
+            document.getElementById('orgYear').textContent = year ? `Est. ${year}` : 'Year not provided';
+            document.getElementById('orgRegNo').textContent = regNo ? `Reg: ${regNo}` : 'Reg. not provided';
+            document.getElementById('orgMission').textContent = mission;
+            document.getElementById('orgSignatory').textContent = signatory || 'Not provided';
+            document.getElementById('orgPhone').textContent = phone || 'Not provided';
+            document.getElementById('orgAddress').textContent = address || 'Not provided';
+            document.getElementById('orgStates').textContent = states || 'Not provided';
+
+            // Update Onboarding UI if NGO
+            if (type === 'ngo') {
+                updateOnboardingUI(user);
+            } else {
+                document.querySelector('.onboarding-card').style.display = 'none';
+                document.querySelector('.profile-main').style.gridTemplateColumns = '1fr';
+            }
+        }
+
+        // Document name mapping for display
+        const docNameMap = {
+            'registrationCertificate': 'Registration Certificate',
+            'panCard': 'PAN Card',
+            'twelveACertificate': '12A Certificate',
+            'eightyGCertificate': '80G Certificate',
+            'fcraCertificate': 'FCRA Certificate',
+            'trusteesDetails': 'Board of Trustees Details',
+            'csr1RegistrationNumber': 'CSR-1 Registration Number',
+            'annualReports': 'Annual Reports',
+            'auditedStatements': 'Audited Financial Statements'
+        };
+
+        // Required documents list (these must be uploaded before campaign creation)
+        const requiredDocs = ['registrationCertificate', 'panCard', 'twelveACertificate', 'eightyGCertificate', 'trusteesDetails'];
+
+        // Onboarding Logic - Enhanced with Real-time Progress Tracking
+        function updateOnboardingUI(user, highlightItem = null) {
+            const ngo = user.ngo || {};
+            const docs = ngo.documents || {};
+            const percentage = ngo.onboardingPercentage || 0;
+
+            // Animate the progress circle update
+            const progressCircle = document.getElementById('progressCircle');
+            const progressPercent = document.getElementById('progressPercent');
+
+            // Add pulse animation
+            progressCircle.classList.add('updating');
+            setTimeout(() => progressCircle.classList.remove('updating'), 500);
+
+            // Update percentage with animation
+            progressPercent.textContent = percentage + '%';
+            progressCircle.style.setProperty('--progress', percentage + '%');
+
+            // Calculate required documents progress
+            let requiredCompleted = 0;
+            const totalRequired = requiredDocs.length;
+
+            // Check required file docs
+            ['registrationCertificate', 'panCard', 'twelveACertificate', 'eightyGCertificate'].forEach(docId => {
+                if (docs[docId] && docs[docId].status && docs[docId].status !== 'unloaded') {
+                    requiredCompleted++;
+                }
+            });
+
+            // Check trustees details
+            if (docs.trusteesDetails && docs.trusteesDetails.status === 'added') {
+                requiredCompleted++;
+            }
+
+            // Update required docs progress bar
+            const requiredDocsFill = document.getElementById('requiredDocsFill');
+            const requiredDocsText = document.getElementById('requiredDocsText');
+            const requiredPercent = Math.round((requiredCompleted / totalRequired) * 100);
+
+            requiredDocsFill.style.width = requiredPercent + '%';
+            requiredDocsText.textContent = `${requiredCompleted} of ${totalRequired} completed`;
+
+            // Update Status of each document item
+            const fileSteps = [
+                { id: 'registrationCertificate', data: docs.registrationCertificate, required: true },
+                { id: 'panCard', data: docs.panCard, required: true },
+                { id: 'twelveACertificate', data: docs.twelveACertificate, required: true },
+                { id: 'eightyGCertificate', data: docs.eightyGCertificate, required: true },
+                { id: 'fcraCertificate', data: docs.fcraCertificate, required: false },
+                { id: 'annualReports', data: docs.annualReports, required: false },
+                { id: 'auditedStatements', data: docs.auditedStatements, required: false }
+            ];
+
+            fileSteps.forEach(step => {
+                const item = document.getElementById('step-' + step.id);
+                if (!item) return;
+
+                const statusSpan = item.querySelector('.item-status');
+                const actionLink = item.querySelector('.item-action');
+
+                // Highlight recently uploaded item
+                if (highlightItem === step.id) {
+                    item.classList.add('just-uploaded');
+                    setTimeout(() => item.classList.remove('just-uploaded'), 1000);
+                }
+
+                if (step.data && step.data.status && step.data.status !== 'unloaded') {
+                    if (step.data.status === 'pending') {
+                        statusSpan.textContent = '⏳';
+                        statusSpan.className = 'item-status pending';
+                        actionLink.textContent = 'Pending Review';
+                        actionLink.onclick = () => showToast('info', 'Under Review', 'This document is being reviewed by our team.');
+                    } else if (step.data.status === 'verified') {
+                        statusSpan.textContent = '✓';
+                        statusSpan.className = 'item-status completed';
+                        actionLink.textContent = 'View';
+                        actionLink.onclick = () => window.open(step.data.url, '_blank');
+                    } else if (step.data.status === 'rejected') {
+                        statusSpan.textContent = '✗';
+                        statusSpan.className = 'item-status required';
+                        actionLink.textContent = 'Re-upload';
+                        actionLink.onclick = () => triggerUpload(step.id);
+                    }
+                } else {
+                    // Not uploaded yet
+                    statusSpan.textContent = step.required ? '!' : '○';
+                    statusSpan.className = step.required ? 'item-status required' : 'item-status pending';
+                    actionLink.textContent = 'Upload';
+                    actionLink.onclick = () => triggerUpload(step.id);
+                }
+            });
+
+            // Handle CSR-1 Registration Number
+            const csrItem = document.getElementById('step-csr1RegistrationNumber');
+            if (csrItem) {
+                const csrStatus = csrItem.querySelector('.item-status');
+                const csrAction = csrItem.querySelector('.item-action');
+
+                if (highlightItem === 'csr1RegistrationNumber') {
+                    csrItem.classList.add('just-uploaded');
+                    setTimeout(() => csrItem.classList.remove('just-uploaded'), 1000);
+                }
+
+                if (docs.csr1RegistrationNumber) {
+                    csrStatus.textContent = '✓';
+                    csrStatus.className = 'item-status completed';
+                    csrAction.textContent = 'Edit';
+                } else {
+                    csrStatus.textContent = '○';
+                    csrStatus.className = 'item-status pending';
+                    csrAction.textContent = 'Add';
+                }
+            }
+
+            // Handle Trustees Details
+            const trusteesItem = document.getElementById('step-trusteesDetails');
+            if (trusteesItem) {
+                const trusteesStatus = trusteesItem.querySelector('.item-status');
+                const trusteesAction = trusteesItem.querySelector('.item-action');
+
+                if (highlightItem === 'trusteesDetails') {
+                    trusteesItem.classList.add('just-uploaded');
+                    setTimeout(() => trusteesItem.classList.remove('just-uploaded'), 1000);
+                }
+
+                if (docs.trusteesDetails && docs.trusteesDetails.status === 'added') {
+                    trusteesStatus.textContent = '✓';
+                    trusteesStatus.className = 'item-status completed';
+                    trusteesAction.textContent = 'Edit';
+                } else {
+                    trusteesStatus.textContent = '!';
+                    trusteesStatus.className = 'item-status required';
+                    trusteesAction.textContent = 'Add';
+                }
+            }
+
+            // Update Compliance Warning with enhanced styling
+            const warning = document.getElementById('complianceWarning');
+            warning.className = 'compliance-warning'; // Reset classes
+
+            if (ngo.complianceStatus === 'VERIFIED') {
+                warning.classList.add('verified');
+                warning.innerHTML = '<span class="warning-icon">✅</span><span class="warning-text">Compliance Verified! You can now create campaigns.</span>';
+            } else if (ngo.complianceStatus === 'PENDING') {
+                warning.classList.add('pending');
+                warning.innerHTML = '<span class="warning-icon">⏳</span><span class="warning-text">Documents under review. Campaign creation pending verification.</span>';
+            } else if (requiredCompleted === totalRequired) {
+                warning.classList.add('pending');
+                warning.innerHTML = '<span class="warning-icon">📝</span><span class="warning-text">All required documents uploaded! Awaiting admin verification.</span>';
+            } else {
+                warning.classList.add('not-started');
+                warning.innerHTML = `<span class="warning-icon">⚠️</span><span class="warning-text">Upload ${totalRequired - requiredCompleted} more required document(s) to enable campaign creation.</span>`;
+            }
+        }
+
+        // ==========================================
+        // TOAST NOTIFICATION SYSTEM
+        // ==========================================
+        function showToast(type, title, message, duration = 5000) {
+            const container = document.getElementById('toastContainer');
+
+            const icons = {
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️',
+                uploading: '📤'
+            };
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span class="toast-icon">${icons[type] || '📌'}</span>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="closeToast(this)">×</button>
+            `;
+
+            container.appendChild(toast);
+
+            // Auto-remove after duration (unless it's an uploading toast)
+            if (type !== 'uploading') {
+                setTimeout(() => {
+                    closeToast(toast.querySelector('.toast-close'));
+                }, duration);
+            }
+
+            return toast;
+        }
+
+        function closeToast(btn) {
+            const toast = btn.closest ? btn.closest('.toast') : btn.parentElement;
+            if (toast) {
+                toast.classList.add('hiding');
+                setTimeout(() => toast.remove(), 300);
+            }
+        }
+
+        // ==========================================
+        // DOCUMENT UPLOAD HANDLERS
+        // ==========================================
+        function triggerUpload(type) {
+            currentUploadType = type;
+            const input = document.getElementById('onboardingFiles');
+            input.value = ''; // Reset the input to allow re-uploading the same file
+            input.click();
+        }
+
+        async function handleOnboardingUpload(input) {
+            if (!input.files || !input.files[0]) return;
+
+            const file = input.files[0];
+            const docName = docNameMap[currentUploadType] || currentUploadType;
+
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showToast('error', 'File Too Large', 'Please upload a file smaller than 10MB.');
+                return;
+            }
+
+            // Validate file type
+            const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast('error', 'Invalid File Type', 'Please upload a PDF, JPG, or PNG file.');
+                return;
+            }
+
+            // Show uploading state
+            const uploadingItem = document.getElementById('step-' + currentUploadType);
+            if (uploadingItem) {
+                uploadingItem.classList.add('uploading');
+                const statusSpan = uploadingItem.querySelector('.item-status');
+                const originalStatus = statusSpan.innerHTML;
+                statusSpan.innerHTML = '<div class="status-spinner"></div>';
+            }
+
+            // Show uploading toast
+            const uploadingToast = showToast('uploading', 'Uploading...', `Uploading ${docName}...`);
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('docType', currentUploadType);
+
+            const token = localStorage.getItem('token');
+
+            try {
+                const response = await fetch('/api/auth/onboarding/document', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                // Close the uploading toast
+                closeToast(uploadingToast.querySelector('.toast-close'));
+
+                if (data.success) {
+                    // Update current user data
+                    currentUser = data.data;
+
+                    // Show success toast with progress info
+                    const newPercentage = data.data.ngo?.onboardingPercentage || 0;
+                    showToast(
+                        'success',
+                        'Document Uploaded Successfully! 🎉',
+                        `${docName} is now pending verification. Progress: ${newPercentage}%`,
+                        6000
+                    );
+
+                    // Update the UI with the highlighted item
+                    updateOnboardingUI(data.data, currentUploadType);
+
+                    // Check if all required docs are now uploaded
+                    const docs = data.data.ngo?.documents || {};
+                    const requiredComplete = checkRequiredDocsComplete(docs);
+                    if (requiredComplete) {
+                        setTimeout(() => {
+                            showToast(
+                                'info',
+                                'All Required Documents Uploaded! 📋',
+                                'You can now create campaigns once verified by admin.',
+                                8000
+                            );
+                        }, 1000);
+                    }
+                } else {
+                    showToast('error', 'Upload Failed', data.error || 'Something went wrong. Please try again.');
+                }
+            } catch (e) {
+                console.error('Upload error:', e);
+                closeToast(uploadingToast.querySelector('.toast-close'));
+                showToast('error', 'Upload Error', 'Network error. Please check your connection and try again.');
+            } finally {
+                // Remove uploading state
+                if (uploadingItem) {
+                    uploadingItem.classList.remove('uploading');
+                }
+                input.value = ''; // Reset the file input
+            }
+        }
+
+        // Check if all required documents are uploaded
+        function checkRequiredDocsComplete(docs) {
+            const requiredFileDocs = ['registrationCertificate', 'panCard', 'twelveACertificate', 'eightyGCertificate'];
+
+            for (const docId of requiredFileDocs) {
+                if (!docs[docId] || !docs[docId].status || docs[docId].status === 'unloaded') {
+                    return false;
+                }
+            }
+
+            if (!docs.trusteesDetails || docs.trusteesDetails.status !== 'added') {
+                return false;
+            }
+
+            return true;
+        }
+
+        async function promptForDetail(type) {
+            const detailName = docNameMap[type] || type;
+            let promptMessage = 'Enter details:';
+
+            if (type === 'csr1RegistrationNumber') {
+                promptMessage = 'Enter your CSR-1 Registration Number:';
+            } else if (type === 'trusteesDetails') {
+                promptMessage = 'Enter Board of Trustees details (names and designations):';
+            }
+
+            const value = prompt(promptMessage);
+            if (!value || !value.trim()) return;
+
+            // Show updating toast
+            const updatingToast = showToast('uploading', 'Updating...', `Saving ${detailName}...`);
+
+            const body = {};
+            if (type === 'csr1RegistrationNumber') body.csr1RegistrationNumber = value.trim();
+            else if (type === 'trusteesDetails') body.trusteesDetails = value.trim();
+
+            const token = localStorage.getItem('token');
+
+            try {
+                const response = await fetch('/api/auth/onboarding/details', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+
+                // Close the updating toast
+                closeToast(updatingToast.querySelector('.toast-close'));
+
+                if (data.success) {
+                    // Update current user data
+                    currentUser = data.data;
+
+                    // Show success toast
+                    const newPercentage = data.data.ngo?.onboardingPercentage || 0;
+                    showToast(
+                        'success',
+                        'Details Saved Successfully! ✨',
+                        `${detailName} has been added. Progress: ${newPercentage}%`,
+                        5000
+                    );
+
+                    // Update the UI with the highlighted item
+                    updateOnboardingUI(data.data, type);
+
+                    // Check if all required docs are now complete
+                    const docs = data.data.ngo?.documents || {};
+                    const requiredComplete = checkRequiredDocsComplete(docs);
+                    if (requiredComplete) {
+                        setTimeout(() => {
+                            showToast(
+                                'info',
+                                'All Required Documents Complete! 📋',
+                                'You can now create campaigns once verified by admin.',
+                                8000
+                            );
+                        }, 1000);
+                    }
+                } else {
+                    showToast('error', 'Update Failed', data.error || 'Something went wrong. Please try again.');
+                }
+            } catch (e) {
+                console.error('Update error:', e);
+                closeToast(updatingToast.querySelector('.toast-close'));
+                showToast('error', 'Update Error', 'Network error. Please check your connection and try again.');
+            }
+        }
+        // Modal Functions
+        function openEditModal() {
+            if (!currentUser) return;
+
+            const container = document.getElementById('editFormContainer');
+            container.innerHTML = generateEditForm(currentUser);
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('show');
+        }
+
+        function generateEditForm(user) {
+            const type = user.stakeholderType;
+            let formHtml = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="edit_email" value="${user.email || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="edit_phone" value="${user.phone || ''}">
+                    </div>
+                </div>
+            `;
+
+            if (type === 'individual') {
+                const ind = user.individual || {};
+                formHtml += `
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="edit_fullName" value="${ind.fullName || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Skills / Interests</label>
+                        <textarea id="edit_skills">${ind.skills || ''}</textarea>
+                    </div>
+                `;
+            } else if (type === 'ngo') {
+                const ngo = user.ngo || {};
+                formHtml += `
+                    <div class="form-group">
+                        <label>NGO Name</label>
+                        <input type="text" id="edit_ngoName" value="${ngo.ngoName || ''}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>NGO Type</label>
+                            <select id="edit_ngoType">
+                                <option value="trust" ${ngo.ngoType === 'trust' ? 'selected' : ''}>Trust</option>
+                                <option value="society" ${ngo.ngoType === 'society' ? 'selected' : ''}>Society</option>
+                                <option value="section8" ${ngo.ngoType === 'section8' ? 'selected' : ''}>Section 8 Company</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Year of Establishment</label>
+                            <input type="text" id="edit_yearOfEstablishment" value="${ngo.yearOfEstablishment || ''}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Registered Address</label>
+                        <input type="text" id="edit_registeredAddress" value="${ngo.registeredAddress || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Operating States/Districts</label>
+                        <input type="text" id="edit_operatingStates" value="${ngo.operatingStates || ''}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Authorized Signatory</label>
+                            <input type="text" id="edit_authorizedPersonName" value="${ngo.authorizedPersonName || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Signatory Role</label>
+                            <input type="text" id="edit_signatoryRole" value="${ngo.signatoryRole || ''}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mission / Focus Areas</label>
+                        <textarea id="edit_missionFocusAreas">${ngo.missionFocusAreas || ''}</textarea>
+                    </div>
+                `;
+            } else if (type === 'business') {
+                const bus = user.business || {};
+                formHtml += `
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" id="edit_companyName" value="${bus.companyName || ''}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Business Type</label>
+                            <input type="text" id="edit_businessType" value="${bus.businessType || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Year of Establishment</label>
+                            <input type="text" id="edit_yearOfEstablishment" value="${bus.yearOfEstablishment || ''}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Registered Address</label>
+                        <input type="text" id="edit_registeredAddress" value="${bus.registeredAddress || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>CSR / SDG Focus Areas</label>
+                        <textarea id="edit_csrFocusAreas">${bus.csrFocusAreas || ''}</textarea>
+                    </div>
+                `;
+            } else if (type === 'institution') {
+                const inst = user.institution || {};
+                formHtml += `
+                    <div class="form-group">
+                        <label>Institution Name</label>
+                        <input type="text" id="edit_institutionName" value="${inst.institutionName || ''}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Institution Type</label>
+                            <input type="text" id="edit_institutionType" value="${inst.institutionType || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Year of Establishment</label>
+                            <input type="text" id="edit_yearOfEstablishment" value="${inst.yearOfEstablishment || ''}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Registered Address</label>
+                        <input type="text" id="edit_registeredAddress" value="${inst.registeredAddress || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Departments / SDG Initiatives</label>
+                        <textarea id="edit_departmentsSdgInitiatives">${inst.departmentsSdgInitiatives || ''}</textarea>
+                    </div>
+                `;
+            }
+
+            return formHtml;
+        }
+
+        async function saveProfile() {
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+
+            const token = localStorage.getItem('token');
+            const type = currentUser.stakeholderType;
+
+            // Collect form data
+            const formData = {
+                email: document.getElementById('edit_email')?.value,
+                phone: document.getElementById('edit_phone')?.value
+            };
+
+            // Add role-specific fields
+            if (type === 'individual') {
+                formData.fullName = document.getElementById('edit_fullName')?.value;
+                formData.skills = document.getElementById('edit_skills')?.value;
+            } else if (type === 'ngo') {
+                formData.ngoName = document.getElementById('edit_ngoName')?.value;
+                formData.ngoType = document.getElementById('edit_ngoType')?.value;
+                formData.yearOfEstablishment = document.getElementById('edit_yearOfEstablishment')?.value;
+                formData.registeredAddress = document.getElementById('edit_registeredAddress')?.value;
+                formData.operatingStates = document.getElementById('edit_operatingStates')?.value;
+                formData.authorizedPersonName = document.getElementById('edit_authorizedPersonName')?.value;
+                formData.signatoryRole = document.getElementById('edit_signatoryRole')?.value;
+                formData.missionFocusAreas = document.getElementById('edit_missionFocusAreas')?.value;
+            } else if (type === 'business') {
+                formData.companyName = document.getElementById('edit_companyName')?.value;
+                formData.businessType = document.getElementById('edit_businessType')?.value;
+                formData.yearOfEstablishment = document.getElementById('edit_yearOfEstablishment')?.value;
+                formData.registeredAddress = document.getElementById('edit_registeredAddress')?.value;
+                formData.csrFocusAreas = document.getElementById('edit_csrFocusAreas')?.value;
+            } else if (type === 'institution') {
+                formData.institutionName = document.getElementById('edit_institutionName')?.value;
+                formData.institutionType = document.getElementById('edit_institutionType')?.value;
+                formData.yearOfEstablishment = document.getElementById('edit_yearOfEstablishment')?.value;
+                formData.registeredAddress = document.getElementById('edit_registeredAddress')?.value;
+                formData.departmentsSdgInitiatives = document.getElementById('edit_departmentsSdgInitiatives')?.value;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/updatedetails`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Profile updated successfully!');
+                    closeEditModal();
+                    loadProfileData();  // Reload profile
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to update profile'));
+                }
+            } catch (e) {
+                console.error('Save error:', e);
+                alert('Error saving profile. Please try again.');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Changes';
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('editModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | SDG-Shram</title>
+    <link rel="stylesheet" href="navbar-common.css">
+    <link rel="stylesheet" href="services-premium.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Standard Navigation Bar -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search projects, NGOs, people...">
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="connect.html">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="services.html" class="active">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">SDG Advocate</p>
+                        </div>
+                    </div>
+
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+
+                    <div class="dropdown-section">
+                        <a href="#">⚙️ Settings & Privacy</a>
+                        <a href="#">❓ Help</a>
+                        <a href="#">🌐 Language</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <a href="#" class="sign-out" onclick="handleLogout(); return false;">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-container" id="mainContent">
+        <!-- Dynamic Content Injected Here -->
+    </div>
+
+    <div id="notificationArea"></div>
+
+    <script src="navbar-init.js"></script>
+    <script>
+        const MockImpactEngine = {
+            initiatives: [
+                {
+                    id: 'proj_001',
+                    type: 'campaign',
+                    title: 'Clean Water for Rural Bihar',
+                    sdgs: [6, 3],
+                    projected: { beneficiaries: 5000, water_liters: 1000000 },
+                    actual: { beneficiaries: 2450, water_liters: 450000 },
+                    status: 'active',
+                    lastUpdate: new Date()
+                },
+                {
+                    id: 'start_002',
+                    type: 'startup',
+                    title: 'EcoPulse Solar Systems',
+                    sdgs: [7, 13],
+                    projected: { co2_offset: 500, households: 1000 },
+                    actual: { co2_offset: 125.4, households: 312 },
+                    status: 'scaling',
+                    lastUpdate: new Date()
+                },
+                {
+                    id: 'proj_003',
+                    type: 'project',
+                    title: 'EmpowerHER Digital Literacy',
+                    sdgs: [4, 5, 8],
+                    projected: { students: 1000, jobs: 200 },
+                    actual: { students: 890, jobs: 145 },
+                    status: 'ongoing',
+                    lastUpdate: new Date()
+                }
+            ],
+
+            ngos: [
+                {
+                    name: 'Green Earth Foundation',
+                    type: 'Environmental NGO',
+                    location: 'Pune, Maharashtra',
+                    status: { '12A': 'verified', '80G': 'verified', 'CSR-1': 'pending' },
+                    trustScore: 92
+                },
+                {
+                    name: 'Education for All',
+                    type: 'Social NGO',
+                    location: 'Delhi',
+                    status: { '12A': 'verified', '80G': 'pending', 'CSR-1': 'not_started' },
+                    trustScore: 78
+                },
+                {
+                    name: 'Rural Health Care',
+                    type: 'Health NGO',
+                    location: 'Nagapur, Maharashtra',
+                    status: { '12A': 'verified', '80G': 'verified', 'CSR-1': 'verified' },
+                    trustScore: 98
+                },
+                {
+                    name: 'Clean Water Initiative',
+                    type: 'Social NGO',
+                    location: 'Bihar',
+                    status: { '12A': 'pending', '80G': 'not_started', 'CSR-1': 'not_started' },
+                    trustScore: 45
+                },
+                {
+                    name: 'SkillUp India',
+                    type: 'Vocational NGO',
+                    location: 'Bangalore',
+                    status: { '12A': 'verified', '80G': 'verified', 'CSR-1': 'verified' },
+                    trustScore: 99
+                },
+                {
+                    name: 'Tribal Welfare Org',
+                    type: 'Tribal NGO',
+                    location: 'Gadchiroli, Maharashtra',
+                    status: { '12A': 'verified', '80G': 'pending', 'CSR-1': 'not_started' },
+                    trustScore: 65
+                }
+            ],
+
+            getLiveStats() {
+                return this.initiatives.map(init => {
+                    const progress = (Object.values(init.actual).reduce((a, b) => a + b, 0) /
+                        Object.values(init.projected).reduce((a, b) => a + b, 0)) * 100;
+                    return { ...init, progress: Math.min(progress, 100).toFixed(1) };
+                });
+            },
+
+            simulatePulse() {
+                this.initiatives.forEach(init => {
+                    if (init.status === 'active' || init.status === 'scaling' || init.status === 'ongoing') {
+                        // Incremental random updates
+                        Object.keys(init.actual).forEach(key => {
+                            const increment = Math.random() * (init.projected[key] * 0.01);
+                            init.actual[key] = parseFloat((init.actual[key] + increment).toFixed(2));
+                        });
+                        init.lastUpdate = new Date();
+                    }
+                });
+            }
+        };
+
+        const ServicesPortal = {
+            currentView: 'landing',
+            user: null,
+
+            init() {
+                this.checkAuth();
+                this.renderView('landing');
+                this.setupRealTime();
+
+                // Start the Pulse Engine
+                setInterval(() => {
+                    MockImpactEngine.simulatePulse();
+                    if (this.currentView === 'impact-assessment') {
+                        this.renderView('impact-assessment');
+                    }
+                }, 3000);
+            },
+
+            checkAuth() {
+                const userStr = localStorage.getItem('user');
+                if (!userStr) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                this.user = JSON.parse(userStr);
+                // Profile display handled by navbar-init.js
+            },
+
+            setupRealTime() {
+                // Mock Real-time notification every 30s
+                setInterval(() => {
+                    const messages = [
+                        "New volunteer match found for your project!",
+                        "Your Impact Assessment report is ready for review.",
+                        "New CSR opportunity: Tech for Education.",
+                        "Mentor session confirmed for Friday at 3:00 PM."
+                    ];
+                    if (Math.random() > 0.7) {
+                        this.notify(messages[Math.floor(Math.random() * messages.length)]);
+                    }
+                }, 30000);
+            },
+
+            notify(message) {
+                const toast = document.createElement('div');
+                toast.className = 'notification-toast';
+                toast.innerHTML = `<i class="fas fa-bell"></i> <span>${message}</span>`;
+                document.getElementById('notificationArea').appendChild(toast);
+                setTimeout(() => toast.remove(), 5000);
+            },
+
+            switchView(viewId) {
+                this.currentView = viewId;
+                this.renderView(viewId);
+                window.scrollTo(0, 0);
+            },
+
+            renderView(viewId) {
+                const container = document.getElementById('mainContent');
+                if (this.templates[viewId]) {
+                    container.innerHTML = this.templates[viewId]();
+                } else {
+                    container.innerHTML = this.templates.landing();
+                }
+            },
+
+            templates: {
+                landing: () => `
+                    <div class="services-hero">
+                        <h1>Our Ecosystem Services</h1>
+                        <p>Empowering NGOs, Corporates, and Innovators with specialized tools for sustainable development.</p>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service-card" style="--service-color: var(--sdg-16)" onclick="ServicesPortal.switchView('impact-assessment')">
+                            <div class="service-icon"><i class="fas fa-chart-pie"></i></div>
+                            <h3>Impact Assessment</h3>
+                            <p>Request data-driven SDG audits and automated impact reporting for your organization.</p>
+                            <div class="service-footer">
+                                <span class="learn-more">Get Started <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="service-card" style="--service-color: var(--sdg-17)" onclick="ServicesPortal.switchView('ngo-verification')">
+                            <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3>NGO Verification</h3>
+                            <p>Guidance and tracking for 12A, 80G, and CSR-1 registration processes.</p>
+                            <div class="service-footer">
+                                <span class="learn-more">Start Wizard <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="service-card" style="--service-color: var(--sdg-1)" onclick="ServicesPortal.switchView('csr-brokerage')">
+                            <div class="service-icon"><i class="fas fa-handshake"></i></div>
+                            <h3>CSR Brokerage</h3>
+                            <p>Strategic matchmaking between corporate funding and high-impact ground projects.</p>
+                            <div class="service-footer">
+                                <span class="learn-more">Explore Partners <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="service-card" style="--service-color: var(--sdg-9)" onclick="ServicesPortal.switchView('startup-mentorship')">
+                            <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
+                            <h3>Startup Mentorship</h3>
+                            <p>Connect SDG-aligned startups with world-class mentors and impact investors.</p>
+                            <div class="service-footer">
+                                <span class="learn-more">Find Mentor <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="service-card" style="--service-color: var(--sdg-4)" onclick="ServicesPortal.switchView('innovation-challenges')">
+                            <div class="service-icon"><i class="fas fa-trophy"></i></div>
+                            <h3>Innovation Challenges</h3>
+                            <p>Host or join crowdsourced challenges to solve critical SDG problems.</p>
+                            <div class="service-footer">
+                                <span class="learn-more">View Challenges <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="service-card" style="--service-color: var(--sdg-3)" onclick="ServicesPortal.switchView('volunteer-matching')">
+                            <div class="service-icon"><i class="fas fa-seedling"></i></div>
+                            <h3>Volunteer Matching</h3>
+                            <p>Intelligent skills-based matching for volunteers and non-profit projects.</p>
+                            <div class="service-footer">
+                                <span class="learn-more">Join Now <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                'impact-assessment': () => {
+                    const stats = MockImpactEngine.getLiveStats();
+                    const totalBeneficiaries = stats.reduce((acc, curr) => acc + (curr.actual.beneficiaries || 0), 0);
+                    const totalCO2 = stats.reduce((acc, curr) => acc + (curr.actual.co2_offset || 0), 0);
+
+                    return `
+                    <div class="service-view-header">
+                        <button class="back-btn" onclick="ServicesPortal.switchView('landing')"><i class="fas fa-arrow-left"></i></button>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                                <h1 style="font-size: 2rem; font-weight: 800; margin: 0;">Real-Time Impact Engine</h1>
+                                <span style="background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                                    <span style="width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite;"></span> LIVE SYNC
+                                </span>
+                            </div>
+                            <p style="color: var(--text-secondary)">Interconnected social, environmental, and economic assessment of all active SDG-Shram initiatives.</p>
+                        </div>
+                        <div style="margin-left: auto; display: flex; gap: 12px;">
+                            <button class="btn-primary" style="background: var(--surface); color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; border-radius: 8px; font-weight: 700;">
+                                <i class="fas fa-file-export"></i> Export Report
+                            </button>
+                            <button class="btn-primary" style="background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700;">
+                                <i class="fas fa-plus"></i> Manual Audit
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px;">
+                        <div class="chart-card" style="padding: 20px;">
+                            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Total Beneficiaries</div>
+                            <div style="font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 8px 0;">${totalBeneficiaries.toLocaleString()}</div>
+                            <div style="font-size: 0.75rem; color: var(--success); font-weight: 600;"><i class="fas fa-trending-up"></i> +12.4% vs last week</div>
+                        </div>
+                        <div class="chart-card" style="padding: 20px;">
+                            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">CO2 Offset (Tons)</div>
+                            <div style="font-size: 1.8rem; font-weight: 800; color: var(--sdg-13); margin: 8px 0;">${totalCO2.toLocaleString()}</div>
+                            <div style="font-size: 0.75rem; color: var(--success); font-weight: 600;"><i class="fas fa-leaf"></i> Continuously tracking</div>
+                        </div>
+                        <div class="chart-card" style="padding: 20px;">
+                            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">SDG Goals Covered</div>
+                            <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent); margin: 8px 0;">12 / 17</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Diversity Index: High</div>
+                        </div>
+                        <div class="chart-card" style="padding: 20px;">
+                            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Impact Multiplier</div>
+                            <div style="font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 8px 0;">3.45x</div>
+                            <div style="font-size: 0.75rem; color: var(--success); font-weight: 600;">Verified social value</div>
+                        </div>
+                    </div>
+
+                    <div class="report-grid">
+                        <div class="chart-card">
+                            <h3 style="margin-bottom: 24px;">Active Initiatives Impact Profiles</h3>
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                ${stats.map(init => `
+                                    <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                            <div>
+                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                                    <span style="font-size: 0.7rem; font-weight: 800; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: var(--text-secondary); text-transform: uppercase;">${init.type}</span>
+                                                    <h4 style="margin: 0; font-size: 1.1rem;">${init.title}</h4>
+                                                </div>
+                                                <div style="display: flex; gap: 4px;">
+                                                    ${init.sdgs.map(s => `<span style="width: 20px; height: 20px; background: var(--sdg-${s}); color: white; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 900;">${s}</span>`).join('')}
+                                                </div>
+                                            </div>
+                                            <div style="text-align: right;">
+                                                <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">${init.progress}% Progress</div>
+                                                <div style="font-size: 0.7rem; color: var(--text-secondary);">Last updated: Just now</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
+                                            <div style="height: 100%; width: ${init.progress}%; background: var(--sdg-${init.sdgs[0] || '16'}); transition: width 0.5s;"></div>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                                            ${Object.entries(init.actual).map(([key, val]) => `
+                                                <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #f1f5f9;">
+                                                    <div style="font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700;">${key.replace('_', ' ')}</div>
+                                                    <div style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary);">${val.toLocaleString()} <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 400;">/ ${init.projected[key].toLocaleString()}</span></div>
+                                                    <div style="height: 4px; background: #e2e8f0; border-radius: 2px; margin-top: 8px; overflow: hidden;">
+                                                        <div style="height: 100%; width: ${(val / init.projected[key]) * 100}%; background: var(--success);"></div>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="chart-card">
+                                <h3 style="margin-bottom: 20px;">Impact Pulse Feed</h3>
+                                <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    <div style="display: flex; gap: 12px;">
+                                        <div style="width: 32px; height: 32px; background: rgba(76, 159, 56, 0.1); color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fas fa-check-circle" style="font-size: 0.8rem;"></i></div>
+                                        <div>
+                                            <p style="font-size: 0.85rem; margin: 0;"><b>EcoPulse Solar</b> just powered its 312th household in Gadchiroli.</p>
+                                            <span style="font-size: 0.7rem; color: var(--text-secondary);">2 minutes ago</span>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 12px;">
+                                        <div style="width: 32px; height: 32px; background: rgba(229, 36, 59, 0.1); color: var(--danger); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fas fa-exclamation-triangle" style="font-size: 0.8rem;"></i></div>
+                                        <div>
+                                            <p style="font-size: 0.85rem; margin: 0;"><b> Bihar Water</b> reaching 45% of its quarterly target. Need to accelerate.</p>
+                                            <span style="font-size: 0.7rem; color: var(--text-secondary);">10 minutes ago</span>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 12px;">
+                                        <div style="width: 32px; height: 32px; background: rgba(0, 104, 157, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="fas fa-users" style="font-size: 0.8rem;"></i></div>
+                                        <div>
+                                            <p style="font-size: 0.85rem; margin: 0;"><b>EmpowerHER</b> completed training session for Batch #12.</p>
+                                            <span style="font-size: 0.7rem; color: var(--text-secondary);">1 hour ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button style="width: 100%; margin-top: 24px; padding: 12px; background: transparent; border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); cursor: pointer;">View Activity Log</button>
+                            </div>
+
+                            <div class="chart-card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border: none;">
+                                <h3 style="color: white; margin-bottom: 12px;">Comparative Analytics</h3>
+                                <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; margin-bottom: 20px;">AI-driven analysis of projected vs. actual impact across our ecosystem.</p>
+                                <div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; color: white;">
+                                    <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 12px;">Efficiency Score</div>
+                                    <div style="font-size: 2.5rem; font-weight: 800;">88%</div>
+                                    <p style="font-size: 0.8rem; margin-top: 8px; opacity: 0.9;">Total actual impact is 12% below projections globally. Flags are active for Resource Supply Chain.</p>
+                                </div>
+                                <button style="width: 100%; margin-top: 20px; padding: 12px; background: white; color: var(--primary); border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">Deep Dive Analytics</button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                },
+
+                'ngo-verification': () => {
+                    const ngos = MockImpactEngine.ngos;
+                    const getStatusBadge = (status) => {
+                        if (status === 'verified') return `<span style="background: #ecfdf5; color: #059669; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 800;"><i class="fas fa-check"></i> VERIFIED</span>`;
+                        if (status === 'pending') return `<span style="background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 800;"><i class="fas fa-clock"></i> PENDING</span>`;
+                        return `<span style="background: #f1f5f9; color: #64748b; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 800;"><i class="fas fa-times"></i> NOT STARTED</span>`;
+                    };
+
+                    return `
+                    <div class="service-view-header">
+                        <button class="back-btn" onclick="ServicesPortal.switchView('landing')"><i class="fas fa-arrow-left"></i></button>
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 800;">NGO Verification Directory</h1>
+                            <p style="color: var(--text-secondary)">Transparency and compliance tracking for all platform partners.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="report-grid">
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="chart-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                    <h3 style="margin: 0;">Verified NGOs Directory</h3>
+                                    <div style="position: relative; width: 300px;">
+                                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 12px; color: var(--text-secondary); font-size: 0.9rem;"></i>
+                                        <input type="text" placeholder="Search by name, location..." style="padding: 10px 12px 10px 36px; font-size: 0.9rem; border-radius: 8px;">
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    ${ngos.map(ngo => `
+                                        <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.2s;">
+                                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                                <div>
+                                                    <h4 style="margin: 0 0 4px 0; font-size: 1.1rem;">${ngo.name}</h4>
+                                                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;"><i class="fas fa-map-marker-alt"></i> ${ngo.location} • ${ngo.type}</p>
+                                                </div>
+                                                <div style="text-align: right;">
+                                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Trust Score</div>
+                                                    <div style="font-size: 1.3rem; font-weight: 900; color: ${ngo.trustScore > 80 ? 'var(--success)' : (ngo.trustScore > 60 ? 'var(--warning)' : 'var(--danger)')}">${ngo.trustScore}%</div>
+                                                </div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+                                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                                    <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-secondary);">12A COMPLIANCE</span>
+                                                    ${getStatusBadge(ngo.status['12A'])}
+                                                </div>
+                                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                                    <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-secondary);">80G TAX EXEMPT</span>
+                                                    ${getStatusBadge(ngo.status['80G'])}
+                                                </div>
+                                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                                    <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-secondary);">CSR-1 REGISTERED</span>
+                                                    ${getStatusBadge(ngo.status['CSR-1'])}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="chart-card">
+                                <h3>My Compliance</h3>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px;">Your current organization status on the platform.</p>
+                                <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    <div style="padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
+                                        <div style="font-size: 0.75rem; font-weight: 800; color: #166534; margin-bottom: 4px;">TRUSTED STATUS</div>
+                                        <div style="font-size: 1.1rem; font-weight: 700; color: #166534;">Verified Tier 1</div>
+                                    </div>
+                                    <button onclick="ServicesPortal.notify('Certification wizard launched')" style="width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 700;">Upload New Document</button>
+                                </div>
+                            </div>
+
+                            <div class="chart-card" style="background: #f8fafc;">
+                                <h3>Verification Levels</h3>
+                                <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+                                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                        <div style="width: 24px; height: 24px; background: #ecfdf5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.7rem;"><i class="fas fa-check"></i></div>
+                                        <span style="font-size: 0.85rem;"><b>Tier 1:</b> All legal docs verified. CSR-ready.</span>
+                                    </div>
+                                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                        <div style="width: 24px; height: 24px; background: #fffbeb; color: #d97706; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.7rem;"><i class="fas fa-clock"></i></div>
+                                        <span style="font-size: 0.85rem;"><b>Tier 2:</b> Registration pending review.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                },
+
+                'csr-brokerage': () => `
+                    <div class="service-view-header">
+                        <button class="back-btn" onclick="ServicesPortal.switchView('landing')"><i class="fas fa-arrow-left"></i></button>
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 800;">CSR Partnership Brokerage</h1>
+                            <p style="color: var(--text-secondary)">Bridging corporate capital with social impact.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+                        <div style="flex: 1; position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 16px; top: 14px; color: var(--text-secondary);"></i>
+                            <input type="text" placeholder="Search by Project, SDG, or Location..." style="padding-left: 45px;">
+                        </div>
+                        <select style="width: 200px;">
+                            <option>All SDGs</option>
+                            <option>SDG 4: Quality Education</option>
+                            <option>SDG 13: Climate Action</option>
+                        </select>
+                        <button style="padding: 0 24px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 700;">Filter</button>
+                    </div>
+
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div style="background: var(--sdg-4); color: white; padding: 4px 12px; font-size: 0.75rem; border-radius: 20px; width: fit-content; margin-bottom: 12px;">SDG 4: Education</div>
+                            <h3>Digital Literacy in Rural Bihar</h3>
+                            <p>Sponsored by <b>Tata Comm</b> • Seeking NGO partner for grassroots implementation.</p>
+                            <div style="margin: 16px 0; font-weight: 700; color: var(--text-primary);">$12,000 Budget</div>
+                            <div class="service-footer">
+                                <span class="learn-more">Apply to Partner <i class="fas fa-link"></i></span>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div style="background: var(--sdg-13); color: white; padding: 4px 12px; font-size: 0.75rem; border-radius: 20px; width: fit-content; margin-bottom: 12px;">SDG 13: Climate</div>
+                            <h3>Urban Afforestation Drive</h3>
+                            <p>Sponsored by <b>HDFC Bank</b> • Budget for planting 50,000 indigenous trees.</p>
+                            <div style="margin: 16px 0; font-weight: 700; color: var(--text-primary);">$45,000 Budget</div>
+                            <div class="service-footer">
+                                <span class="learn-more">Apply to Partner <i class="fas fa-link"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `,
+
+                'startup-mentorship': () => `
+                    <div class="service-view-header">
+                        <button class="back-btn" onclick="ServicesPortal.switchView('landing')"><i class="fas fa-arrow-left"></i></button>
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 800;">Startup Mentorship</h1>
+                            <p style="color: var(--text-secondary)">Expert guidance for impact-driven founders.</p>
+                        </div>
+                    </div>
+
+                    <div class="report-grid">
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="chart-card">
+                                <h3>Recommended Mentors</h3>
+                                <div style="margin-top: 20px;">
+                                    <div class="mentor-item" style="display: flex; align-items: center; gap: 16px; padding: 16px; border-bottom: 1px solid #f1f5f9;">
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">👨‍💼</div>
+                                        <div style="flex: 1;">
+                                            <h4 style="margin: 0;">Rajesh Khanna</h4>
+                                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Ex-Google VP • Impact Investing</p>
+                                        </div>
+                                        <button style="padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600;">Request Session</button>
+                                    </div>
+                                    <div class="mentor-item" style="display: flex; align-items: center; gap: 16px; padding: 16px;">
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">👩‍🔬</div>
+                                        <div style="flex: 1;">
+                                            <h4 style="margin: 0;">Dr. Priya S.</h4>
+                                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Environmental Scientist • ESG Specialist</p>
+                                        </div>
+                                        <button style="padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600;">Request Session</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Mentor Application</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">New startups must apply to enter the mentorship track.</p>
+                            <button class="btn-primary" style="width: 100%; padding: 12px; background: var(--secondary); color: white; border: none; border-radius: 8px; font-weight: 700;">Submit Application</button>
+                        </div>
+                    </div>
+                `,
+
+                'innovation-challenges': () => `
+                    <div class="service-view-header">
+                        <button class="back-btn" onclick="ServicesPortal.switchView('landing')"><i class="fas fa-arrow-left"></i></button>
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 800;">Innovation Challenges</h1>
+                            <p style="color: var(--text-secondary)">Crowdsourcing solutions for global problems.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 24px; margin-bottom: 30px;">
+                        <button style="background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700;"><i class="fas fa-plus"></i> Create Challenge</button>
+                        <button style="background: white; border: 1px solid var(--border); padding: 12px 24px; border-radius: 8px; font-weight: 700;">My Submissions</button>
+                    </div>
+
+                    <div class="service-card" style="margin-bottom: 24px; --service-color: var(--sdg-6);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <h3 style="font-size: 1.6rem;">Clean Water Access Hackathon 2026</h3>
+                                <p>Build a low-cost IoT solution for monitoring ground water levels in urban Maharashtra.</p>
+                            </div>
+                            <div style="background: #fdf2f8; color: #be185d; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Ends in 14 Days</div>
+                        </div>
+                        <div style="display: flex; gap: 40px; margin-top: 20px;">
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Prize Pool</div>
+                                <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary);">$5,000</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Participants</div>
+                                <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary);">242 Teams</div>
+                            </div>
+                        </div>
+                        <div class="service-footer">
+                            <span class="learn-more">Join Challenge <i class="fas fa-users"></i></span>
+                        </div>
+                    </div>
+                `,
+
+                'volunteer-matching': () => `
+                    <div class="service-view-header">
+                        <button class="back-btn" onclick="ServicesPortal.switchView('landing')"><i class="fas fa-arrow-left"></i></button>
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 800;">Volunteer Matching</h1>
+                            <p style="color: var(--text-secondary)">Connect your skills with meaningful causes.</p>
+                        </div>
+                    </div>
+
+                    <div class="report-grid">
+                        <div class="chart-card">
+                            <h3>Matching Algorithm Results</h3>
+                            <div style="margin-top: 20px;">
+                                <div class="opportunity-card" style="padding: 20px; border: 1px solid #f1f5f9; border-radius: 12px; margin-bottom: 16px;">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <h4 style="margin: 0;">UI/UX Designer for Green NGO</h4>
+                                        <span style="background: #ecfdf5; color: #059669; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">98% MATCH</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; margin-top: 8px;"><b>Reason:</b> Matches your skill 'Figma' and SDG focus 'Environment'.</p>
+                                    <button style="margin-top: 12px; width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600;">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>My Volunteer Profile</h3>
+                            <div style="margin-top: 16px;">
+                                <div style="font-size: 0.85rem; font-weight: 700;">Skills:</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 20px;">
+                                    <span style="background: #e2e8f0; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">UI/UX Design</span>
+                                    <span style="background: #e2e8f0; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">Web Dev</span>
+                                    <span style="background: #e2e8f0; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">Data Science</span>
+                                </div>
+                                <button style="width: 100%; padding: 10px; background: white; border: 1px solid var(--primary); color: var(--primary); border-radius: 6px; font-weight: 700;">Update Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => ServicesPortal.init());
+
+    </script>
+</body>
+
+</html>

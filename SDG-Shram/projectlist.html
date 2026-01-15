@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore SDG Startups | SDG-Shram</title>
+    <link rel="stylesheet" href="navbar-common.css">
+    <link rel="stylesheet" href="projectlist.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="globalSearch" placeholder="Search startups by name or goal...">
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="connect.html">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html" class="active">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="services.html">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">SDG Advocate</p>
+                        </div>
+                    </div>
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+                    <div class="dropdown-section">
+                        <a href="#">⚙️ Settings</a>
+                        <a href="#" class="sign-out" onclick="handleLogout()">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="page-container"
+        style="padding-top: 100px; max-width: 1240px; margin: 0 auto; display: flex; gap: 30px; padding-bottom: 50px;">
+
+        <!-- Left Sidebar: SDG Filters -->
+        <aside
+            style="width: 280px; position: sticky; top: 100px; height: calc(100vh - 120px); overflow-y: auto; padding-right: 15px; border-right: 1px solid #f1f5f9;">
+            <h2
+                style="font-size: 1.1rem; margin-bottom: 20px; color: #0f4c81; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+                Goal Discovery</h2>
+            <div id="sdgFilterList" style="display: flex; flex-direction: column; gap: 6px;">
+                <div class="filter-item active" data-goal="all"
+                    style="padding: 12px; background: #e7f3ff; color: #0f4c81; border-radius: 8px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 10px; transition: all 0.2s;">
+                    <i class="fas fa-th"></i> All Startups
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Content: Startup Grid -->
+        <main style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <div>
+                    <h1 id="discoveryTitle" style="font-size: 2rem; font-weight: 800; color: #1c1e21; margin: 0;">
+                        Explore SDG Startups</h1>
+                    <p style="color: #64748b; margin-top: 4px;">Discover innovation bridging science and society.</p>
+                </div>
+                <a href="startup-portal.html" class="btn-primary"
+                    style="background: #2ecc71; color: white; padding: 12px 24px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2); transition: all 0.2s;">
+                    <i class="fas fa-plus"></i> Post a Startup
+                </a>
+            </div>
+
+            <div id="startupGrid"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+                <!-- Startups will be injected here -->
+            </div>
+
+            <div id="emptyState" style="display: none; text-align: center; padding: 80px 0;">
+                <div style="font-size: 4rem; color: #e2e8f0; margin-bottom: 24px;"><i class="fas fa-seedling"></i></div>
+                <h3 style="font-size: 1.5rem; font-weight: 700;">No ventures found yet</h3>
+                <p style="color: #64748b; margin-bottom: 24px;">Growth takes time. Be the first to plant an idea here.
+                </p>
+                <a href="startup-portal.html"
+                    style="background: #0f4c81; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 700;">Start
+                    Submission</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden template for startup card -->
+    <template id="startupCardTemplate">
+        <div class="project-card"
+            style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;">
+            <div class="card-tags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;"></div>
+            <h3 class="startup-name" style="margin: 0 0 12px 0; font-size: 1.3rem; color: #1c1e21; font-weight: 800;">
+            </h3>
+            <p class="startup-desc"
+                style="font-size: 0.95rem; color: #65676b; line-height: 1.6; margin-bottom: 24px; flex: 1;"></p>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f8fafc; padding-top: 20px;">
+                <div>
+                    <div
+                        style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin-bottom: 2px;">
+                        Funding Goal</div>
+                    <span class="startup-funding" style="font-weight: 800; color: #0f4c81; font-size: 1.1rem;"></span>
+                </div>
+                <span class="view-btn"
+                    style="color: #2ecc71; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">View
+                    Pitch <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i></span>
+            </div>
+        </div>
+    </template>
+
+    <script src="navbar-init.js"></script>
+    <script>
+        const DiscoveryEngine = {
+            currentGoal: 'all',
+            startups: [],
+
+            sdgData: [
+                { id: 1, name: "No Poverty", color: "#E5243B" },
+                { id: 2, name: "Zero Hunger", color: "#DDA63A" },
+                { id: 3, name: "Good Health", color: "#4C9F38" },
+                { id: 4, name: "Quality Education", color: "#C5192D" },
+                { id: 5, name: "Gender Equality", color: "#FF3A21" },
+                { id: 6, name: "Clean Water", color: "#26BDE2" },
+                { id: 7, name: "Affordable Energy", color: "#FCC30B" },
+                { id: 8, name: "Decent Work", color: "#A21942" },
+                { id: 9, name: "Industry & Innovation", color: "#FD6925" },
+                { id: 10, name: "Reduced Inequality", color: "#DD1367" },
+                { id: 11, name: "Sustainable Cities", color: "#FD9D24" },
+                { id: 12, name: "Responsible Consumption", color: "#BF8B2E" },
+                { id: 13, name: "Climate Action", color: "#3F7E44" },
+                { id: 14, name: "Life Below Water", color: "#0A97D9" },
+                { id: 15, name: "Life On Land", color: "#56C02B" },
+                { id: 16, name: "Peace & Justice", color: "#00689D" },
+                { id: 17, name: "Partnership for Goals", color: "#19486A" }
+            ],
+
+            init() {
+                this.loadStartups();
+                this.renderFilters();
+                this.renderStartups();
+                this.setupSearch();
+
+                window.addEventListener('storage', (e) => {
+                    if (e.key === 'submittedStartups') {
+                        this.loadStartups();
+                        this.renderStartups();
+                    }
+                });
+            },
+
+            loadStartups() {
+                const defaults = [
+                    { id: 'D1', name: 'EcoPulse Solar', problemStatement: 'Providing affordable solar-powered irrigation systems to rural farmers in Maharashtra.', funding: '450000', sdgs: [7, 13, 2] },
+                    { id: 'D2', name: 'AquaPure AI', problemStatement: 'Using machine learning to detect groundwater contaminants in real-time.', funding: '1200000', sdgs: [6, 9] },
+                    { name: 'EduTrack India', problemStatement: 'Blockchain-based tracking of student learning outcomes in underserved communities.', funding: '150000', sdgs: [4, 10] }
+                ];
+                const submitted = JSON.parse(localStorage.getItem('submittedStartups') || '[]');
+                this.startups = [...submitted, ...defaults];
+            },
+
+            renderFilters() {
+                const list = document.getElementById('sdgFilterList');
+                this.sdgData.forEach(goal => {
+                    const item = document.createElement('div');
+                    item.className = 'filter-item';
+                    item.dataset.goal = goal.id;
+                    item.style.padding = '10px 12px';
+                    item.style.borderRadius = '8px';
+                    item.style.cursor = 'pointer';
+                    item.style.fontSize = '0.9rem';
+                    item.style.fontWeight = '600';
+                    item.style.display = 'flex';
+                    item.style.alignItems = 'center';
+                    item.style.gap = '12px';
+                    item.style.color = '#64748b';
+                    item.style.transition = 'all 0.25s ease';
+                    item.innerHTML = `
+                        <span style="width: 28px; height: 28px; background: ${goal.color}; color: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800;">${goal.id}</span>
+                        ${goal.name}
+                    `;
+
+                    item.onclick = () => {
+                        document.querySelectorAll('.filter-item').forEach(i => {
+                            i.classList.remove('active');
+                            i.style.background = 'transparent';
+                            i.style.color = '#64748b';
+                            i.style.transform = 'none';
+                        });
+                        item.classList.add('active');
+                        item.style.background = '#f8fafc';
+                        item.style.color = '#1c1e21';
+                        item.style.transform = 'translateX(5px)';
+                        this.currentGoal = goal.id;
+                        this.renderStartups();
+                    };
+                    list.appendChild(item);
+                });
+
+                const allBtn = document.querySelector('[data-goal="all"]');
+                allBtn.onclick = () => {
+                    document.querySelectorAll('.filter-item').forEach(i => {
+                        i.classList.remove('active');
+                        i.style.background = 'transparent';
+                        i.style.color = '#64748b';
+                        i.style.transform = 'none';
+                    });
+                    allBtn.classList.add('active');
+                    allBtn.style.background = '#e7f3ff';
+                    allBtn.style.color = '#0f4c81';
+                    this.currentGoal = 'all';
+                    this.renderStartups();
+                };
+            },
+
+            renderStartups(searchTerm = '') {
+                const grid = document.getElementById('startupGrid');
+                const empty = document.getElementById('emptyState');
+                const template = document.getElementById('startupCardTemplate');
+                const title = document.getElementById('discoveryTitle');
+
+                grid.innerHTML = '';
+                let filtered = this.startups;
+
+                if (this.currentGoal !== 'all') {
+                    filtered = filtered.filter(s => s.sdgs.includes(parseInt(this.currentGoal)));
+                    const goalName = this.sdgData.find(g => g.id == this.currentGoal).name;
+                    title.textContent = `${goalName} Ventures`;
+                } else {
+                    title.textContent = 'Explore All Startups';
+                }
+
+                if (searchTerm) {
+                    filtered = filtered.filter(s =>
+                        s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        s.problemStatement.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+
+                if (filtered.length === 0) {
+                    empty.style.display = 'block';
+                    grid.style.display = 'none';
+                } else {
+                    empty.style.display = 'none';
+                    grid.style.display = 'grid';
+
+                    filtered.forEach(s => {
+                        const card = template.content.cloneNode(true);
+                        card.querySelector('.startup-name').textContent = s.name;
+                        card.querySelector('.startup-desc').textContent = s.problemStatement;
+                        const fundingVal = s.funding.toString().replace('$', '').replace(',', '');
+                        card.querySelector('.startup-funding').textContent = '$' + parseInt(fundingVal).toLocaleString();
+
+                        const tagContainer = card.querySelector('.card-tags');
+                        s.sdgs.forEach(sid => {
+                            const goal = this.sdgData.find(g => g.id == sid);
+                            if (goal) {
+                                const tag = document.createElement('span');
+                                tag.style.background = goal.color;
+                                tag.style.color = 'white';
+                                tag.style.padding = '3px 8px';
+                                tag.style.borderRadius = '5px';
+                                tag.style.fontSize = '0.65rem';
+                                tag.style.fontWeight = '800';
+                                tag.textContent = `GOAL ${sid}`;
+                                tagContainer.appendChild(tag);
+                            }
+                        });
+                        grid.appendChild(card);
+                    });
+                }
+            },
+
+            setupSearch() {
+                const search = document.getElementById('globalSearch');
+                search.addEventListener('input', (e) => {
+                    this.renderStartups(e.target.value);
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => DiscoveryEngine.init());
+    </script>
+</body>
+
+</html>

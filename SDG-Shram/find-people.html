@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find People | SDG-Shram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f2ef;
+            --accent-blue: #007bff;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+        }
+
+        nav {
+            background: #002147;
+            padding: 10px 5%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            /* Close spacing for list view */
+        }
+
+        /* Results Card - List View Style */
+        .user-card {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+
+        .user-card:hover {
+            background: #f9f9f9;
+        }
+
+        .card-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e7f3ff;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-info h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .user-type {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .user-focus {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .connect-btn {
+            padding: 6px 20px;
+            border-radius: 15px;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            background: transparent;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .connect-btn.sent {
+            background: #e9ecef;
+            border-color: #dee2e6;
+            color: #6c757d;
+            cursor: default;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="connect.html" class="back-btn">←</a>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search by name, organization, or SDG..."
+                autofocus>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 id="resultTitle">Recent Members</h2>
+        <div id="resultsList" class="results-list">
+            <!-- Results will appear here -->
+        </div>
+    </div>
+
+    <script src="networking.js"></script>
+    <script>
+        let searchTimeout;
+        const resultsList = document.getElementById('resultsList');
+        const searchInput = document.getElementById('searchInput');
+        const resultTitle = document.getElementById('resultTitle');
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', loadDiscovery);
+
+        async function loadDiscovery() {
+            resultsList.innerHTML = '<div class="empty-state">Loading suggestions...</div>';
+            const res = await apiFetch('/users/discovery');
+            if (res.success) {
+                renderUsers(res.data);
+            }
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+
+            if (!query) {
+                resultTitle.textContent = 'Recent Members';
+                loadDiscovery();
+                return;
+            }
+
+            searchTimeout = setTimeout(async () => {
+                resultTitle.textContent = `Search results for "${query}"`;
+                const res = await apiFetch(`/users/search?q=${encodeURIComponent(query)}`);
+                if (res.success) {
+                    renderUsers(res.data);
+                }
+            }, 300);
+        });
+
+        function renderUsers(users) {
+            if (users.length === 0) {
+                resultsList.innerHTML = '<div class="empty-state">No members found matching your search.</div>';
+                return;
+            }
+            resultsList.innerHTML = users.map(user => createUserCard(user)).join('');
+        }
+    </script>
+</body>
+
+</html>

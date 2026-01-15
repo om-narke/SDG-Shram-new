@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect | SDG-Shram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #f3f2ef;
+            /* Light gray to match other pages */
+            --card-bg: #ffffff;
+            --accent-blue: #007bff;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        /* Navbar placeholder sync */
+        nav {
+            background: #002147;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header-section {
+            margin-bottom: 50px;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #ddd;
+            color: var(--text-dark);
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* User Card Styles */
+        .user-card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #eee;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
+
+        .user-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .user-type {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .user-focus {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-blue);
+            background: transparent;
+            color: var(--accent-blue);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Community Card Styles */
+        .community-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .community-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .community-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .community-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sdg-tag {
+            background: #e7f3ff;
+            color: #007bff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .member-count {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .join-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
+        /* Requests Section Styles */
+        .requests-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: none;
+            /* Hidden by default, shown if requests exist */
+        }
+
+        .requests-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .request-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .request-card:last-child {
+            border-bottom: none;
+        }
+
+        .request-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .request-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #e7f3ff;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .request-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .request-info strong {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .request-info span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .accept-btn,
+        .reject-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .accept-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+        }
+
+        .reject-btn {
+            background: white;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .accept-btn:hover {
+            background: #0056b3;
+        }
+
+        .reject-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .close-modal {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-blue);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">SDG-Shram</div>
+        <div class="nav-links">
+            <a href="feed.html" style="color: white; text-decoration: none;">Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header-section">
+            <h1>Connect for Impact</h1>
+            <p>Build meaningful connections, collaborate on social causes, and grow your SDG-aligned network.</p>
+            <div class="action-btns">
+                <a href="find-people.html" class="btn btn-primary">Find People</a>
+                <button class="btn btn-outline" onclick="openCommunityModal()">Create a Community</button>
+            </div>
+        </header>
+
+        <!-- New Connection Requests Section -->
+        <section id="requestsSection" class="requests-section">
+            <h2 style="margin-bottom: 20px;">Pending Connection Requests</h2>
+            <div id="requestsGrid" class="requests-grid">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+
+        <section>
+            <h2>People You May Want to Connect With</h2>
+            <div id="peopleGrid" class="grid">
+                <div class="loading">Loading suggestions...</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Communities You Can Join</h2>
+            <div id="communitiesGrid" class="grid">
+                <div class="loading">Loading communities...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Create Community Modal -->
+    <div id="communityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create a New Community</h3>
+                <span class="close-modal" onclick="closeCommunityModal()">&times;</span>
+            </div>
+            <form id="createCommunityForm">
+                <div class="form-group">
+                    <label for="commName">Community Name</label>
+                    <input type="text" id="commName" placeholder="e.g., Solar Energy Advocates" required>
+                </div>
+                <div class="form-group">
+                    <label for="commDesc">Description</label>
+                    <textarea id="commDesc" placeholder="What is this community about?" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="commSdg">Primary SDG Focus</label>
+                    <select id="commSdg" required>
+                        <option value="">Select an SDG</option>
+                        <option value="1">SDG 1: No Poverty</option>
+                        <option value="2">SDG 2: Zero Hunger</option>
+                        <option value="3">SDG 3: Good Health</option>
+                        <option value="4">SDG 4: Quality Education</option>
+                        <option value="5">SDG 5: Gender Equality</option>
+                        <option value="6">SDG 6: Clean Water</option>
+                        <option value="7">SDG 7: Clean Energy</option>
+                        <option value="13">SDG 13: Climate Action</option>
+                        <option value="14">SDG 14: Life Below Water</option>
+                        <option value="15">SDG 15: Life on Land</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; border-radius: 8px; margin-top: 10px;">Create Community</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="networking.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check auth
+            if (!localStorage.getItem('token')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load Incoming Requests
+            const requestsRes = await apiFetch('/users/connect/requests');
+            if (requestsRes.success && requestsRes.data.length > 0) {
+                const grid = document.getElementById('requestsGrid');
+                grid.innerHTML = requestsRes.data.map(req => createRequestCard(req)).join('');
+                document.getElementById('requestsSection').style.display = 'block';
+            }
+
+            // Load Discovery Users
+            const userRes = await apiFetch('/users/discovery');
+            if (userRes.success) {
+                const grid = document.getElementById('peopleGrid');
+                grid.innerHTML = userRes.data.map(user => createUserCard(user)).join('');
+            }
+
+            // Load Communities
+            const commRes = await apiFetch('/communities');
+            if (commRes.success) {
+                const grid = document.getElementById('communitiesGrid');
+                grid.innerHTML = commRes.data.map(comm => createCommunityCard(comm)).join('');
+                if (commRes.data.length === 0) {
+                    grid.innerHTML = '<div class="loading">No communities yet. Be the first to create one!</div>';
+                }
+            }
+        });
+
+        const modal = document.getElementById('communityModal');
+        const commForm = document.getElementById('createCommunityForm');
+
+        function openCommunityModal() {
+            modal.style.display = 'block';
+        }
+
+        function closeCommunityModal() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeCommunityModal();
+            }
+        }
+
+        commForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = commForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating...';
+
+            const communityData = {
+                name: document.getElementById('commName').value,
+                description: document.getElementById('commDesc').value,
+                sdg: document.getElementById('commSdg').value
+            };
+
+            const result = await createCommunity(communityData);
+            if (result.success) {
+                alert('Community created successfully!');
+                closeCommunityModal();
+                location.reload();
+            } else {
+                alert(result.error || 'Failed to create community');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Community';
+            }
+        });
+    </script>
+</body>
+
+</html>

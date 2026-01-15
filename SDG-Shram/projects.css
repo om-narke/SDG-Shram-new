@@ -1,0 +1,306 @@
+/* Page Container */
+.page-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* ----------------------------- */
+/* Projects Hero Section */
+/* ----------------------------- */
+
+.projects-hero {
+    margin-bottom: 30px;
+}
+
+.projects-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.projects-hero .hero-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Horizontal Cards Row */
+.project-cards-row {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+/* Horizontal Card Styling */
+.project-card.horizontal-card {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.project-card.horizontal-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.project-card.blue-accent {
+    border-left-color: #007bff;
+}
+
+.project-card.green-accent {
+    border-left-color: #28a745;
+}
+
+.project-card .card-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.project-card .card-content p {
+    font-size: 0.92rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+/* Tags */
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.card-tags .tag {
+    background: #f0f4f8;
+    color: #555;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid #e0e6ed;
+}
+
+/* Card Buttons */
+.card-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.card-buttons .btn-primary {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.card-buttons .btn-primary:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+.card-buttons .btn-primary.green {
+    background: #28a745;
+}
+
+.card-buttons .btn-primary.green:hover {
+    background: #1e7e34;
+}
+
+.card-buttons .btn-outline {
+    background: transparent;
+    color: #333;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease;
+}
+
+.card-buttons .btn-outline:hover {
+    background: #f5f5f5;
+    border-color: #bbb;
+}
+
+/* Transparency Note */
+.transparency-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* ----------------------------- */
+/* Projects Section Styling */
+/* ----------------------------- */
+
+.projects-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 40px 50px;
+    color: #333;
+    line-height: 1.8;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.projects-section h2 {
+    font-size: 1.8rem;
+    color: #002147;
+    font-style: italic;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.projects-section p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.projects-section b {
+    color: #002147;
+}
+
+.projects-section ul {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.projects-section ul li {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.projects-section ol {
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+.projects-section ol li {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.projects-section .closing {
+    font-style: italic;
+    font-weight: 600;
+    margin-top: 15px;
+    color: #002147;
+}
+
+/* Divider line */
+.projects-section .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ddd, transparent);
+    margin: 30px 0;
+}
+
+/* Buttons Section */
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 35px;
+}
+
+/* Button Design */
+.btn-list,
+.btn-upload {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: none;
+    border-radius: 30px;
+    padding: 14px 35px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-list:hover,
+.btn-upload:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.btn-upload {
+    background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-upload:hover {
+    background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+    .project-cards-row {
+        flex-direction: column;
+    }
+
+    .projects-section {
+        padding: 30px 25px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-list,
+    .btn-upload {
+        width: 100%;
+        font-size: 0.95rem;
+    }
+
+    .feed-navbar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 3%;
+    }
+
+    .search-box {
+        display: none;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .projects-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .card-buttons {
+        flex-direction: column;
+    }
+
+    .card-buttons .btn-primary,
+    .card-buttons .btn-outline {
+        text-align: center;
+    }
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | SDG-Shram</title>
+    <link rel="stylesheet" href="navbar-common.css">
+    <link rel="stylesheet" href="projects.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar (Shared) -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search startups, projects...">
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="connect.html">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html" class="active">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="services.html">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">SDG Advocate</p>
+                        </div>
+                    </div>
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+                    <div class="dropdown-section">
+                        <a href="#">⚙️ Settings</a>
+                        <a href="#" class="sign-out" onclick="handleLogout()">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="navbar-init.js"></script>
+
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <!-- Projects on SDG-Shram Hero Section -->
+        <section class="projects-hero">
+            <h1>Projects on SDG-Shram</h1>
+            <p class="hero-subtitle">Choose how you want to create impact — by building solutions or supporting change
+                on the ground.</p>
+
+            <!-- Horizontal Cards Container -->
+            <div class="project-cards-row">
+                <!-- Card 1: Startup Funding & Mentorship -->
+                <div class="project-card horizontal-card blue-accent">
+                    <div class="card-content">
+                        <h3>Startup Funding & Mentorship</h3>
+                        <p>Support SDG-aligned startups by providing funding, mentorship, partnerships, or strategic
+                            guidance. Help founders scale solutions addressing real social and environmental challenges.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">SDG Startups</span>
+                            <span class="tag">Early-Stage</span>
+                            <span class="tag">Innovation</span>
+                        </div>
+                        <div class="card-buttons">
+                            <a href="projectlist.html" class="btn-primary">Explore Startups</a>
+                            <a href="startup-portal.html" class="btn-outline">Post a Startup Project</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: NGO & Institutional Fundraising -->
+                <div class="project-card horizontal-card green-accent">
+                    <div class="card-content">
+                        <h3>NGO & Institutional Fundraising</h3>
+                        <p>Enable NGOs and institutions to raise funds for verified SDG campaigns. Support community
+                            programs, awareness drives, and on-ground initiatives.</p>
+                        <div class="card-tags">
+                            <span class="tag">NGOs</span>
+                            <span class="tag">Institutions</span>
+                            <span class="tag">Campaigns</span>
+                        </div>
+                        <div class="card-buttons">
+                            <a href="campaigns.html" class="btn-primary green">Explore Campaigns</a>
+                            <a href="create-campaign.html" class="btn-outline">Create a Fundraising Campaign</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="transparency-note">All projects on SDG-Shram follow transparency, verification, and SDG alignment
+                standards.</p>
+        </section>
+
+        <!-- Startup Ideas Section -->
+        <section class="projects-section">
+            <h2><i>Startup Ideas for a Sustainable Future</i></h2>
+
+            <p class="intro"><b>Turn your sustainable idea into action!</b><br>
+                This section is dedicated to innovators, students, and changemakers who are developing startup ideas
+                aligned with the United Nations Sustainable Development Goals (SDGs).<br>
+                If you have an idea, prototype, or project that aims to make a positive social, environmental, or
+                economic impact — this is the place to showcase it.
+            </p>
+
+            <p class="why"><b>Why share your idea here?</b></p>
+            <ul>
+                <li>Get visibility among businesses, NGOs, and investors who care about sustainability.</li>
+                <li>Find mentors and collaborators to help you refine and scale your project.</li>
+                <li>Contribute to real-world SDG progress through innovation and entrepreneurship.</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <p class="how-title"><b>How it works:</b></p>
+            <ol class="steps">
+                <li>Submit your startup idea with details like goal alignment, challenges, and impact.</li>
+                <li>Get featured on our platform for review by potential partners.</li>
+                <li>Collaborate, grow, and make your sustainable dream a reality!</li>
+            </ol>
+
+            <p class="closing"><i>Together, we can turn sustainable ideas into real-world change.</i></p>
+
+            <div class="buttons">
+                <a href="projectlist.html"><button class="btn-list">List of all the projects</button></a>
+                <a href="startup-portal.html"><button class="btn-upload">Upload your Startup Idea Here</button></a>
+            </div>
+        </section>
+    </div>
+
+</body>
+
+</html>

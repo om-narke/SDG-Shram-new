@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Details | SDG-Shram</title>
+    <link rel="stylesheet" href="campaign-detail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search projects, NGOs, people...">
+        </div>
+
+        <div class="nav-links">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="#">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html" class="active">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="#">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">Tech Enthusiast | SDG Advocate</p>
+                        </div>
+                    </div>
+
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Account</div>
+                        <a href="#">⚙️ Settings & Privacy</a>
+                        <a href="#">❓ Help</a>
+                        <a href="#">🌐 Language</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Manage</div>
+                        <a href="#">📝 Posts & Activity</a>
+                    </div>
+
+                    <div class="dropdown-section">
+                        <a href="#" class="sign-out" onclick="handleLogout(); return false;">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <!-- Campaign Header -->
+        <section class="campaign-header">
+            <a href="campaigns.html" class="back-link">← Back to Campaigns</a>
+            <h1 id="campaignTitle">Clean Drinking Water for Rural Communities</h1>
+            <p class="campaign-meta">
+                <span class="sdg-tag">SDG 6</span>
+                <span class="separator">·</span>
+                <span id="orgName">NGO Initiative</span>
+                <span class="separator">·</span>
+                <span id="location">Maharashtra, India</span>
+                <span class="separator">·</span>
+                <span class="verified-badge">✓ Verified Campaign</span>
+            </p>
+        </section>
+
+        <!-- Campaign Cover Image -->
+        <div class="campaign-main-image" id="campaignCoverContainer" style="display: none; margin-bottom: 30px;">
+            <img id="campaignCoverImage" src="" alt="Campaign Cover"
+                style="width: 100%; border-radius: 12px; height: 400px; object-fit: cover;">
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+
+            <!-- Left Column - Campaign Details -->
+            <div class="left-column">
+
+                <!-- Campaign Overview -->
+                <div class="info-card">
+                    <h3>Campaign Overview</h3>
+                    <p id="campaignOverview">
+                        This campaign aims to install clean drinking water filtration systems in underserved rural
+                        villages, ensuring long-term access to safe water for over 5,000 residents. The initiative
+                        focuses on sustainability, community ownership, and measurable health outcomes.
+                    </p>
+                </div>
+
+                <!-- Key Objectives -->
+                <div class="info-card">
+                    <h3>Key Objectives</h3>
+                    <ul class="objectives-list">
+                        <li>Install 25 community water filtration units</li>
+                        <li>Reduce waterborne diseases by 40%</li>
+                        <li>Train local volunteers for maintenance</li>
+                        <li>Create sustainable water management committees</li>
+                        <li>Provide clean water access to 5,000+ residents</li>
+                    </ul>
+                </div>
+
+                <!-- Fund Utilization Plan -->
+                <div class="info-card">
+                    <h3>Fund Utilization Plan</h3>
+                    <ul class="fund-list">
+                        <li><span class="fund-category">Infrastructure & Equipment</span> — 60%</li>
+                        <li><span class="fund-category">Training & Community Programs</span> — 20%</li>
+                        <li><span class="fund-category">Maintenance Fund</span> — 10%</li>
+                        <li><span class="fund-category">Administrative & Logistics</span> — 10%</li>
+                    </ul>
+                </div>
+
+                <!-- Impact Timeline -->
+                <div class="info-card">
+                    <h3>Impact Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot completed"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 1: Site Assessment</h4>
+                                <p>Completed - Jan 2026</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot active"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 2: Fundraising</h4>
+                                <p>In Progress - Feb 2026</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 3: Installation</h4>
+                                <p>Planned - Mar 2026</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 4: Community Training</h4>
+                                <p>Planned - Apr 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About the Organization -->
+                <div class="info-card">
+                    <h3>About the Organization</h3>
+                    <p>XYZ Foundation is a registered non-profit organization working in rural development and public
+                        health for over 10 years, with operations across Maharashtra and Karnataka.</p>
+                </div>
+
+                <!-- Transparency & Compliance -->
+                <div class="info-card transparency-card">
+                    <h3>Transparency & Compliance</h3>
+                    <p>This campaign follows SDG-Shram's transparency standards. All fund usage updates, progress
+                        reports, and impact metrics will be published periodically on this page.</p>
+                </div>
+
+            </div>
+
+            <!-- Right Column - Donation & Status -->
+            <div class="right-column">
+
+                <!-- Donation Card -->
+                <div class="donation-card">
+                    <div class="raised-info">
+                        <span class="amount">₹4.2L</span> raised of <span class="goal">₹6L</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
+                    <p class="supporters"><strong>142</strong> supporters</p>
+
+                    <a href="#" class="btn-donate">Donate Now</a>
+                    <a href="#" class="btn-share">Share Campaign</a>
+                </div>
+
+                <!-- Verification Status -->
+                <div class="verification-card">
+                    <h4>Verification Status</h4>
+                    <ul class="verification-list">
+                        <li class="verified">
+                            <span class="check">✓</span>
+                            NGO Verified
+                        </li>
+                        <li class="verified">
+                            <span class="check">✓</span>
+                            SDG Alignment Reviewed
+                        </li>
+                        <li class="verified">
+                            <span class="check">✓</span>
+                            Fund Usage Declared
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Campaign Stats -->
+                <div class="stats-card">
+                    <h4>Campaign Stats</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-value">32</span>
+                            <span class="stat-label">Days Left</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">70%</span>
+                            <span class="stat-label">Funded</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">5K+</span>
+                            <span class="stat-label">Beneficiaries</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">25</span>
+                            <span class="stat-label">Villages</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="contact-card">
+                    <h4>Contact Campaign</h4>
+                    <p>Have questions? Reach out to the campaign organizers.</p>
+                    <a href="#" class="btn-contact">Send Message</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Authentication check
+        (function () {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+
+            if (!token || !user) {
+                alert('🔒 Please login to access this page.');
+                window.location.replace('dashboard.html');
+            } else {
+                try {
+                    const userData = JSON.parse(user);
+                    const initial = userData.name ? userData.name.charAt(0).toUpperCase() : 'U';
+
+                    document.getElementById('userAvatar').textContent = initial;
+                    document.getElementById('dropdownAvatar').textContent = initial;
+                    document.getElementById('dropdownName').textContent = userData.name || 'User Name';
+                    document.getElementById('dropdownBio').textContent = userData.userType || 'SDG Advocate';
+                } catch (e) {
+                    console.log('Error parsing user data:', e);
+                }
+            }
+        })();
+
+        // Fetch and display campaign details
+        async function loadCampaignDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const campaignId = urlParams.get('id');
+
+            if (!campaignId) {
+                alert('Campaign ID not found');
+                window.location.href = 'campaigns.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/campaigns/${campaignId}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    const campaign = result.data;
+                    populateCampaignData(campaign);
+                } else {
+                    alert('Error loading campaign: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error fetching campaign details:', error);
+                alert('Error connecting to server');
+            }
+        }
+
+        function populateCampaignData(campaign) {
+            // Basic Info
+            document.getElementById('campaignTitle').textContent = campaign.title;
+            document.getElementById('location').textContent = campaign.location;
+            document.querySelector('.sdg-tag').textContent = `SDG ${campaign.primarySdg}`;
+            document.getElementById('campaignOverview').textContent = campaign.overview;
+
+            // Cover Image
+            if (campaign.coverImage && campaign.coverImage.url) {
+                const coverContainer = document.getElementById('campaignCoverContainer');
+                const coverImg = document.getElementById('campaignCoverImage');
+                coverImg.src = campaign.coverImage.url;
+                coverContainer.style.display = 'block';
+            }
+
+            // Header Org Name
+            let creatorName = 'Organization';
+            let aboutOrg = campaign.aboutOrg || 'Information about the organization will appear here.';
+
+            if (campaign.createdBy) {
+                const type = campaign.createdBy.stakeholderType;
+                if (type === 'ngo') creatorName = campaign.createdBy.ngo?.ngoName || 'NGO';
+                else if (type === 'business') creatorName = campaign.createdBy.business?.companyName || 'Business';
+                else if (type === 'institution') creatorName = campaign.createdBy.institution?.institutionName || 'Institution';
+            }
+            document.getElementById('orgName').textContent = creatorName;
+
+            // About Organization section
+            const aboutSection = document.querySelector('.info-card:nth-of-type(5)');
+            if (aboutSection) {
+                aboutSection.querySelector('p').textContent = aboutOrg;
+            }
+
+            // Objectives
+            const objectivesList = document.querySelector('.objectives-list');
+            if (campaign.objectives && campaign.objectives.length > 0) {
+                objectivesList.innerHTML = campaign.objectives.map(obj => `<li>${obj}</li>`).join('');
+            } else {
+                objectivesList.innerHTML = '<li>Objective information not available.</li>';
+            }
+
+            // Fund Utilization Plan
+            const fundList = document.querySelector('.fund-list');
+            if (campaign.fundAllocation && campaign.fundAllocation.length > 0) {
+                fundList.innerHTML = campaign.fundAllocation.map(fund =>
+                    `<li><span class="fund-category">${fund.category}</span> — ${fund.percentage}%</li>`
+                ).join('');
+            } else {
+                fundList.innerHTML = '<li>Fund utilization information not available.</li>';
+            }
+
+            // Timeline
+            const timelineContainer = document.querySelector('.timeline');
+            if (campaign.timeline && campaign.timeline.length > 0) {
+                timelineContainer.innerHTML = campaign.timeline.map(item => `
+                    <div class="timeline-item">
+                        <div class="timeline-dot ${item.status === 'completed' ? 'completed' : (item.status === 'in-progress' ? 'active' : '')}"></div>
+                        <div class="timeline-content">
+                            <h4>${item.name}</h4>
+                            <p>${item.status.charAt(0).toUpperCase() + item.status.slice(1)} - ${item.date || 'TBD'}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                timelineContainer.innerHTML = '<p>Timeline information not available.</p>';
+            }
+
+            // Progress & Stats
+            const progress = campaign.progressPercent || 0;
+            const raised = (campaign.raisedAmount / 100000).toFixed(1) + 'L';
+            const goal = (campaign.goalAmount / 100000).toFixed(1) + 'L';
+
+            document.querySelector('.right-column .amount').textContent = `₹${raised}`;
+            document.querySelector('.right-column .goal').textContent = `₹${goal}`;
+            document.querySelector('.right-column .progress-fill').style.width = `${progress}%`;
+            document.querySelector('.right-column .supporters strong').textContent = campaign.supporters || 0;
+
+            // Stats Grid
+            const statValues = document.querySelectorAll('.stat-value');
+            if (statValues.length >= 4) {
+                statValues[0].textContent = campaign.daysLeft; // Days Left
+                statValues[1].textContent = `${progress}%`;    // Funded
+                statValues[2].textContent = (campaign.beneficiaries > 1000) ? (campaign.beneficiaries / 1000).toFixed(1) + 'K+' : campaign.beneficiaries;
+                statValues[3].textContent = campaign.targetArea || '—';
+            }
+
+            // Verification Status
+            if (campaign.isVerified) {
+                document.querySelector('.verified-badge').style.display = 'inline';
+            } else {
+                document.querySelector('.verified-badge').textContent = 'Review Pending';
+                document.querySelector('.verified-badge').style.background = '#fff3cd';
+                document.querySelector('.verified-badge').style.color = '#856404';
+            }
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', loadCampaignDetails);
+
+        // Toggle dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            const menu = document.getElementById('profileMenu');
+            dropdown.classList.toggle('show');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const menu = document.getElementById('profileMenu');
+            const dropdown = document.getElementById('profileDropdown');
+            if (menu && !menu.contains(event.target)) {
+                dropdown.classList.remove('show');
+                menu.classList.remove('active');
+            }
+        });
+
+        // Logout function
+        function handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.replace('dashboard.html');
+        }
+    </script>
+</body>
+
+</html>

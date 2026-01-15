@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Campaign | SDG-Shram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f3f2ef;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #002147;
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-section img {
+            height: 42px;
+        }
+
+        .logo-section h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            padding: 40px 5%;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Form Container */
+        .form-container {
+            max-width: 800px;
+            margin: 30px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .form-card h2 {
+            font-size: 1.15rem;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-card h2 .step-num {
+            background: #333;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #333;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Form Row */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Fund Allocation */
+        .fund-allocation {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #eee;
+        }
+
+        .fund-item {
+            display: grid;
+            grid-template-columns: 1fr 100px;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .fund-item input[type="text"] {
+            padding: 12px;
+        }
+
+        .fund-item input[type="number"] {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .add-fund-btn {
+            background: none;
+            border: 1px dashed #999;
+            padding: 12px;
+            border-radius: 8px;
+            color: #666;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .add-fund-btn:hover {
+            background: #f5f5f5;
+            border-color: #666;
+        }
+
+        /* Objectives */
+        .objective-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .objective-item input {
+            flex: 1;
+        }
+
+        .remove-btn {
+            background: #fee;
+            border: none;
+            color: #e74c3c;
+            width: 44px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #fdd;
+        }
+
+        /* Timeline */
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 120px;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        /* Image Upload */
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .image-upload:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .image-upload input {
+            display: none;
+        }
+
+        .image-upload .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .image-upload p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .image-upload small {
+            color: #999;
+        }
+
+        .image-preview-container {
+            display: none;
+            margin-top: 15px;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .image-preview-container img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .remove-image-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .remove-image-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Submit Section */
+        .submit-section {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .btn-submit {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background: #222;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-draft {
+            background: white;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 14px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-draft:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+
+        /* SDG Selector */
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .sdg-option {
+            position: relative;
+        }
+
+        .sdg-option input {
+            display: none;
+        }
+
+        .sdg-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .sdg-option input:checked+label {
+            border-color: #667eea;
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            .form-row,
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .sdg-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+        <a href="projects.html" class="back-btn">← Back to Projects</a>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>🚀 Create a Fundraising Campaign</h1>
+        <p>Launch your campaign to make a real impact on the Sustainable Development Goals</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+
+        <!-- Step 1: Basic Information -->
+        <div class="form-card">
+            <h2><span class="step-num">1</span> Campaign Basic Information</h2>
+
+            <div class="form-group">
+                <label>Campaign Title <span class="required">*</span></label>
+                <input type="text" id="campaignTitle" placeholder="e.g., Clean Drinking Water for Rural Communities"
+                    required>
+                <small>A clear, compelling title that explains your campaign's purpose</small>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>SDG Alignment <span class="required">*</span></label>
+                    <select id="primarySdg" required>
+                        <option value="">Select Primary SDG</option>
+                        <option value="1">SDG 1 - No Poverty</option>
+                        <option value="2">SDG 2 - Zero Hunger</option>
+                        <option value="3">SDG 3 - Good Health</option>
+                        <option value="4">SDG 4 - Quality Education</option>
+                        <option value="5">SDG 5 - Gender Equality</option>
+                        <option value="6">SDG 6 - Clean Water</option>
+                        <option value="7">SDG 7 - Affordable Energy</option>
+                        <option value="8">SDG 8 - Decent Work</option>
+                        <option value="9">SDG 9 - Industry & Innovation</option>
+                        <option value="10">SDG 10 - Reduced Inequalities</option>
+                        <option value="11">SDG 11 - Sustainable Cities</option>
+                        <option value="12">SDG 12 - Responsible Consumption</option>
+                        <option value="13">SDG 13 - Climate Action</option>
+                        <option value="14">SDG 14 - Life Below Water</option>
+                        <option value="15">SDG 15 - Life on Land</option>
+                        <option value="16">SDG 16 - Peace & Justice</option>
+                        <option value="17">SDG 17 - Partnerships</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Campaign Location <span class="required">*</span></label>
+                    <input type="text" id="location" placeholder="e.g., Maharashtra, India" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Campaign Overview <span class="required">*</span></label>
+                <textarea id="overview"
+                    placeholder="Describe your campaign in detail. What problem are you solving? Who will benefit? What is your approach?"
+                    required></textarea>
+                <small>This will be the main description donors see (minimum 100 characters)</small>
+            </div>
+
+            <div class="form-group">
+                <label>Campaign Cover Image</label>
+                <div class="image-upload" id="uploadBox" onclick="document.getElementById('coverImage').click()">
+                    <input type="file" id="coverImage" accept="image/*" onchange="handleImagePreview(this)">
+                    <div class="upload-icon">📷</div>
+                    <p id="uploadText">Click to upload campaign cover image</p>
+                    <small>Recommended: 1200x630px, JPG or PNG, max 5MB</small>
+                </div>
+                <div class="image-preview-container" id="previewContainer">
+                    <img src="" id="imagePreview" alt="Preview">
+                    <button type="button" class="remove-image-btn" onclick="removeImage()">Remove Image</button>
+                    <div
+                        style="padding: 10px; background: #f8f9fa; font-size: 0.9rem; color: #28a745; text-align: center;">
+                        ✅ Image selected successfully
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Funding Details -->
+        <div class="form-card">
+            <h2><span class="step-num">2</span> Funding Details</h2>
+
+            <div class="form-row-3">
+                <div class="form-group">
+                    <label>Fundraising Goal (₹) <span class="required">*</span></label>
+                    <input type="number" id="goalAmount" placeholder="600000" min="10000" required>
+                </div>
+                <div class="form-group">
+                    <label>Campaign Start Date <span class="required">*</span></label>
+                    <input type="date" id="startDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Campaign End Date <span class="required">*</span></label>
+                    <input type="date" id="endDate" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Fund Utilization Plan <span class="required">*</span></label>
+                <small>Describe how the funds will be allocated (must total 100%)</small>
+                <div class="fund-allocation" id="fundAllocation">
+                    <div class="fund-item">
+                        <input type="text" placeholder="e.g., Infrastructure & Equipment" class="fund-category">
+                        <input type="number" placeholder="%" class="fund-percent" min="0" max="100">
+                    </div>
+                    <div class="fund-item">
+                        <input type="text" placeholder="e.g., Training & Programs" class="fund-category">
+                        <input type="number" placeholder="%" class="fund-percent" min="0" max="100">
+                    </div>
+                    <div class="fund-item">
+                        <input type="text" placeholder="e.g., Administrative Costs" class="fund-category">
+                        <input type="number" placeholder="%" class="fund-percent" min="0" max="100">
+                    </div>
+                </div>
+                <button type="button" class="add-fund-btn" onclick="addFundItem()">+ Add Fund Category</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Key Objectives -->
+        <div class="form-card">
+            <h2><span class="step-num">3</span> Key Objectives & Impact</h2>
+
+            <div class="form-group">
+                <label>Key Objectives <span class="required">*</span></label>
+                <small>List the main goals of your campaign</small>
+                <div id="objectivesList">
+                    <div class="objective-item">
+                        <input type="text" placeholder="Objective 1: e.g., Install 25 water filtration units"
+                            class="objective-input">
+                        <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+                    </div>
+                    <div class="objective-item">
+                        <input type="text" placeholder="Objective 2: e.g., Train 50 local volunteers"
+                            class="objective-input">
+                        <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+                    </div>
+                    <div class="objective-item">
+                        <input type="text" placeholder="Objective 3: e.g., Reduce waterborne diseases by 40%"
+                            class="objective-input">
+                        <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+                    </div>
+                </div>
+                <button type="button" class="add-fund-btn" onclick="addObjective()">+ Add Objective</button>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Expected Beneficiaries <span class="required">*</span></label>
+                    <input type="number" id="beneficiaries" placeholder="e.g., 5000" required>
+                    <small>Number of people who will directly benefit</small>
+                </div>
+                <div class="form-group">
+                    <label>Target Area/Villages</label>
+                    <input type="text" id="targetArea" placeholder="e.g., 25 villages in Pune district">
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Impact Timeline -->
+        <div class="form-card">
+            <h2><span class="step-num">4</span> Implementation Timeline</h2>
+
+            <div class="form-group">
+                <label>Project Phases</label>
+                <small>Add the key phases of your project implementation</small>
+                <div id="timelineList">
+                    <div class="timeline-item">
+                        <input type="text" placeholder="Phase 1: e.g., Site Assessment" class="phase-name">
+                        <input type="text" placeholder="e.g., Jan 2026" class="phase-date">
+                        <select class="phase-status">
+                            <option value="planned">Planned</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="timeline-item">
+                        <input type="text" placeholder="Phase 2: e.g., Fundraising" class="phase-name">
+                        <input type="text" placeholder="e.g., Feb 2026" class="phase-date">
+                        <select class="phase-status">
+                            <option value="planned">Planned</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="timeline-item">
+                        <input type="text" placeholder="Phase 3: e.g., Implementation" class="phase-name">
+                        <input type="text" placeholder="e.g., Mar 2026" class="phase-date">
+                        <select class="phase-status">
+                            <option value="planned">Planned</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="add-fund-btn" onclick="addTimelinePhase()">+ Add Phase</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Additional Information -->
+        <div class="form-card">
+            <h2><span class="step-num">5</span> Additional Information</h2>
+
+            <div class="form-group">
+                <label>About Your Organization</label>
+                <textarea id="aboutOrg"
+                    placeholder="Tell donors about your organization's background, experience, and credibility..."></textarea>
+                <small>This helps build trust with potential donors</small>
+            </div>
+
+            <div class="form-group">
+                <label>Supporting Documents</label>
+                <div class="image-upload" onclick="document.getElementById('documents').click()">
+                    <input type="file" id="documents" accept=".pdf,.doc,.docx" multiple>
+                    <div class="upload-icon">📄</div>
+                    <p>Upload project proposals, budgets, or certifications</p>
+                    <small>PDF, DOC accepted, max 10MB each</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Campaign Video URL (Optional)</label>
+                <input type="url" id="videoUrl" placeholder="https://youtube.com/watch?v=...">
+                <small>Add a YouTube or Vimeo link to increase engagement</small>
+            </div>
+        </div>
+
+        <!-- Submit Section -->
+        <div class="submit-section">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="submitCampaign()">
+                Submit Campaign for Review
+            </button>
+            <button type="button" class="btn-draft" onclick="saveDraft()">
+                Save as Draft
+            </button>
+            <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                Your campaign will be reviewed by our team before going live
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Required documents configuration
+        const requiredDocuments = {
+            'registrationCertificate': 'Registration Certificate (PDF)',
+            'panCard': 'PAN Card (NGO)',
+            'twelveACertificate': '12A Certificate',
+            'eightyGCertificate': '80G Certificate',
+            'trusteesDetails': 'Board of Trustees Details'
+        };
+
+        // Check authentication and compliance on load
+        (async function checkAccess() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    const user = result.data;
+
+                    // Only apply restrictions to NGOs
+                    if (user.stakeholderType === 'ngo') {
+                        const ngo = user.ngo || {};
+                        const docs = ngo.documents || {};
+
+                        // Check for missing required documents
+                        const missingDocs = [];
+
+                        // Check file-based documents
+                        ['registrationCertificate', 'panCard', 'twelveACertificate', 'eightyGCertificate'].forEach(docId => {
+                            if (!docs[docId] || !docs[docId].status || docs[docId].status === 'unloaded') {
+                                missingDocs.push(requiredDocuments[docId]);
+                            }
+                        });
+
+                        // Check trustees details
+                        if (!docs.trusteesDetails || docs.trusteesDetails.status !== 'added') {
+                            missingDocs.push(requiredDocuments['trusteesDetails']);
+                        }
+
+                        // Calculate progress
+                        const totalRequired = Object.keys(requiredDocuments).length;
+                        const completed = totalRequired - missingDocs.length;
+                        const progressPercent = Math.round((completed / totalRequired) * 100);
+
+                        // If documents are missing OR compliance is not verified
+                        if (missingDocs.length > 0 || ngo.complianceStatus !== 'VERIFIED') {
+                            const warning = document.createElement('div');
+                            warning.id = 'demoComplianceOverlay';
+                            warning.style = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;';
+
+                            let statusIcon = '📋';
+                            let statusTitle = 'Complete Your Profile';
+                            let statusColor = '#ffc107';
+                            let statusMessage = '';
+
+                            if (missingDocs.length > 0) {
+                                statusIcon = '📄';
+                                statusTitle = 'Documents Required';
+                                statusColor = '#dc3545';
+                                statusMessage = `You need to upload <strong>${missingDocs.length}</strong> more required document(s) before creating a campaign.`;
+                            } else if (ngo.complianceStatus === 'PENDING') {
+                                statusIcon = '⏳';
+                                statusTitle = 'Verification Pending';
+                                statusColor = '#ffc107';
+                                statusMessage = 'All documents have been uploaded! Your profile is being reviewed by our team.';
+                            } else if (ngo.complianceStatus === 'REJECTED') {
+                                statusIcon = '❌';
+                                statusTitle = 'Verification Rejected';
+                                statusColor = '#dc3545';
+                                statusMessage = 'Some of your documents were rejected. Please check your profile and re-upload them.';
+                            } else {
+                                statusMessage = 'Please complete your profile onboarding to create campaigns.';
+                            }
+
+                            let missingDocsHtml = '';
+                            if (missingDocs.length > 0) {
+                                missingDocsHtml = `
+                                    <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: left;">
+                                        <h4 style="color: #333; margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Required Documents:</h4>
+                                        <ul style="list-style: none; padding: 0; margin: 0;">
+                                            ${missingDocs.map(doc => `
+                                                <li style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #eee;">
+                                                    <span style="color: #dc3545; font-size: 1.1rem;">✗</span>
+                                                    <span style="color: #666;">${doc}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                `;
+                            }
+
+                            warning.innerHTML = `
+                                <div style="max-width: 520px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); animation: slideUp 0.4s ease;">
+                                    <div style="font-size: 4rem; margin-bottom: 15px;">${statusIcon}</div>
+                                    <h1 style="color: #1a1a1a; margin-bottom: 10px; font-size: 1.8rem;">${statusTitle}</h1>
+                                    
+                                    <!-- Progress Bar -->
+                                    <div style="background: #e9ecef; border-radius: 10px; height: 10px; margin: 20px 0; overflow: hidden;">
+                                        <div style="background: linear-gradient(90deg, #28a745, #20c997); height: 100%; width: ${progressPercent}%; transition: width 0.5s ease; border-radius: 10px;"></div>
+                                    </div>
+                                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">
+                                        Profile Completion: <strong style="color: ${progressPercent === 100 ? '#28a745' : '#333'}">${progressPercent}%</strong> 
+                                        (${completed} of ${totalRequired} required documents)
+                                    </p>
+                                    
+                                    <p style="color: #666; font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px;">
+                                        ${statusMessage}
+                                    </p>
+                                    
+                                    ${missingDocsHtml}
+                                    
+                                    <a href="profile.html" style="display: inline-block; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; padding: 14px 35px; border-radius: 30px; text-decoration: none; font-weight: 600; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,123,255,0.3); transition: transform 0.2s, box-shadow 0.2s;">
+                                        ${missingDocs.length > 0 ? '📤 Upload Documents' : '👀 View Profile Status'}
+                                    </a>
+                                    
+                                    <div style="margin-top: 25px; border-top: 1px solid #eee; pt: 20px;">
+                                        <button onclick="document.getElementById('demoComplianceOverlay').remove(); window.isDemoMode = true; console.log('🚀 Demo Mode Activated');" 
+                                                style="background: none; border: 2px solid #007bff; color: #007bff; padding: 10px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 15px;">
+                                            🔓 Continue to Demo
+                                        </button>
+                                    </div>
+                                    
+                                    <div style="margin-top: 10px;">
+                                        <a href="campaigns.html" style="color: #888; text-decoration: none; font-size: 0.9rem;">← Back to Campaigns</a>
+                                    </div>
+                                </div>
+                                
+                                <style>
+                                    @keyframes slideUp {
+                                        from { opacity: 0; transform: translateY(30px); }
+                                        to { opacity: 1; transform: translateY(0); }
+                                    }
+                                </style>
+                            `;
+                            document.body.appendChild(warning);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('Access check failed:', err);
+            }
+        })();
+
+        // Handle Image Preview
+        function handleImagePreview(input) {
+            const previewContainer = document.getElementById('previewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+            const uploadBox = document.getElementById('uploadBox');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    uploadBox.style.display = 'none';
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Remove Image
+        function removeImage() {
+            const input = document.getElementById('coverImage');
+            const previewContainer = document.getElementById('previewContainer');
+            const uploadBox = document.getElementById('uploadBox');
+            const imagePreview = document.getElementById('imagePreview');
+
+            input.value = '';
+            imagePreview.src = '';
+            previewContainer.style.display = 'none';
+            uploadBox.style.display = 'block';
+        }
+
+        // Add fund allocation item
+        function addFundItem() {
+            const container = document.getElementById('fundAllocation');
+            const item = document.createElement('div');
+            item.className = 'fund-item';
+            item.innerHTML = `
+                <input type="text" placeholder="Category name" class="fund-category">
+                <input type="number" placeholder="%" class="fund-percent" min="0" max="100">
+            `;
+            container.appendChild(item);
+        }
+
+        // Add objective
+        function addObjective() {
+            const container = document.getElementById('objectivesList');
+            const count = container.children.length + 1;
+            const item = document.createElement('div');
+            item.className = 'objective-item';
+            item.innerHTML = `
+                <input type="text" placeholder="Objective ${count}" class="objective-input">
+                <button type="button" class="remove-btn" onclick="removeItem(this)">×</button>
+            `;
+            container.appendChild(item);
+        }
+
+        // Add timeline phase
+        function addTimelinePhase() {
+            const container = document.getElementById('timelineList');
+            const count = container.children.length + 1;
+            const item = document.createElement('div');
+            item.className = 'timeline-item';
+            item.innerHTML = `
+                <input type="text" placeholder="Phase ${count}" class="phase-name">
+                <input type="text" placeholder="Timeline" class="phase-date">
+                <select class="phase-status">
+                    <option value="planned">Planned</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            `;
+            container.appendChild(item);
+        }
+
+        // Remove item
+        function removeItem(btn) {
+            btn.parentElement.remove();
+        }
+
+        // Collect form data
+        function collectFormData() {
+            // Collect objectives
+            const objectives = [];
+            document.querySelectorAll('.objective-input').forEach(input => {
+                if (input.value.trim()) objectives.push(input.value.trim());
+            });
+
+            // Collect fund allocation
+            const fundAllocation = [];
+            const categories = document.querySelectorAll('.fund-category');
+            const percents = document.querySelectorAll('.fund-percent');
+            for (let i = 0; i < categories.length; i++) {
+                if (categories[i].value.trim() && percents[i].value) {
+                    fundAllocation.push({
+                        category: categories[i].value.trim(),
+                        percentage: parseInt(percents[i].value)
+                    });
+                }
+            }
+
+            // Collect timeline
+            const timeline = [];
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                const name = item.querySelector('.phase-name').value.trim();
+                const date = item.querySelector('.phase-date').value.trim();
+                const status = item.querySelector('.phase-status').value;
+                if (name) {
+                    timeline.push({ name, date, status });
+                }
+            });
+
+            return {
+                title: document.getElementById('campaignTitle').value.trim(),
+                primarySdg: document.getElementById('primarySdg').value,
+                location: document.getElementById('location').value.trim(),
+                overview: document.getElementById('overview').value.trim(),
+                goalAmount: parseInt(document.getElementById('goalAmount').value),
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                fundAllocation,
+                objectives,
+                beneficiaries: parseInt(document.getElementById('beneficiaries').value) || 0,
+                targetArea: document.getElementById('targetArea').value.trim(),
+                timeline,
+                aboutOrg: document.getElementById('aboutOrg').value.trim(),
+                videoUrl: document.getElementById('videoUrl').value.trim()
+            };
+        }
+
+        // Validate form
+        function validateForm() {
+            const data = collectFormData();
+
+            if (!data.title) {
+                alert('Please enter a campaign title');
+                return false;
+            }
+            if (!data.primarySdg) {
+                alert('Please select a primary SDG');
+                return false;
+            }
+            if (!data.location) {
+                alert('Please enter the campaign location');
+                return false;
+            }
+            if (!data.overview || data.overview.length < 100) {
+                alert('Please provide a detailed overview (minimum 100 characters)');
+                return false;
+            }
+            if (!data.goalAmount || data.goalAmount < 10000) {
+                alert('Please enter a valid fundraising goal (minimum ₹10,000)');
+                return false;
+            }
+            if (!data.startDate || !data.endDate) {
+                alert('Please select campaign start and end dates');
+                return false;
+            }
+            if (data.objectives.length < 1) {
+                alert('Please add at least one objective');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Submit campaign
+        async function submitCampaign() {
+            if (!validateForm()) return;
+
+            // Check Compliance Status for NGOs (real-time check)
+            const token = localStorage.getItem('token');
+            const userResponse = await fetch('/api/auth/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const userData = await userResponse.json();
+
+            if (userData.data.stakeholderType === 'ngo' && !window.isDemoMode) {
+                const ngo = userData.data.ngo || {};
+                const docs = ngo.documents || {};
+
+                // Check for missing required documents
+                const missingDocs = [];
+                const requiredDocsLocal = {
+                    'registrationCertificate': 'Registration Certificate',
+                    'panCard': 'PAN Card',
+                    'twelveACertificate': '12A Certificate',
+                    'eightyGCertificate': '80G Certificate'
+                };
+
+                Object.keys(requiredDocsLocal).forEach(docId => {
+                    if (!docs[docId] || !docs[docId].status || docs[docId].status === 'unloaded') {
+                        missingDocs.push(requiredDocsLocal[docId]);
+                    }
+                });
+
+                if (!docs.trusteesDetails || docs.trusteesDetails.status !== 'added') {
+                    missingDocs.push('Board of Trustees Details');
+                }
+
+                if (missingDocs.length > 0) {
+                    const totalRequired = 5;
+                    const completed = totalRequired - missingDocs.length;
+                    const progressPercent = Math.round((completed / totalRequired) * 100);
+
+                    alert(`🚫 Documents Required!\n\n${missingDocs.length} document(s) still needed:\n- ${missingDocs.join('\n- ')}\n\nProfile Progress: ${progressPercent}%\n\nPlease complete your profile documentation first.`);
+                    window.location.href = 'profile.html';
+                    return;
+                }
+
+                if (ngo.complianceStatus !== 'VERIFIED') {
+                    let statusMessage = '⏳ Verification Pending';
+                    if (ngo.complianceStatus === 'REJECTED') {
+                        statusMessage = '❌ Verification Rejected - Please check your documents';
+                    }
+
+                    alert(`${statusMessage}\n\nAll documents have been uploaded, but your profile needs to be verified by our admin team before you can create campaigns.\n\nPlease wait for verification or contact support.`);
+                    window.location.href = 'profile.html';
+                    return;
+                }
+            }
+
+            const btn = document.getElementById('submitBtn');
+            const originalBtnText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            // Collect all data
+            const data = collectFormData();
+
+            // Create FormData object for file upload
+            const formData = new FormData();
+
+            // Append basic fields
+            formData.append('title', data.title);
+            formData.append('primarySdg', data.primarySdg);
+            formData.append('location', data.location);
+            formData.append('overview', data.overview);
+            formData.append('goalAmount', data.goalAmount);
+            formData.append('startDate', data.startDate);
+            formData.append('endDate', data.endDate);
+            formData.append('beneficiaries', data.beneficiaries);
+            formData.append('targetArea', data.targetArea);
+            formData.append('aboutOrg', data.aboutOrg);
+            formData.append('videoUrl', data.videoUrl);
+            formData.append('status', 'pending_review');
+
+            // Append complex objects as JSON strings (controller will parse them)
+            formData.append('fundAllocation', JSON.stringify(data.fundAllocation));
+            formData.append('objectives', JSON.stringify(data.objectives));
+            formData.append('timeline', JSON.stringify(data.timeline));
+
+            // Append cover image file
+            const coverImageInput = document.getElementById('coverImage');
+            if (coverImageInput.files && coverImageInput.files[0]) {
+                formData.append('coverImage', coverImageInput.files[0]);
+            }
+
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/campaigns', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                        // 'Content-Type': 'multipart/form-data' // Browser sets this automatically with boundary
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ Campaign submitted successfully!\n\nYour campaign will be reviewed by our team and will go live once approved.');
+                    localStorage.removeItem('campaignDraft');
+                    window.location.href = 'campaigns.html';
+                } else {
+                    throw new Error(result.error || 'Failed to submit campaign');
+                }
+
+            } catch (error) {
+                console.error('Error submitting campaign:', error);
+                alert(`Error: ${error.message}`);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalBtnText;
+            }
+        }
+
+        // Save as draft
+        function saveDraft() {
+            const formData = collectFormData();
+            formData.status = 'draft';
+
+            localStorage.setItem('campaignDraft', JSON.stringify(formData));
+            alert('Campaign saved as draft!');
+        }
+
+        // Load draft if exists
+        window.addEventListener('DOMContentLoaded', function () {
+            const draft = localStorage.getItem('campaignDraft');
+            if (draft) {
+                const data = JSON.parse(draft);
+                // Populate form fields with draft data
+                if (data.title) document.getElementById('campaignTitle').value = data.title;
+                if (data.primarySdg) document.getElementById('primarySdg').value = data.primarySdg;
+                if (data.location) document.getElementById('location').value = data.location;
+                if (data.overview) document.getElementById('overview').value = data.overview;
+                if (data.goalAmount) document.getElementById('goalAmount').value = data.goalAmount;
+                if (data.startDate) document.getElementById('startDate').value = data.startDate;
+                if (data.endDate) document.getElementById('endDate').value = data.endDate;
+                if (data.beneficiaries) document.getElementById('beneficiaries').value = data.beneficiaries;
+                if (data.targetArea) document.getElementById('targetArea').value = data.targetArea;
+                if (data.aboutOrg) document.getElementById('aboutOrg').value = data.aboutOrg;
+                if (data.videoUrl) document.getElementById('videoUrl').value = data.videoUrl;
+            }
+
+            // Set min date for date inputs
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').min = today;
+            document.getElementById('endDate').min = today;
+        });
+    </script>
+</body>
+
+</html>

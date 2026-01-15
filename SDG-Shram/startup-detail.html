@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Detail | SDG-Shram</title>
+    <link rel="stylesheet" href="startup-portal-premium.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .detail-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .detail-banner {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            position: relative;
+        }
+
+        .detail-header-overlay {
+            padding: 0 40px;
+            margin-top: -60px;
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .detail-logo-large {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 4px solid white;
+        }
+
+        .detail-title-section {
+            padding-bottom: 12px;
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 32px;
+            border-bottom: 1px solid var(--border-color);
+            margin: 40px 0 32px;
+            padding: 0 40px;
+        }
+
+        .tab-item {
+            padding: 12px 0;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .tab-item.active {
+            color: var(--primary);
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .impact-stat-box {
+            padding: 24px;
+            border-radius: var(--radius-md);
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .impact-stat-box i {
+            font-size: 1.5rem;
+            color: var(--impact-green);
+            margin-bottom: 12px;
+        }
+
+        .impact-stat-box .value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .impact-stat-box .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .traction-chart-placeholder {
+            height: 240px;
+            background: #f1f5f9;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border: 1px dashed var(--border-color);
+            margin-top: 20px;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        .document-item:hover {
+            border-color: var(--secondary);
+            background: #f0f9ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="portal-wrapper">
+        <!-- Sidebar (Same as dashboard for consistency) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="logo/logo.png" alt="SDG-Shram">
+                <h2>SDG-Shram</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="startup-portal.html" class="nav-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>Discover</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Traction</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Portfolio</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Documents</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-quick-profile">
+                    <div class="user-avatar">U</div>
+                    <div style="flex: 1; overflow: hidden;">
+                        <div style="font-size: 0.85rem; font-weight: 600;">Investor Name</div>
+                        <div style="font-size: 0.7rem; color: rgba(255,255,255,0.5);">VC Partner</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Layout -->
+        <main class="main-layout">
+            <header class="topbar">
+                <div class="topbar-actions" style="margin-left: initial;">
+                    <a href="startup-portal.html"
+                        style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">
+                        <i class="fas fa-arrow-left"></i> Back to Opportunities
+                    </a>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="btn btn-secondary"><i class="far fa-star"></i> Save</button>
+                    <button class="btn btn-primary">Connect with Founder</button>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <div class="detail-card">
+                    <div class="detail-banner"></div>
+                    <div class="detail-header-overlay">
+                        <div class="detail-logo-large">⚡</div>
+                        <div class="detail-title-section">
+                            <div class="sdg-tag sdg-7" style="margin-bottom: 12px; font-size: 0.8rem;">Goal 7:
+                                Affordable & Clean Energy</div>
+                            <h1 style="font-size: 2.5rem; font-weight: 800;">EcoPulse Systems</h1>
+                            <p
+                                style="color: white; font-size: 1.1rem; opacity: 0.9; margin-top: -60px; transform: translateY(-30px); position: absolute; left: 144px; top: -20px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                AI-Driven Decentralized Solar Solutions</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-nav">
+                        <div class="tab-item active">Overview</div>
+                        <div class="tab-item">Market & Traction</div>
+                        <div class="tab-item">Team</div>
+                        <div class="tab-item">Impact Reporting</div>
+                        <div class="tab-item">Documents</div>
+                    </div>
+
+                    <div style="padding: 0 40px 40px;">
+                        <div class="dashboard-content">
+                            <div class="main-section">
+                                <section class="content-block">
+                                    <h3 class="card-title" style="margin-bottom: 16px;">The Thesis</h3>
+                                    <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7;">
+                                        EcoPulse systems addresses the critical gap in rural energy infrastructure. By
+                                        leveraging proprietary AI algorithms, we've increased energy efficiency in
+                                        micro-grids by 34%, making clean energy 20% cheaper than diesel alternatives in
+                                        emerging markets.
+                                    </p>
+                                </section>
+
+                                <section class="content-block" style="margin-top: 40px;">
+                                    <h3 class="card-title">Impact Metrics</h3>
+                                    <div class="impact-grid">
+                                        <div class="impact-stat-box">
+                                            <i class="fas fa-leaf"></i>
+                                            <div class="value">12.5k</div>
+                                            <div class="label">Tons CO2 Offset</div>
+                                        </div>
+                                        <div class="impact-stat-box">
+                                            <i class="fas fa-home"></i>
+                                            <div class="value">50+</div>
+                                            <div class="label">Villages Powered</div>
+                                        </div>
+                                        <div class="impact-stat-box">
+                                            <i class="fas fa-bolt"></i>
+                                            <div class="value">98.4%</div>
+                                            <div class="label">Average Uptime</div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="content-block" style="margin-top: 40px;">
+                                    <h3 class="card-title">Monthly Traction (Revenue)</h3>
+                                    <div class="traction-chart-placeholder">
+                                        <i class="fas fa-chart-area" style="font-size: 3rem; margin-bottom: 12px;"></i>
+                                        <span>Interactive Growth Chart (MRR $12k → $45k)</span>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <aside class="side-panel">
+                                <div class="card" style="border-color: var(--secondary); background: #f0f9ff;">
+                                    <h3 class="card-title" style="color: var(--primary);">Investment Round</h3>
+                                    <div style="margin: 20px 0;">
+                                        <div
+                                            style="display: flex; justify-content: space-between; font-weight: 700; color: var(--primary);">
+                                            <span>Seed Extension</span>
+                                            <span>$450k Goal</span>
+                                        </div>
+                                        <div
+                                            style="height: 8px; background: #e2e8f0; border-radius: 4px; margin: 12px 0; overflow: hidden;">
+                                            <div style="height: 100%; width: 65%; background: var(--secondary);"></div>
+                                        </div>
+                                        <div
+                                            style="text-align: right; font-size: 0.85rem; color: var(--text-secondary);">
+                                            65% Committed</div>
+                                    </div>
+                                    <div class="stats-group">
+                                        <div class="stat-card-small" style="background: white;">
+                                            <h5>Min. Check</h5>
+                                            <div class="value">$25,000</div>
+                                        </div>
+                                        <div class="stat-card-small" style="background: white;">
+                                            <h5>Pre-Money Val</h5>
+                                            <div class="value">$4.5M</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Request Data
+                                        Room Access</button>
+                                </div>
+
+                                <div class="card">
+                                    <h3 class="card-title">Due Diligence</h3>
+                                    <div style="margin-top: 16px;">
+                                        <div class="document-item">
+                                            <span style="font-size: 0.9rem;"><i class="far fa-file-pdf"
+                                                    style="color: #e11d48; margin-right: 8px;"></i> Pitch
+                                                Deck.pdf</span>
+                                            <i class="fas fa-download"
+                                                style="color: var(--text-muted); cursor: pointer;"></i>
+                                        </div>
+                                        <div class="document-item">
+                                            <span style="font-size: 0.9rem;"><i class="far fa-file-excel"
+                                                    style="color: #16a34a; margin-right: 8px;"></i>
+                                                Financials_Q4.xlsx</span>
+                                            <i class="fas fa-download"
+                                                style="color: var(--text-muted); cursor: pointer;"></i>
+                                        </div>
+                                        <div class="document-item">
+                                            <span style="font-size: 0.9rem;"><i class="far fa-file-alt"
+                                                    style="color: #2563eb; margin-right: 8px;"></i> Impact
+                                                Report.pdf</span>
+                                            <i class="fas fa-download"
+                                                style="color: var(--text-muted); cursor: pointer;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
