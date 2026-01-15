@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDG-Shram | Feed</title>
     <link rel="stylesheet" href="feed-modern.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="apple-touch-icon" href="logo/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* Small utility for dropdown which is still controlled by JS */
@@ -484,6 +487,15 @@
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             window.location.href = 'dashboard.html';
+        }
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('PWA Service Worker registered'))
+                    .catch(err => console.log('Service Worker failed', err));
+            });
         }
     </script>
 </body>
