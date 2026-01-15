@@ -254,6 +254,46 @@
     color: #e74c3c !important;
 }
 
+/* Desktop: Ensure proper navbar display */
+@media (min-width: 769px) {
+    .hamburger-menu {
+        display: none !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        margin-top: 0 !important;
+        width: auto !important;
+        position: static !important;
+    }
+
+    .nav-links a {
+        flex-direction: column !important;
+        padding: 6px 14px !important;
+        font-size: 0.7rem !important;
+        border-bottom: none !important;
+    }
+
+    .nav-links span {
+        display: block !important;
+    }
+
+    .user-section {
+        display: flex !important;
+    }
+
+    .profile-menu .menu-label {
+        display: flex !important;
+    }
+}
+
 @media (max-width: 768px) {
     .feed-navbar {
         padding: 10px 15px;

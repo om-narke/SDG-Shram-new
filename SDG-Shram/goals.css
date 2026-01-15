@@ -354,6 +354,41 @@ body {
   transform: scale(1.05);
 }
 
+/* Desktop: Ensure proper navbar display */
+@media (min-width: 769px) {
+  .hamburger-menu {
+    display: none !important;
+  }
+
+  .nav-links {
+    display: flex !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    flex-direction: row !important;
+    gap: 25px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin-top: 0 !important;
+    width: auto !important;
+  }
+
+  .nav-links a {
+    flex-direction: column !important;
+    padding: 0 !important;
+    font-size: 0.75rem !important;
+    border-bottom: none !important;
+  }
+
+  .nav-links a span {
+    display: block !important;
+  }
+
+  .user-section {
+    display: flex !important;
+  }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .goal img {
