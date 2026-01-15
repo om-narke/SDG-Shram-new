@@ -30,6 +30,14 @@
             "destination": "/SDG-Shram/dashboard.html"
         },
         {
+            "source": "/sw.js",
+            "destination": "/SDG-Shram/sw.js"
+        },
+        {
+            "source": "/manifest.json",
+            "destination": "/SDG-Shram/manifest.json"
+        },
+        {
             "source": "/(.*)",
             "destination": "/SDG-Shram/$1"
         }
