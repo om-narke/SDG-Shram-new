@@ -87,11 +87,13 @@ const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
-  console.log(`📂 Frontend: http://localhost:${PORT}`);
-  console.log(`🔌 API: http://localhost:${PORT}/api`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running on port ${PORT}`);
+    console.log(`📂 Frontend: http://localhost:${PORT}`);
+    console.log(`🔌 API: http://localhost:${PORT}/api`);
+  });
+}
 
 module.exports = app;
 

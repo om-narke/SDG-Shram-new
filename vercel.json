@@ -1,0 +1,37 @@
+{
+    "version": 2,
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/server.js"
+        },
+        {
+            "source": "/login",
+            "destination": "/SDG-Shram/login.html"
+        },
+        {
+            "source": "/signup",
+            "destination": "/SDG-Shram/signup.html"
+        },
+        {
+            "source": "/dashboard",
+            "destination": "/SDG-Shram/dashboard.html"
+        },
+        {
+            "source": "/profile",
+            "destination": "/SDG-Shram/profile.html"
+        },
+        {
+            "source": "/feed",
+            "destination": "/SDG-Shram/feed.html"
+        },
+        {
+            "source": "/",
+            "destination": "/SDG-Shram/dashboard.html"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/SDG-Shram/$1"
+        }
+    ]
+}
