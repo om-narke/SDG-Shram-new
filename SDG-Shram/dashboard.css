@@ -772,152 +772,14 @@ section {
   .navbar {
     flex-wrap: wrap;
     height: auto;
-    padding: 15px 4%;
-    gap: 15px;
+    padding: 10px 3%;
+    gap: 10px;
+    justify-content: space-between;
   }
 
   .icon {
     order: 1;
-  }
-
-  .menu {
-    order: 3;
-    width: 100%;
-    padding-left: 0;
-    justify-content: center;
-    margin-top: 10px;
-  }
-
-  .basic {
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .basic li a {
-    font-size: 11px;
-  }
-
-  .basic li a img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .register {
-    order: 2;
-  }
-
-  .login,
-  .signup {
-    padding: 6px 14px;
-    font-size: 12px;
-  }
-
-  .content-inner {
-    flex-direction: column;
-    padding: 30px 15px 0 15px;
-  }
-
-  .text {
-    min-height: 280px;
-    padding: 30px 20px;
-    margin-left: 0;
-    background-size: 80%;
-    background-position: center bottom;
-  }
-
-  .text h1 {
-    font-size: 26px;
-  }
-
-  .text .info {
-    font-size: 15px;
-  }
-
-  .login-box {
-    max-width: 100%;
-    padding: 25px 20px;
-  }
-
-  .login-box h2 {
-    font-size: 20px;
-  }
-
-  .sdg-container {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 0 15px;
-  }
-
-  .goal-card {
-    width: 100px;
-    height: 100px;
-  }
-
-  .about-sdg-shram {
-    padding: 30px 15px;
-  }
-
-  .about-sdg-shram h2 {
-    font-size: 1.6rem;
-  }
-
-  .about-sdg-shram p,
-  .about-sdg-shram li {
-    font-size: 1rem;
-  }
-
-  .projects-incubation {
-    padding: 25px 15px;
-    background-size: 200px auto;
-    background-position: bottom right;
-  }
-
-  .projects-incubation h2 {
-    font-size: 1.4rem;
-  }
-
-  .projects-incubation ul {
-    margin-left: 25px;
-    font-size: 0.95rem;
-  }
-
-  #stakeholders {
-    padding: 15px !important;
-  }
-
-  #stakeholders h2 {
-    font-size: 22px !important;
-  }
-
-  #stakeholders ul {
-    margin-left: 20px !important;
-    font-size: 15px !important;
-  }
-
-  .footer {
-    padding: 25px 20px;
-  }
-
-  .footer-logo {
-    width: 50px;
-    height: 50px;
-  }
-
-  .footer-left h3 {
-    font-size: 22px;
-  }
-
-  .social-icons img {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-/* Small mobile devices */
-@media (max-width: 480px) {
-  .navbar {
-    padding: 12px 3%;
+    flex-shrink: 0;
   }
 
   .logo {
@@ -925,16 +787,44 @@ section {
   }
 
   .logoname {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .register {
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .login,
+  .signup {
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 15px;
+  }
+
+  .menu {
+    order: 3;
+    width: 100%;
+    padding-left: 0;
+    justify-content: center;
+    margin-top: 5px;
+    overflow-x: auto;
   }
 
   .basic {
     gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
   }
 
   .basic li a {
-    font-size: 10px;
-    gap: 3px;
+    font-size: 9px;
+    gap: 2px;
+    white-space: nowrap;
+    padding: 5px 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
   }
 
   .basic li a img {
@@ -942,15 +832,17 @@ section {
     height: 18px;
   }
 
-  .login,
-  .signup {
-    padding: 5px 10px;
-    font-size: 11px;
+  .content-inner {
+    flex-direction: column;
+    padding: 20px 15px 0 15px;
   }
 
   .text {
-    min-height: 220px;
-    padding: 20px 15px;
+    min-height: auto;
+    padding: 25px 15px;
+    margin-left: 0;
+    background-size: 60%;
+    background-position: right bottom;
   }
 
   .text h1 {
@@ -963,52 +855,207 @@ section {
   }
 
   .login-box {
-    padding: 20px 15px;
+    max-width: 100%;
+    padding: 25px 20px;
+    margin-top: 20px;
   }
 
   .login-box h2 {
     font-size: 18px;
-    margin-bottom: 20px;
+  }
+
+  .sdg-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 10px;
+  }
+
+  .goal-card {
+    width: 90px;
+    height: 90px;
+  }
+
+  .about-sdg-shram {
+    padding: 25px 15px;
+  }
+
+  .about-sdg-shram h2 {
+    font-size: 1.4rem;
+  }
+
+  .about-sdg-shram p,
+  .about-sdg-shram li {
+    font-size: 0.95rem;
+  }
+
+  .projects-incubation {
+    padding: 20px 15px;
+    background-size: 150px auto;
+    background-position: bottom right;
+  }
+
+  .projects-incubation h2 {
+    font-size: 1.3rem;
+  }
+
+  .projects-incubation ul {
+    margin-left: 20px;
+    font-size: 0.9rem;
+  }
+
+  #stakeholders {
+    padding: 15px !important;
+  }
+
+  #stakeholders h2 {
+    font-size: 20px !important;
+  }
+
+  #stakeholders ul {
+    margin-left: 18px !important;
+    font-size: 14px !important;
+  }
+
+  .footer {
+    padding: 20px 15px;
+  }
+
+  .footer-logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .footer-left h3 {
+    font-size: 20px;
+  }
+
+  .social-icons img {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 2%;
+    gap: 8px;
+  }
+
+  .icon {
+    gap: 6px;
+  }
+
+  .logo {
+    height: 32px;
+  }
+
+  .logoname {
+    font-size: 14px;
+  }
+
+  .basic {
+    gap: 4px;
+  }
+
+  .basic li a {
+    font-size: 8px;
+    gap: 1px;
+    padding: 4px 6px;
+  }
+
+  .basic li a img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .login,
+  .signup {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .content-inner {
+    padding: 15px 10px 0 10px;
+  }
+
+  .text {
+    min-height: auto;
+    padding: 15px 10px;
+    background-size: 50%;
+  }
+
+  .text h1 {
+    font-size: 18px;
+  }
+
+  .text .info {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .login-box {
+    padding: 18px 12px;
+  }
+
+  .login-box h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
   }
 
   .social-btn {
     padding: 10px;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .sdg-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 
   .goal-card {
-    width: 85px;
-    height: 85px;
+    width: 75px;
+    height: 75px;
   }
 
   .goal-back h3 {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .info-btn {
-    font-size: 10px;
-    padding: 4px 8px;
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  .about-sdg-shram {
+    padding: 20px 10px;
   }
 
   .about-sdg-shram h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .about-sdg-shram h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+
+  .about-sdg-shram p,
+  .about-sdg-shram li {
+    font-size: 0.85rem;
   }
 
   .projects-incubation {
     background-image: none;
+    padding: 15px 10px;
   }
 
   .projects-incubation h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .projects-incubation ul {
+    margin-left: 15px;
+    font-size: 0.85rem;
   }
 
   .footer-container {
@@ -1016,10 +1063,24 @@ section {
   }
 
   .footer-right h4 {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .contact-item p {
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer-left h3 {
+    font-size: 18px;
+  }
+
+  .social-icons img {
+    width: 24px;
+    height: 24px;
   }
 }
