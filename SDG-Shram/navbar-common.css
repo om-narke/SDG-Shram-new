@@ -221,8 +221,25 @@
 }
 
 @media (max-width: 768px) {
+    .feed-navbar {
+        padding: 0 15px;
+        height: 60px;
+    }
+
     .feed-navbar .search-box {
         display: none;
+    }
+
+    .feed-navbar .logo-section img {
+        height: 32px;
+    }
+
+    .feed-navbar .logo-section h2 {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        gap: 4px;
     }
 
     .nav-links span {
@@ -230,6 +247,82 @@
     }
 
     .nav-links a {
-        padding: 8px;
+        padding: 6px 8px;
+    }
+
+    .nav-links a img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .profile-menu .avatar-small {
+        width: 26px;
+        height: 26px;
+        font-size: 0.75rem;
+    }
+
+    .profile-menu .menu-label {
+        display: none;
+    }
+
+    .profile-dropdown {
+        min-width: 260px;
+        right: -5px;
+    }
+
+    .dropdown-header {
+        padding: 16px;
+    }
+
+    .dropdown-header .avatar-large {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .view-profile-btn {
+        margin: 12px;
+        padding: 6px;
+        font-size: 0.8rem;
+    }
+
+    .profile-dropdown a {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .feed-navbar {
+        padding: 0 10px;
+        height: 55px;
+    }
+
+    .feed-navbar .logo-section img {
+        height: 28px;
+    }
+
+    .feed-navbar .logo-section h2 {
+        font-size: 0.95rem;
+    }
+
+    .nav-links a {
+        padding: 4px 5px;
+    }
+
+    .nav-links a img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .profile-menu .avatar-small {
+        width: 24px;
+        height: 24px;
+        font-size: 0.7rem;
+    }
+
+    .profile-dropdown {
+        min-width: 240px;
+        top: 50px;
     }
 }

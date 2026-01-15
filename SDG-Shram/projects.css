@@ -258,23 +258,47 @@
 
 /* Responsive for smaller screens */
 @media (max-width: 768px) {
+    .page-container {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
     .project-cards-row {
         flex-direction: column;
     }
 
+    .project-card.horizontal-card {
+        padding: 22px 20px;
+    }
+
+    .project-card .card-content h3 {
+        font-size: 1.15rem;
+    }
+
     .projects-section {
-        padding: 30px 25px;
+        padding: 25px 20px;
+    }
+
+    .projects-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .projects-section ul,
+    .projects-section ol {
+        margin-left: 20px;
     }
 
     .buttons {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
 
     .btn-list,
     .btn-upload {
         width: 100%;
         font-size: 0.95rem;
+        padding: 12px 28px;
     }
 
     .feed-navbar {
@@ -288,11 +312,19 @@
     }
 
     .nav-links {
-        gap: 15px;
+        gap: 10px;
+    }
+
+    .nav-links a span {
+        display: none;
     }
 
     .projects-hero h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+    }
+
+    .projects-hero .hero-subtitle {
+        font-size: 0.9rem;
     }
 
     .card-buttons {
@@ -302,5 +334,64 @@
     .card-buttons .btn-primary,
     .card-buttons .btn-outline {
         text-align: center;
+        width: 100%;
+    }
+
+    .card-tags {
+        gap: 8px;
+    }
+
+    .card-tags .tag {
+        padding: 5px 12px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-container {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    .project-card.horizontal-card {
+        padding: 18px 16px;
+    }
+
+    .project-card .card-content h3 {
+        font-size: 1.05rem;
+    }
+
+    .project-card .card-content p {
+        font-size: 0.88rem;
+    }
+
+    .projects-section {
+        padding: 20px 15px;
+    }
+
+    .projects-section h2 {
+        font-size: 1.3rem;
+    }
+
+    .projects-section p,
+    .projects-section ul li,
+    .projects-section ol li {
+        font-size: 0.9rem;
+    }
+
+    .btn-list,
+    .btn-upload {
+        padding: 11px 24px;
+        font-size: 0.9rem;
+    }
+
+    .projects-hero h1 {
+        font-size: 1.3rem;
+    }
+
+    .card-buttons .btn-primary,
+    .card-buttons .btn-outline {
+        padding: 9px 18px;
+        font-size: 0.85rem;
     }
 }

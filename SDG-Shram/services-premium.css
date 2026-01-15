@@ -361,8 +361,68 @@ textarea:focus {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+    body {
+        padding-top: 60px;
+    }
+
+    .page-container {
+        padding: 25px 15px;
+    }
+
+    .services-hero {
+        margin-bottom: 40px;
+    }
+
+    .services-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .services-hero p {
+        font-size: 1rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .service-card {
+        padding: 24px 20px;
+    }
+
+    .service-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 1.6rem;
+        margin-bottom: 18px;
+    }
+
+    .service-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .wizard-container {
+        margin: 0 -5px;
+    }
+
+    .wizard-steps {
+        padding: 0 10px;
+        overflow-x: auto;
+    }
+
+    .step-item {
+        padding: 14px 8px;
+        font-size: 0.85rem;
+        min-width: 80px;
+    }
+
+    .wizard-content {
+        padding: 25px 20px;
+    }
+
     .form-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .form-group.full-width {
@@ -371,9 +431,63 @@ textarea:focus {
 
     .report-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .services-grid {
-        grid-template-columns: 1fr;
+    .chart-card {
+        padding: 20px;
+    }
+
+    .notification-toast {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 55px;
+    }
+
+    .page-container {
+        padding: 20px 10px;
+    }
+
+    .services-hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .service-card {
+        padding: 20px 16px;
+    }
+
+    .service-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 1.4rem;
+    }
+
+    .service-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .service-card p {
+        font-size: 0.9rem;
+    }
+
+    .wizard-content {
+        padding: 20px 15px;
+    }
+
+    input,
+    select,
+    textarea {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+
+    label {
+        font-size: 0.85rem;
     }
 }

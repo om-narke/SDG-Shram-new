@@ -735,3 +735,291 @@ section {
   margin-bottom: 0 !important;
   padding-bottom: 30px;
 }
+
+/* ========== MOBILE RESPONSIVE STYLES ========== */
+
+/* Tablets and smaller desktops */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0 3%;
+  }
+
+  .menu {
+    padding-left: 30px;
+  }
+
+  .basic {
+    gap: 25px;
+  }
+
+  .content-inner {
+    padding: 60px 30px 0 30px;
+    gap: 20px;
+  }
+
+  .text h1 {
+    font-size: 32px;
+  }
+
+  .sdg-container {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 15px 4%;
+    gap: 15px;
+  }
+
+  .icon {
+    order: 1;
+  }
+
+  .menu {
+    order: 3;
+    width: 100%;
+    padding-left: 0;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .basic {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .basic li a {
+    font-size: 11px;
+  }
+
+  .basic li a img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .register {
+    order: 2;
+  }
+
+  .login,
+  .signup {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .content-inner {
+    flex-direction: column;
+    padding: 30px 15px 0 15px;
+  }
+
+  .text {
+    min-height: 280px;
+    padding: 30px 20px;
+    margin-left: 0;
+    background-size: 80%;
+    background-position: center bottom;
+  }
+
+  .text h1 {
+    font-size: 26px;
+  }
+
+  .text .info {
+    font-size: 15px;
+  }
+
+  .login-box {
+    max-width: 100%;
+    padding: 25px 20px;
+  }
+
+  .login-box h2 {
+    font-size: 20px;
+  }
+
+  .sdg-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 0 15px;
+  }
+
+  .goal-card {
+    width: 100px;
+    height: 100px;
+  }
+
+  .about-sdg-shram {
+    padding: 30px 15px;
+  }
+
+  .about-sdg-shram h2 {
+    font-size: 1.6rem;
+  }
+
+  .about-sdg-shram p,
+  .about-sdg-shram li {
+    font-size: 1rem;
+  }
+
+  .projects-incubation {
+    padding: 25px 15px;
+    background-size: 200px auto;
+    background-position: bottom right;
+  }
+
+  .projects-incubation h2 {
+    font-size: 1.4rem;
+  }
+
+  .projects-incubation ul {
+    margin-left: 25px;
+    font-size: 0.95rem;
+  }
+
+  #stakeholders {
+    padding: 15px !important;
+  }
+
+  #stakeholders h2 {
+    font-size: 22px !important;
+  }
+
+  #stakeholders ul {
+    margin-left: 20px !important;
+    font-size: 15px !important;
+  }
+
+  .footer {
+    padding: 25px 20px;
+  }
+
+  .footer-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .footer-left h3 {
+    font-size: 22px;
+  }
+
+  .social-icons img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 12px 3%;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .logoname {
+    font-size: 18px;
+  }
+
+  .basic {
+    gap: 8px;
+  }
+
+  .basic li a {
+    font-size: 10px;
+    gap: 3px;
+  }
+
+  .basic li a img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .login,
+  .signup {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .text {
+    min-height: 220px;
+    padding: 20px 15px;
+  }
+
+  .text h1 {
+    font-size: 22px;
+  }
+
+  .text .info {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .login-box {
+    padding: 20px 15px;
+  }
+
+  .login-box h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .social-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .sdg-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .goal-card {
+    width: 85px;
+    height: 85px;
+  }
+
+  .goal-back h3 {
+    font-size: 10px;
+  }
+
+  .info-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .about-sdg-shram h2 {
+    font-size: 1.3rem;
+  }
+
+  .about-sdg-shram h3 {
+    font-size: 1.1rem;
+  }
+
+  .projects-incubation {
+    background-image: none;
+  }
+
+  .projects-incubation h2 {
+    font-size: 1.2rem;
+  }
+
+  .footer-container {
+    gap: 15px;
+  }
+
+  .footer-right h4 {
+    font-size: 16px;
+  }
+
+  .contact-item p {
+    font-size: 14px;
+  }
+}
