@@ -22,7 +22,14 @@
       <input type="text" placeholder="Search projects, NGOs, people...">
     </div>
 
-    <div class="nav-links">
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-links" id="navMenu">
       <a href="feed.html">
         <img src="logo/home.png" alt="Home">
         <span>Home</span>
@@ -191,7 +198,19 @@
       localStorage.removeItem('user');
       window.location.replace('dashboard.html');
     }
+
+    // Mobile Hamburger Menu Toggle
+    function toggleMobileMenu() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const navMenu = document.getElementById('navMenu');
+
+      if (hamburgerBtn && navMenu) {
+        hamburgerBtn.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      }
+    }
   </script>
+  <script src="hamburger-menu.js"></script>
 </body>
 
 </html>
