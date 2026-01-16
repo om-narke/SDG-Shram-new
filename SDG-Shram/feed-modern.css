@@ -342,7 +342,7 @@ body {
 .profile-card {
     background: white;
     border-radius: var(--border-radius);
-    overflow: hidden;
+    overflow: visible;
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -356,17 +356,22 @@ body {
     height: 80px;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     position: relative;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .profile-card .profile-info {
     text-align: center;
     padding: 0 16px 20px;
-    margin-top: -35px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 1;
 }
 
 .profile-card .profile-avatar {
     width: 80px;
     height: 80px;
+    min-width: 80px;
+    min-height: 80px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
@@ -378,6 +383,9 @@ body {
     margin: 0 auto;
     border: 4px solid white;
     box-shadow: 0 4px 12px rgba(15, 76, 129, 0.25);
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    position: relative;
 }
 
 .profile-card .profile-name {
