@@ -35,14 +35,14 @@
             <input type="text" placeholder="Search projects, NGOs, people...">
         </div>
 
-        <!-- Hamburger Menu Button -->
+        <!-- Hamburger Menu Button (Mobile) -->
         <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
         </button>
 
-        <div class="nav-links" id="navMenu">
+        <div class="nav-links" id="navLinks">
             <a href="feed.html" class="active">
                 <img src="logo/home.png" alt="Home">
                 <span>Home</span>
@@ -64,6 +64,9 @@
                 <span>Services</span>
             </a>
         </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 
         <div class="user-section">
             <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
@@ -464,6 +467,20 @@
             profileMenu.classList.toggle('active');
         }
 
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('mobileMenuOverlay');
+
+            navLinks.classList.toggle('mobile-active');
+            hamburgerBtn.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = navLinks.classList.contains('mobile-active') ? 'hidden' : '';
+        }
+
         // Close dropdown when clicking outside
         document.addEventListener('click', function (e) {
             const dropdown = document.getElementById('profileDropdown');
@@ -471,6 +488,12 @@
             if (!profileMenu.contains(e.target)) {
                 dropdown.classList.remove('show');
                 profileMenu.classList.remove('active');
+            }
+
+            // Close mobile menu when clicking on a link
+            const navLinks = document.getElementById('navLinks');
+            if (e.target.closest('.nav-links a') && navLinks.classList.contains('mobile-active')) {
+                toggleMobileMenu();
             }
         });
 
@@ -504,41 +527,6 @@
                     .catch(err => console.log('Service Worker failed', err));
             });
         }
-    </script>
-    <script>
-        // Mobile Hamburger Menu Toggle
-        function toggleMobileMenu() {
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const navMenu = document.getElementById('navMenu');
-
-            hamburgerBtn.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function (e) {
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const navMenu = document.getElementById('navMenu');
-
-            if (hamburgerBtn && navMenu &&
-                !hamburgerBtn.contains(e.target) &&
-                !navMenu.contains(e.target)) {
-                hamburgerBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Close menu when a nav link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                const hamburgerBtn = document.getElementById('hamburgerBtn');
-                const navMenu = document.getElementById('navMenu');
-                if (hamburgerBtn && navMenu) {
-                    hamburgerBtn.classList.remove('active');
-                    navMenu.classList.remove('active');
-                }
-            });
-        });
     </script>
 </body>
 

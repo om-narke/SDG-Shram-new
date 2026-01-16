@@ -29,7 +29,14 @@
             <input type="text" placeholder="Search projects, NGOs, people...">
         </div>
 
-        <div class="nav-links">
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="nav-links" id="navLinks">
             <a href="feed.html">
                 <img src="logo/home.png" alt="Home">
                 <span>Home</span>
@@ -51,6 +58,9 @@
                 <span>Services</span>
             </a>
         </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 
         <div class="user-section">
             <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
