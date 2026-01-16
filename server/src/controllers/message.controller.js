@@ -152,25 +152,7 @@ exports.getMessages = async (req, res) => {
             .lean();
 
         // Format messages
-        const formattedMessages = messages.map(msg => {
-            // Get sender name/initial
-            let senderName = 'Unknown';
-            // Helper to get name from sender object
-            if (msg.sender.individual?.fullName) senderName = msg.sender.individual.fullName;
-            else if (msg.sender.ngo?.ngoName) senderName = msg.sender.ngo.ngoName;
-            else if (msg.sender.business?.companyName) senderName = msg.sender.business.companyName;
-            else if (msg.sender.institution?.institutionName) senderName = msg.sender.institution.institutionName;
-
-            return {
-                id: msg._id,
-                senderId: msg.sender._id,
-                senderName: senderName,
-                senderInitial: senderName.charAt(0).toUpperCase(),
-                text: msg.content,
-                timestamp: msg.createdAt,
-                isMe: msg.sender._id.toString() === userId
-            };
-        });
+        const formattedMessages = messages.map(msg => formatMessage(msg, userId));
 
         res.json({ success: true, data: formattedMessages });
     } catch (error) {
@@ -198,20 +180,67 @@ exports.sendMessage = async (req, res) => {
 
         if (type === 'dm') {
             newMessage.recipient = conversationId;
-            // Check connection? Maybe
         } else {
-            // For community, we ensure user is member
             newMessage.community = conversationId;
         }
 
         const message = await Message.create(newMessage);
 
-        // Populate sender info for return
-        const fullMessage = await Message.findById(message._id).populate('sender');
+        // Populate sender info for return and socket
+        const fullMessage = await Message.findById(message._id).populate('sender', 'individual ngo business institution');
 
-        res.json({ success: true, data: fullMessage });
+        // Format for socket emit
+        let senderName = 'Unknown';
+        if (fullMessage.sender.individual?.fullName) senderName = fullMessage.sender.individual.fullName;
+        else if (fullMessage.sender.ngo?.ngoName) senderName = fullMessage.sender.ngo.ngoName;
+        else if (fullMessage.sender.business?.companyName) senderName = fullMessage.sender.business.companyName;
+        else if (fullMessage.sender.institution?.institutionName) senderName = fullMessage.sender.institution.institutionName;
+
+        const socketMsg = {
+            id: fullMessage._id,
+            senderId: fullMessage.sender._id,
+            senderName: senderName,
+            senderInitial: senderName.charAt(0).toUpperCase(),
+            text: fullMessage.content,
+            timestamp: fullMessage.createdAt,
+            conversationId: type === 'dm' ? userId : conversationId,
+            type: type,
+            isMe: false
+        };
+
+        // Emit via Socket.io
+        const io = req.app.get('io');
+        if (io) {
+            if (type === 'dm') {
+                io.to(conversationId.toString()).emit('newMessage', socketMsg);
+            } else {
+                io.to(`community_${conversationId}`).emit('newMessage', socketMsg);
+            }
+        }
+
+        // Return standard formatted message
+        res.json({ success: true, data: formatMessage(fullMessage, userId) });
     } catch (error) {
         console.error('Error sending message:', error);
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 };
+
+function formatMessage(msg, currentUserId) {
+    let senderName = 'Unknown';
+    // Helper to get name from sender object
+    if (msg.sender.individual?.fullName) senderName = msg.sender.individual.fullName;
+    else if (msg.sender.ngo?.ngoName) senderName = msg.sender.ngo.ngoName;
+    else if (msg.sender.business?.companyName) senderName = msg.sender.business.companyName;
+    else if (msg.sender.institution?.institutionName) senderName = msg.sender.institution.institutionName;
+
+    return {
+        id: msg._id,
+        senderId: msg.sender._id,
+        senderName: senderName,
+        senderInitial: senderName.charAt(0).toUpperCase(),
+        text: msg.content,
+        timestamp: msg.createdAt,
+        isMe: msg.sender._id.toString() === currentUserId.toString()
+    };
+}

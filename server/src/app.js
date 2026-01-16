@@ -89,11 +89,22 @@ const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
 // Start server
+// Start server
+const http = require('http');
+const { initSocket } = require('./config/socket');
+
+const server = http.createServer(app);
+const io = initSocket(server);
+
+// Make io accessible to routes via req.app.get('io') or just import getIo in controllers
+app.set('io', io);
+
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`🚀 Server is running on port ${PORT}`);
     console.log(`📂 Frontend: http://localhost:${PORT}`);
     console.log(`🔌 API: http://localhost:${PORT}/api`);
+    console.log(`⚡ Socket.io initialized`);
   });
 }
 

@@ -29,17 +29,70 @@ const MessagingSystem = {
 
     // Initialize WebSocket connection
     initializeSocket() {
-        // For demo purposes, we'll use polling-based updates
-        // In production, you would use Socket.io or WebSockets
-        this.pollForUpdates();
+        if (typeof io !== 'undefined') {
+            this.socket = io();
+            const userId = this.currentUser._id;
+
+            this.socket.on('connect', () => {
+                console.log('Socket connected');
+                // Join user room
+                this.socket.emit('join', userId);
+
+                // Join community rooms
+                this.communities.forEach(c => {
+                    this.socket.emit('joinCommunity', c.id);
+                });
+            });
+
+            this.socket.on('newMessage', (message) => {
+                this.handleNewMessage(message);
+            });
+        }
     },
 
-    pollForUpdates() {
-        setInterval(() => {
-            if (this.activeConversation) {
-                this.loadMessages(this.activeConversation.id, this.activeConversation.type);
+    // Handle incoming real-time message
+    handleNewMessage(message) {
+        // If chat window open for this conversation, append message
+        if (this.activeConversation &&
+            this.activeConversation.id === message.conversationId &&
+            document.getElementById('chatWindow').classList.contains('active')) {
+
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML += `
+                <div class="message ${message.isMe ? 'sent' : 'received'}">
+                    ${!message.isMe ? `<div class="message-avatar">${message.senderInitial}</div>` : ''}
+                    <div class="message-content">
+                        <div class="message-bubble">${this.escapeHTML(message.text)}</div>
+                        <div class="message-time">${this.formatMessageTime(message.timestamp)}</div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Update conversation list last message and unread count
+        const convId = message.type === 'dm' ? message.senderId : message.conversationId;
+        const convList = message.type === 'dm' ? this.conversations : this.communities;
+        const conv = convList.find(c => c.id === convId || c.id === message.conversationId);
+
+        if (conv) {
+            conv.lastMessage = message.text;
+            conv.timestamp = message.timestamp;
+            if (!this.activeConversation || this.activeConversation.id !== conv.id) {
+                conv.unread = (conv.unread || 0) + 1;
             }
-        }, 5000);
+            // Move to top
+            convList.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            if (this.currentTab === (message.type === 'dm' ? 'messages' : 'communities')) {
+                if (message.type === 'dm') this.renderConversations();
+                else this.renderCommunities();
+            }
+            this.updateUnreadBadge();
+        } else if (message.type === 'dm') {
+            // New conversation started by someone else
+            this.loadConversations();
+        }
     },
 
     // Render the messaging UI components
@@ -196,6 +249,13 @@ const MessagingSystem = {
             if (response.ok) {
                 const data = await response.json();
                 this.communities = data.data || [];
+
+                // Join updated community rooms if socket connected
+                if (this.socket && this.socket.connected) {
+                    this.communities.forEach(c => {
+                        this.socket.emit('joinCommunity', c.id);
+                    });
+                }
             } else {
                 console.error('Failed to load communities');
                 this.communities = [];
