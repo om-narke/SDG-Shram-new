@@ -27,40 +27,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Hamburger Menu Button */
-.hamburger-menu {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 26px;
-    height: 22px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
-}
-
-.hamburger-menu span {
-    width: 100%;
-    height: 3px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.hamburger-menu.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger-menu.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger-menu.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-}
-
 /* Glassmorphic Navbar */
 .feed-navbar {
     background: var(--glass-background);
@@ -402,8 +368,8 @@ body {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: white;
-    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -411,8 +377,7 @@ body {
     font-size: 2rem;
     margin: 0 auto;
     border: 4px solid white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #fff 0%, #f0f2f5 100%);
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.25);
 }
 
 .profile-card .profile-name {
@@ -768,43 +733,7 @@ body {
     }
 }
 
-/* Desktop: Ensure proper navbar display */
-@media (min-width: 577px) {
-    .hamburger-menu {
-        display: none !important;
-    }
-
-    .nav-links {
-        display: flex !important;
-        max-height: none !important;
-        opacity: 1 !important;
-        overflow: visible !important;
-        flex-direction: row !important;
-        gap: 10px !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        margin-top: 0 !important;
-        width: auto !important;
-        position: static !important;
-    }
-
-    .nav-links a {
-        flex-direction: column !important;
-        padding: 8px 16px !important;
-        font-size: 0.75rem !important;
-        border-bottom: none !important;
-    }
-
-    .nav-links a span {
-        display: block !important;
-    }
-
-    .user-section {
-        display: flex !important;
-    }
-}
-
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .feed-container {
         grid-template-columns: 1fr;
         padding: 0 10px;
@@ -820,10 +749,8 @@ body {
     }
 
     .feed-navbar {
-        padding: 10px 15px;
-        height: auto;
-        flex-wrap: wrap;
-        position: relative;
+        padding: 0 15px;
+        height: 60px;
     }
 
     .feed-navbar .logo-section img {
@@ -834,61 +761,22 @@ body {
         font-size: 1.1rem;
     }
 
-    /* Show hamburger menu on mobile */
-    .hamburger-menu {
-        display: flex;
-        order: 2;
-    }
-
-    /* Mobile nav menu - hidden by default */
     .nav-links {
-        order: 4;
-        width: 100%;
-        flex-direction: column;
-        gap: 0;
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-        background: white;
-        border-radius: 0 0 12px 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        margin-top: 0;
-    }
-
-    /* Mobile nav menu - visible when active */
-    .nav-links.active {
-        max-height: 350px;
-        opacity: 1;
-        padding: 10px 0;
-        margin-top: 10px;
+        gap: 4px;
     }
 
     .nav-links a {
-        flex-direction: row;
-        justify-content: flex-start;
-        padding: 14px 20px;
-        font-size: 0.95rem;
-        gap: 12px;
-        border-bottom: 1px solid #f0f0f0;
-        border-radius: 0;
-    }
-
-    .nav-links a:last-child {
-        border-bottom: none;
-    }
-
-    .nav-links a:hover {
-        background: var(--accent-color);
+        padding: 6px 8px;
+        font-size: 0.65rem;
     }
 
     .nav-links a img {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
     }
 
     .nav-links a span {
-        display: block;
+        display: none;
     }
 
     .profile-menu {
