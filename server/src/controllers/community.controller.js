@@ -104,3 +104,35 @@ exports.leaveCommunity = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+/**
+ * @desc    Get communities joined by user
+ * @route   GET /api/communities/joined
+ */
+exports.getJoinedCommunities = async (req, res) => {
+  try {
+    const communities = await Community.find({ members: req.user.id });
+
+    // Check for last message (could be optimized with aggregation, but simple is fine for now)
+    // Note: This requires the Message model. To keep it simple, we won't fetch real last message here
+    // In a production app, we would aggregate with messages or store lastMessage in Community model
+
+    // Format for messaging.js
+    const formatted = communities.map(c => ({
+      id: c._id,
+      name: c.name,
+      initial: c.name.substring(0, 2).toUpperCase(),
+      lastMessage: 'View community chat', // Placeholder
+      timestamp: c.createdAt,
+      memberCount: c.memberCount,
+      sdg: c.sdg
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: formatted
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};

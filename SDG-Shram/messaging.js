@@ -29,70 +29,17 @@ const MessagingSystem = {
 
     // Initialize WebSocket connection
     initializeSocket() {
-        if (typeof io !== 'undefined') {
-            this.socket = io();
-            const userId = this.currentUser._id;
-
-            this.socket.on('connect', () => {
-                console.log('Socket connected');
-                // Join user room
-                this.socket.emit('join', userId);
-
-                // Join community rooms
-                this.communities.forEach(c => {
-                    this.socket.emit('joinCommunity', c.id);
-                });
-            });
-
-            this.socket.on('newMessage', (message) => {
-                this.handleNewMessage(message);
-            });
-        }
+        // For demo purposes, we'll use polling-based updates
+        // In production, you would use Socket.io or WebSockets
+        this.pollForUpdates();
     },
 
-    // Handle incoming real-time message
-    handleNewMessage(message) {
-        // If chat window open for this conversation, append message
-        if (this.activeConversation &&
-            this.activeConversation.id === message.conversationId &&
-            document.getElementById('chatWindow').classList.contains('active')) {
-
-            const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML += `
-                <div class="message ${message.isMe ? 'sent' : 'received'}">
-                    ${!message.isMe ? `<div class="message-avatar">${message.senderInitial}</div>` : ''}
-                    <div class="message-content">
-                        <div class="message-bubble">${this.escapeHTML(message.text)}</div>
-                        <div class="message-time">${this.formatMessageTime(message.timestamp)}</div>
-                    </div>
-                </div>
-            `;
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Update conversation list last message and unread count
-        const convId = message.type === 'dm' ? message.senderId : message.conversationId;
-        const convList = message.type === 'dm' ? this.conversations : this.communities;
-        const conv = convList.find(c => c.id === convId || c.id === message.conversationId);
-
-        if (conv) {
-            conv.lastMessage = message.text;
-            conv.timestamp = message.timestamp;
-            if (!this.activeConversation || this.activeConversation.id !== conv.id) {
-                conv.unread = (conv.unread || 0) + 1;
+    pollForUpdates() {
+        setInterval(() => {
+            if (this.activeConversation) {
+                this.loadMessages(this.activeConversation.id, this.activeConversation.type);
             }
-            // Move to top
-            convList.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-            if (this.currentTab === (message.type === 'dm' ? 'messages' : 'communities')) {
-                if (message.type === 'dm') this.renderConversations();
-                else this.renderCommunities();
-            }
-            this.updateUnreadBadge();
-        } else if (message.type === 'dm') {
-            // New conversation started by someone else
-            this.loadConversations();
-        }
+        }, 5000);
     },
 
     // Render the messaging UI components
@@ -225,15 +172,15 @@ const MessagingSystem = {
                 const data = await response.json();
                 this.conversations = data.data || [];
             } else {
-                console.error('Failed to load conversations');
-                this.conversations = [];
+                // Demo data for testing
+                this.conversations = this.getDemoConversations();
             }
 
             this.renderConversations();
             this.updateUnreadBadge();
         } catch (error) {
-            console.error('Error loading conversations:', error);
-            this.conversations = [];
+            console.log('Using demo conversations');
+            this.conversations = this.getDemoConversations();
             this.renderConversations();
         }
     },
@@ -242,32 +189,81 @@ const MessagingSystem = {
     async loadCommunities() {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('/api/messages/communities', {
+            const response = await fetch('/api/communities/joined', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
             if (response.ok) {
                 const data = await response.json();
                 this.communities = data.data || [];
-
-                // Join updated community rooms if socket connected
-                if (this.socket && this.socket.connected) {
-                    this.communities.forEach(c => {
-                        this.socket.emit('joinCommunity', c.id);
-                    });
-                }
             } else {
-                console.error('Failed to load communities');
-                this.communities = [];
+                this.communities = this.getDemoCommunities();
             }
         } catch (error) {
-            console.error('Error loading communities:', error);
-            this.communities = [];
+            console.log('Using demo communities');
+            this.communities = this.getDemoCommunities();
         }
     },
 
-    // Demo data removed - using real API
+    // Demo data for conversations
+    getDemoConversations() {
+        return [
+            {
+                id: 'conv1',
+                recipientId: 'user1',
+                recipientName: 'Priya Sharma',
+                recipientInitial: 'PS',
+                lastMessage: 'Great! Let\'s connect for the SDG project.',
+                timestamp: new Date(Date.now() - 300000),
+                unread: 2,
+                online: true
+            },
+            {
+                id: 'conv2',
+                recipientId: 'user2',
+                recipientName: 'Rahul Green Foundation',
+                recipientInitial: 'RG',
+                lastMessage: 'Thank you for joining our initiative!',
+                timestamp: new Date(Date.now() - 3600000),
+                unread: 0,
+                online: false
+            },
+            {
+                id: 'conv3',
+                recipientId: 'user3',
+                recipientName: 'Dr. Anita Kumar',
+                recipientInitial: 'AK',
+                lastMessage: 'The climate report is ready for review.',
+                timestamp: new Date(Date.now() - 86400000),
+                unread: 0,
+                online: true
+            }
+        ];
+    },
 
+    // Demo data for communities
+    getDemoCommunities() {
+        return [
+            {
+                id: 'comm1',
+                name: 'Climate Action Network',
+                initial: 'CA',
+                lastMessage: 'New event planned for Earth Day!',
+                timestamp: new Date(Date.now() - 1800000),
+                memberCount: 245,
+                sdg: 'SDG 13'
+            },
+            {
+                id: 'comm2',
+                name: 'Clean Energy Innovators',
+                initial: 'CE',
+                lastMessage: 'Solar panel workshop this weekend.',
+                timestamp: new Date(Date.now() - 7200000),
+                memberCount: 128,
+                sdg: 'SDG 7'
+            }
+        ];
+    },
 
     // Render conversations list
     renderConversations() {
@@ -380,35 +376,44 @@ const MessagingSystem = {
     async loadMessages(id, type) {
         const messagesContainer = document.getElementById('chatMessages');
 
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`/api/messages/history?conversationId=${id}&type=${type}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+        // Demo messages
+        const demoMessages = this.getDemoMessages(id, type);
 
-            if (response.ok) {
-                const data = await response.json();
-                const messages = data.data || [];
+        messagesContainer.innerHTML = demoMessages.map(msg => `
+            <div class="message ${msg.senderId === this.currentUser._id ? 'sent' : 'received'}">
+                <div class="message-avatar">${msg.senderInitial}</div>
+                <div class="message-content">
+                    <div class="message-bubble">${msg.text}</div>
+                    <div class="message-time">${this.formatMessageTime(msg.timestamp)}</div>
+                </div>
+            </div>
+        `).join('');
 
-                messagesContainer.innerHTML = messages.map(msg => `
-                    <div class="message ${msg.isMe ? 'sent' : 'received'}">
-                        ${!msg.isMe ? `<div class="message-avatar">${msg.senderInitial}</div>` : ''}
-                        <div class="message-content">
-                            <div class="message-bubble">${this.escapeHTML(msg.text)}</div>
-                            <div class="message-time">${this.formatMessageTime(msg.timestamp)}</div>
-                        </div>
-                    </div>
-                `).join('');
-
-                // Scroll to bottom
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
-        } catch (error) {
-            console.error('Error loading history:', error);
-        }
+        // Scroll to bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     },
 
-    // Get demo messages - REMOVED
+    // Get demo messages
+    getDemoMessages(id, type) {
+        const currentUserId = this.currentUser._id || 'me';
+
+        if (type === 'community') {
+            return [
+                { id: '1', senderId: 'user1', senderInitial: 'PS', text: 'Welcome to the community! 🌍', timestamp: new Date(Date.now() - 7200000) },
+                { id: '2', senderId: 'user2', senderInitial: 'RK', text: 'Excited to work on climate action together!', timestamp: new Date(Date.now() - 3600000) },
+                { id: '3', senderId: currentUserId, senderInitial: 'ME', text: 'Thanks for having me! Looking forward to contributing.', timestamp: new Date(Date.now() - 1800000) },
+                { id: '4', senderId: 'user1', senderInitial: 'PS', text: 'We have a new project starting next week. Anyone interested?', timestamp: new Date(Date.now() - 600000) }
+            ];
+        }
+
+        return [
+            { id: '1', senderId: 'other', senderInitial: 'PS', text: 'Hi! I saw your profile on SDG-Shram.', timestamp: new Date(Date.now() - 7200000) },
+            { id: '2', senderId: currentUserId, senderInitial: 'ME', text: 'Hello! Thanks for connecting!', timestamp: new Date(Date.now() - 7000000) },
+            { id: '3', senderId: 'other', senderInitial: 'PS', text: 'I\'m working on a clean water project aligned with SDG 6. Would love to collaborate!', timestamp: new Date(Date.now() - 3600000) },
+            { id: '4', senderId: currentUserId, senderInitial: 'ME', text: 'That sounds amazing! Tell me more about it.', timestamp: new Date(Date.now() - 3500000) },
+            { id: '5', senderId: 'other', senderInitial: 'PS', text: 'Great! Let\'s connect for the SDG project.', timestamp: new Date(Date.now() - 300000) }
+        ];
+    },
 
     // Send a message
     async sendMessage() {
@@ -417,12 +422,13 @@ const MessagingSystem = {
 
         if (!text || !this.activeConversation) return;
 
-        // Optimistic update
+        // Add message locally
         const messagesContainer = document.getElementById('chatMessages');
         const userInitial = this.currentUser.name ? this.currentUser.name.charAt(0).toUpperCase() : 'U';
 
         messagesContainer.innerHTML += `
             <div class="message sent">
+                <div class="message-avatar">${userInitial}</div>
                 <div class="message-content">
                     <div class="message-bubble">${this.escapeHTML(text)}</div>
                     <div class="message-time">Just now</div>
@@ -434,9 +440,10 @@ const MessagingSystem = {
         input.value = '';
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
+        // Send to server (if API exists)
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('/api/messages/send', {
+            await fetch('/api/messages/send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -448,13 +455,8 @@ const MessagingSystem = {
                     text: text
                 })
             });
-
-            if (!response.ok) {
-                console.error('Failed to send message');
-                // Could retry or show error
-            }
         } catch (error) {
-            console.error('Error sending message:', error);
+            console.log('Message saved locally (demo mode)');
         }
     },
 

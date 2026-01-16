@@ -1,39 +1,41 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
+    conversationId: {
+        type: String,
+        required: true,
+        index: true
+    },
+    type: {
+        type: String, // 'dm' or 'community'
+        enum: ['dm', 'community'],
+        default: 'dm'
+    },
     sender: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    recipient: { // For One-to-One
+    recipient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    community: { // For Group Chat
+    community: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Community'
     },
-    content: {
+    text: {
         type: String,
-        required: true
-    },
-    type: { // 'dm' or 'community'
-        type: String,
-        enum: ['dm', 'community'],
         required: true
     },
     readBy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }]
-}, {
-    timestamps: true
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
-
-// Index for faster queries
-messageSchema.index({ sender: 1, recipient: 1 });
-messageSchema.index({ community: 1 });
-messageSchema.index({ createdAt: -1 });
 
 module.exports = mongoose.model('Message', messageSchema);

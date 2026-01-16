@@ -5,10 +5,12 @@ const {
   getCommunities,
   createCommunity,
   joinCommunity,
-  leaveCommunity
+  leaveCommunity,
+  getJoinedCommunities
 } = require('../controllers/community.controller');
 
 router.get('/', getCommunities);
+router.get('/joined', protect, getJoinedCommunities);
 router.post('/', protect, createCommunity);
 router.post('/:id/join', protect, joinCommunity);
 router.post('/:id/leave', protect, leaveCommunity);
