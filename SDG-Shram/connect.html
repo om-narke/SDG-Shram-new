@@ -7,6 +7,7 @@
     <title>Connect | SDG-Shram</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="navbar-common.css">
+    <link rel="stylesheet" href="messaging.css">
     <style>
         :root {
             /* Match feed-modern.css color scheme */
@@ -453,21 +454,11 @@
             box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.1);
         }
 
-        /* Override conflicting nav styles - use feed-navbar from navbar-common.css */
-        nav.feed-navbar {
-            background: linear-gradient(135deg, #002147 0%, #003366 100%);
-            padding: 10px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Ensure content starts below fixed navbar */
+        body {
+            padding-top: 70px;
         }
 
-        /* Ensure content starts below navbar */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -686,6 +677,7 @@
     </div>
 
     <script src="networking.js"></script>
+    <script src="messaging.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             // Check auth

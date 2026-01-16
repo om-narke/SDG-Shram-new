@@ -57,13 +57,41 @@ function createCommunityCard(community) {
 // Actions
 async function sendConnectRequest(userId) {
     const btn = document.querySelector(`#user-${userId} .connect-btn`);
+    const card = document.getElementById(`user-${userId}`);
+    const userName = card ? card.querySelector('h4')?.textContent : 'User';
+
     btn.disabled = true;
     btn.textContent = 'Sending...';
 
     const result = await apiFetch(`/users/connect/${userId}`, { method: 'POST' });
     if (result.success) {
-        btn.textContent = 'Request Sent';
+        btn.textContent = '✓ Connected';
         btn.classList.add('sent');
+        btn.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+        btn.style.color = 'white';
+        btn.style.border = 'none';
+
+        // Add message button after successful connection
+        const messageBtn = document.createElement('button');
+        messageBtn.className = 'connect-btn';
+        messageBtn.style.marginTop = '8px';
+        messageBtn.style.background = 'linear-gradient(135deg, #0f4c81 0%, #1a6cb5 100%)';
+        messageBtn.style.color = 'white';
+        messageBtn.style.border = 'none';
+        messageBtn.textContent = '💬 Message';
+        messageBtn.onclick = () => {
+            if (window.MessagingSystem) {
+                MessagingSystem.startConversation(userId, userName);
+            }
+        };
+        btn.parentElement.appendChild(messageBtn);
+
+        // Automatically open the chat after a brief delay
+        setTimeout(() => {
+            if (window.MessagingSystem) {
+                MessagingSystem.startConversation(userId, userName);
+            }
+        }, 500);
     } else {
         alert(result.error);
         btn.disabled = false;
@@ -71,11 +99,45 @@ async function sendConnectRequest(userId) {
     }
 }
 
-async function joinCommunity(communityId) {
+async function joinCommunity(communityId, communityName = 'Community') {
+    // Get community name from the card if available
+    const cards = document.querySelectorAll('.community-card');
+    cards.forEach(card => {
+        const btn = card.querySelector('.join-btn');
+        if (btn && btn.getAttribute('onclick')?.includes(communityId)) {
+            communityName = card.querySelector('h4')?.textContent || communityName;
+        }
+    });
+
     const result = await apiFetch(`/communities/${communityId}/join`, { method: 'POST' });
     if (result.success) {
-        alert('Joined successfully!');
-        location.reload();
+        // Show success message
+        const successMsg = document.createElement('div');
+        successMsg.innerHTML = `
+            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                        background: white; padding: 30px 40px; border-radius: 16px; 
+                        box-shadow: 0 20px 60px rgba(0,0,0,0.3); z-index: 3000; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🎉</div>
+                <h3 style="color: #0f4c81; margin-bottom: 10px;">Welcome to ${communityName}!</h3>
+                <p style="color: #666; margin-bottom: 20px;">You've successfully joined the community.</p>
+                <button onclick="this.parentElement.parentElement.remove()" 
+                        style="background: linear-gradient(135deg, #0f4c81, #1a6cb5); color: white; 
+                               border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer;
+                               font-weight: 600;">Start Chatting</button>
+            </div>
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+                        background: rgba(0,0,0,0.5); z-index: 2999;" 
+                 onclick="this.parentElement.remove()"></div>
+        `;
+        document.body.appendChild(successMsg);
+
+        // Open community chat automatically after a delay
+        setTimeout(() => {
+            if (window.MessagingSystem) {
+                MessagingSystem.openCommunityChat(communityId, communityName);
+            }
+            successMsg.remove();
+        }, 2000);
     } else {
         alert(result.error);
     }
@@ -97,7 +159,7 @@ function createRequestCard(request) {
     const type = stakeholderType.charAt(0).toUpperCase() + stakeholderType.slice(1);
 
     return `
-        <div class="request-card" id="request-${user._id}">
+        <div class="request-card" id="request-${user._id}" data-username="${name}">
             <div class="request-user">
                 <div class="request-avatar">${initial}</div>
                 <div class="request-info">
@@ -114,10 +176,30 @@ function createRequestCard(request) {
 }
 
 async function acceptConnection(userId) {
+    const requestCard = document.getElementById(`request-${userId}`);
+    const userName = requestCard ? requestCard.dataset.username : 'User';
+
     const result = await apiFetch(`/users/connect/accept/${userId}`, { method: 'PUT' });
     if (result.success) {
-        document.getElementById(`request-${userId}`).remove();
-        checkRequestsVisibility();
+        // Show connected animation
+        requestCard.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 15px; padding: 10px;">
+                <div style="color: #2ecc71; font-size: 1.5rem;">✓</div>
+                <div>
+                    <strong style="color: #2ecc71;">Connected with ${userName}!</strong>
+                    <p style="color: #666; font-size: 0.85rem; margin-top: 4px;">Opening chat...</p>
+                </div>
+            </div>
+        `;
+
+        // Open chat after accepting connection
+        setTimeout(() => {
+            if (window.MessagingSystem) {
+                MessagingSystem.startConversation(userId, userName);
+            }
+            requestCard.remove();
+            checkRequestsVisibility();
+        }, 1500);
     } else {
         alert(result.error);
     }
