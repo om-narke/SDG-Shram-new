@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campaign Details | SDG-Shram</title>
+    <link rel="stylesheet" href="navbar-common.css">
     <link rel="stylesheet" href="campaign-detail.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -22,12 +23,19 @@
             <input type="text" placeholder="Search projects, NGOs, people...">
         </div>
 
-        <div class="nav-links">
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="nav-links" id="navLinks">
             <a href="feed.html">
                 <img src="logo/home.png" alt="Home">
                 <span>Home</span>
             </a>
-            <a href="#">
+            <a href="connect.html">
                 <img src="logo/connect.png" alt="Network">
                 <span>Connect</span>
             </a>
@@ -39,11 +47,14 @@
                 <img src="logo/goals.png" alt="Goals">
                 <span>SDG Goals</span>
             </a>
-            <a href="#">
+            <a href="services.html">
                 <img src="logo/services.png" alt="Services">
                 <span>Services</span>
             </a>
         </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 
         <div class="user-section">
             <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
@@ -428,6 +439,19 @@
             menu.classList.toggle('active');
         }
 
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('mobileMenuOverlay');
+
+            if (navLinks) navLinks.classList.toggle('mobile-active');
+            if (hamburgerBtn) hamburgerBtn.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+
+            document.body.style.overflow = navLinks && navLinks.classList.contains('mobile-active') ? 'hidden' : '';
+        }
+
         // Close dropdown when clicking outside
         document.addEventListener('click', function (event) {
             const menu = document.getElementById('profileMenu');
@@ -435,6 +459,12 @@
             if (menu && !menu.contains(event.target)) {
                 dropdown.classList.remove('show');
                 menu.classList.remove('active');
+            }
+
+            // Close mobile menu when clicking a link
+            const navLinks = document.getElementById('navLinks');
+            if (event.target.closest('.nav-links a') && navLinks && navLinks.classList.contains('mobile-active')) {
+                toggleMobileMenu();
             }
         });
 

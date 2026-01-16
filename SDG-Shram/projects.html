@@ -24,14 +24,14 @@
             <input type="text" placeholder="Search startups, projects...">
         </div>
 
-        <!-- Hamburger Menu Button -->
+        <!-- Hamburger Menu Button (Mobile) -->
         <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
         </button>
 
-        <div class="nav-links" id="navMenu">
+        <div class="nav-links" id="navLinks">
             <a href="feed.html">
                 <img src="logo/home.png" alt="Home">
                 <span>Home</span>
@@ -53,6 +53,9 @@
                 <span>Services</span>
             </a>
         </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 
         <div class="user-section">
             <div class="profile-menu" id="profileMenu">
@@ -80,8 +83,6 @@
         </div>
     </nav>
     <script src="navbar-init.js"></script>
-    <script src="hamburger-menu.js"></script>
-
 
     <!-- Page Container -->
     <div class="page-container">

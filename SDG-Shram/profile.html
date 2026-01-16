@@ -762,6 +762,122 @@
             margin-top: 6px;
             text-align: right;
         }
+
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            z-index: 1002;
+        }
+
+        .hamburger-menu:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 22px;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin: 2.5px 0;
+        }
+
+        .hamburger-menu.active .hamburger-line:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
+        }
+
+        .hamburger-menu.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active .hamburger-line:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .profile-navbar {
+                padding: 10px 15px;
+            }
+
+            .profile-navbar .nav-links {
+                position: fixed;
+                top: 0;
+                right: -280px;
+                width: 280px;
+                height: 100vh;
+                background: linear-gradient(135deg, #0f4c81 0%, #002147 100%);
+                flex-direction: column;
+                padding: 80px 20px 30px;
+                gap: 0;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+                z-index: 1001;
+                transition: right 0.4s ease;
+            }
+
+            .profile-navbar .nav-links.mobile-active {
+                right: 0;
+            }
+
+            .profile-navbar .nav-links a {
+                flex-direction: row;
+                padding: 16px 20px;
+                gap: 16px;
+                border-radius: 8px;
+                font-size: 1rem;
+            }
+
+            .profile-navbar .nav-links a img {
+                margin-bottom: 0;
+            }
+
+            .profile-navbar .nav-links a span {
+                display: block;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+
+            .left-column,
+            .right-column {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -773,7 +889,14 @@
             <h2>SDG-Shram</h2>
         </div>
 
-        <div class="nav-links">
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="nav-links" id="navLinks">
             <a href="feed.html">
                 <img src="logo/home.png" alt="Home">
                 <span>Home</span>
@@ -786,7 +909,18 @@
                 <img src="logo/project.png" alt="Projects">
                 <span>Projects</span>
             </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="services.html">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
         </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 
         <a href="feed.html" class="back-btn">← Back to Feed</a>
     </nav>
@@ -971,6 +1105,27 @@
     </div>
 
     <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('mobileMenuOverlay');
+
+            if (navLinks) navLinks.classList.toggle('mobile-active');
+            if (hamburgerBtn) hamburgerBtn.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+
+            document.body.style.overflow = navLinks && navLinks.classList.contains('mobile-active') ? 'hidden' : '';
+        }
+
+        // Close mobile menu when clicking a link
+        document.addEventListener('click', function (event) {
+            const navLinks = document.getElementById('navLinks');
+            if (event.target.closest('.nav-links a') && navLinks && navLinks.classList.contains('mobile-active')) {
+                toggleMobileMenu();
+            }
+        });
+
         let currentUser = null;
         let currentUploadType = null;
 

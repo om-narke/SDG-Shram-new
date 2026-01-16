@@ -22,14 +22,14 @@
       <input type="text" placeholder="Search projects, NGOs, people...">
     </div>
 
-    <!-- Hamburger Menu Button -->
+    <!-- Hamburger Menu Button (Mobile) -->
     <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
     </button>
 
-    <div class="nav-links" id="navMenu">
+    <div class="nav-links" id="navLinks">
       <a href="feed.html">
         <img src="logo/home.png" alt="Home">
         <span>Home</span>
@@ -51,6 +51,9 @@
         <span>Services</span>
       </a>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
 
     <div class="user-section">
       <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
@@ -182,6 +185,19 @@
       menu.classList.toggle('active');
     }
 
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const overlay = document.getElementById('mobileMenuOverlay');
+
+      if (navLinks) navLinks.classList.toggle('mobile-active');
+      if (hamburgerBtn) hamburgerBtn.classList.toggle('active');
+      if (overlay) overlay.classList.toggle('active');
+
+      document.body.style.overflow = navLinks && navLinks.classList.contains('mobile-active') ? 'hidden' : '';
+    }
+
     // Close dropdown when clicking outside
     document.addEventListener('click', function (event) {
       const menu = document.getElementById('profileMenu');
@@ -189,6 +205,12 @@
       if (!menu.contains(event.target)) {
         dropdown.classList.remove('show');
         menu.classList.remove('active');
+      }
+
+      // Close mobile menu when clicking a link
+      const navLinks = document.getElementById('navLinks');
+      if (event.target.closest('.nav-links a') && navLinks && navLinks.classList.contains('mobile-active')) {
+        toggleMobileMenu();
       }
     });
 
@@ -198,19 +220,7 @@
       localStorage.removeItem('user');
       window.location.replace('dashboard.html');
     }
-
-    // Mobile Hamburger Menu Toggle
-    function toggleMobileMenu() {
-      const hamburgerBtn = document.getElementById('hamburgerBtn');
-      const navMenu = document.getElementById('navMenu');
-
-      if (hamburgerBtn && navMenu) {
-        hamburgerBtn.classList.toggle('active');
-        navMenu.classList.toggle('active');
-      }
-    }
   </script>
-  <script src="hamburger-menu.js"></script>
 </body>
 
 </html>

@@ -386,13 +386,81 @@
             border-color: var(--accent-blue);
         }
     </style>
+    <link rel="stylesheet" href="navbar-common.css">
 </head>
 
 <body>
-    <nav>
-        <div class="logo">SDG-Shram</div>
-        <div class="nav-links">
-            <a href="feed.html" style="color: white; text-decoration: none;">Home</a>
+    <!-- Navigation Bar -->
+    <nav class="feed-navbar">
+        <div class="logo-section">
+            <img src="logo/logo.png" alt="SDG-Shram">
+            <h2>SDG-Shram</h2>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search projects, NGOs, people...">
+        </div>
+
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu()">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="nav-links" id="navLinks">
+            <a href="feed.html">
+                <img src="logo/home.png" alt="Home">
+                <span>Home</span>
+            </a>
+            <a href="connect.html" class="active">
+                <img src="logo/connect.png" alt="Network">
+                <span>Connect</span>
+            </a>
+            <a href="projects.html">
+                <img src="logo/project.png" alt="Projects">
+                <span>Projects</span>
+            </a>
+            <a href="goals.html">
+                <img src="logo/goals.png" alt="Goals">
+                <span>SDG Goals</span>
+            </a>
+            <a href="services.html">
+                <img src="logo/services.png" alt="Services">
+                <span>Services</span>
+            </a>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+
+        <div class="user-section">
+            <div class="profile-menu" id="profileMenu" onclick="toggleDropdown()">
+                <div class="avatar-small" id="userAvatar">U</div>
+                <div class="menu-label">
+                    <span>Me</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="avatar-large" id="dropdownAvatar">U</div>
+                        <div class="info">
+                            <h4 id="dropdownName">User Name</h4>
+                            <p id="dropdownBio">SDG Advocate</p>
+                        </div>
+                    </div>
+                    <a href="profile.html" class="view-profile-btn">View profile</a>
+                    <div class="dropdown-section">
+                        <a href="#">⚙️ Settings & Privacy</a>
+                        <a href="#">❓ Help</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <a href="#" class="sign-out" onclick="handleLogout(); return false;">Sign out</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -476,6 +544,23 @@
                 return;
             }
 
+            // Update user info in navbar
+            try {
+                const userData = JSON.parse(localStorage.getItem('user'));
+                if (userData) {
+                    const displayName = userData.individual?.fullName || userData.ngo?.ngoName ||
+                        userData.business?.companyName || userData.institution?.institutionName || 'User';
+                    const initial = displayName.charAt(0).toUpperCase();
+
+                    document.getElementById('userAvatar').textContent = initial;
+                    document.getElementById('dropdownAvatar').textContent = initial;
+                    document.getElementById('dropdownName').textContent = displayName;
+                    document.getElementById('dropdownBio').textContent = userData.stakeholderType || 'SDG Advocate';
+                }
+            } catch (e) {
+                console.log('Error parsing user data:', e);
+            }
+
             // Load Incoming Requests
             const requestsRes = await apiFetch('/users/connect/requests');
             if (requestsRes.success && requestsRes.data.length > 0) {
@@ -513,9 +598,49 @@
             modal.style.display = 'none';
         }
 
+        // Navbar functions
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            const menu = document.getElementById('profileMenu');
+            dropdown.classList.toggle('show');
+            menu.classList.toggle('active');
+        }
+
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('mobileMenuOverlay');
+
+            if (navLinks) navLinks.classList.toggle('mobile-active');
+            if (hamburgerBtn) hamburgerBtn.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+
+            document.body.style.overflow = navLinks && navLinks.classList.contains('mobile-active') ? 'hidden' : '';
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.replace('dashboard.html');
+        }
+
         window.onclick = function (event) {
             if (event.target == modal) {
                 closeCommunityModal();
+            }
+
+            // Close dropdown when clicking outside
+            const menu = document.getElementById('profileMenu');
+            const dropdown = document.getElementById('profileDropdown');
+            if (menu && !menu.contains(event.target)) {
+                dropdown.classList.remove('show');
+                menu.classList.remove('active');
+            }
+
+            // Close mobile menu when clicking a link
+            const navLinks = document.getElementById('navLinks');
+            if (event.target.closest('.nav-links a') && navLinks && navLinks.classList.contains('mobile-active')) {
+                toggleMobileMenu();
             }
         }
 
