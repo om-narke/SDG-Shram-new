@@ -50,12 +50,14 @@ const campaignRoutes = require('./routes/campaign.routes');
 const userRoutes = require('./routes/user.routes');
 const communityRoutes = require('./routes/community.routes');
 const serviceRoutes = require('./routes/service.routes');
+const messageRoutes = require('./routes/message.routes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/communities', communityRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Serve frontend pages (catch-all for HTML pages)
 app.get('/', (req, res) => {
